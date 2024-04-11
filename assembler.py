@@ -245,7 +245,28 @@ def run(contents):
                 code += to_binary(instr['value'],9)
                 code += OPCODES[instr['op']][0]
 
-            if opclass in [1, 2]:
+            if opclass == 1:
+                if instr['label'] is not None:
+                    if instr['label'] not in labels:
+                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
+                        if not casc_err:
+                            return
+                    else:
+                        code += to_binary(labels[instr['label']], 9)
+
+                else:
+                    code += '0000' 
+                    if (pl:=instr['partial_label'])!=None:
+                        rootlabel,part = pl.split('$');part = int(part,16)
+                        partial_label = to_binary(labels[rootlabel], 16)[::-1][4*part:4+4*part][::-1]
+                        code += partial_label
+                        instr['annot']='#0b'+('....'*(2-part)+partial_label+'....'*(part))[3:]
+                    else:
+                        code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
+                    code += '1' if instr['iFlag'] else '0'
+                code += OPCODES[instr['op']][0]
+
+            if opclass == 2:
                 if instr['label'] is not None:
                     if instr['label'] not in labels:
                         print("ERROR: label not found"+(" caused by cascade error")*casc_err)
