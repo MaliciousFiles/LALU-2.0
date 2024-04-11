@@ -8,7 +8,7 @@
 mul:	mv		R4,[0]
 loop:	bsr		R6,[1]
 		usm		[1]
-		jmprnx	[2]
+		jmprnx	[3]
 		nop
 		add		R4,R5
 
@@ -28,13 +28,13 @@ loop:	bsr		R6,[1]
 fac:	mv		R2,R2
 
 		usm		[8]
-		jmprx	[2]
+		jmprx	[3]
 		nop
 		mv		R2,[1]
 		
 		mv		R1,[1]
 		sub		R1,R0
-		jmprz	[8]
+		jmprz	[9]
 		nop
 
 		mv		R5,R2
