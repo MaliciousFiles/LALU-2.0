@@ -1206,6 +1206,10 @@
       <a name="facing" val="east"/>
       <a name="label" val="lfmz"/>
     </comp>
+    <comp lib="0" loc="(490,1740)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="mul"/>
+    </comp>
     <comp lib="0" loc="(510,530)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
@@ -1613,7 +1617,7 @@
     </comp>
     <comp lib="1" loc="(590,1390)" name="OR Gate">
       <a name="facing" val="north"/>
-      <a name="inputs" val="10"/>
+      <a name="inputs" val="11"/>
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(640,1370)" name="AND Gate">
@@ -2707,6 +2711,7 @@
     <wire from="(490,1650)" to="(620,1650)"/>
     <wire from="(490,1680)" to="(630,1680)"/>
     <wire from="(490,1710)" to="(640,1710)"/>
+    <wire from="(490,1740)" to="(590,1740)"/>
     <wire from="(500,530)" to="(510,530)"/>
     <wire from="(500,550)" to="(500,560)"/>
     <wire from="(500,560)" to="(510,560)"/>
@@ -2742,6 +2747,7 @@
     <wire from="(580,2670)" to="(820,2670)"/>
     <wire from="(590,1380)" to="(590,1390)"/>
     <wire from="(590,1380)" to="(610,1380)"/>
+    <wire from="(590,1420)" to="(590,1740)"/>
     <wire from="(60,300)" to="(100,300)"/>
     <wire from="(600,1350)" to="(600,1360)"/>
     <wire from="(600,1360)" to="(610,1360)"/>
