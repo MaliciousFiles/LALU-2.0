@@ -3,8 +3,17 @@
   This file is intended to be loaded by Logisim-evolution v3.8.0(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
+    <tool name="Splitter">
+      <a name="facing" val="south"/>
+    </tool>
     <tool name="Pin">
       <a name="appearance" val="classic"/>
+    </tool>
+    <tool name="Tunnel">
+      <a name="facing" val="north"/>
+    </tool>
+    <tool name="Constant">
+      <a name="facing" val="south"/>
     </tool>
   </lib>
   <lib desc="#Gates" name="1"/>
@@ -19,7 +28,10 @@
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
   <lib desc="file#Multiplexers.circ" name="12">
-    <tool name="mx2i_2">
+    <tool name="mx2i_1">
+      <a name="facing" val="south"/>
+    </tool>
+    <tool name="mx4i_1">
       <a name="facing" val="south"/>
     </tool>
   </lib>
@@ -46,9 +58,7 @@
       <a name="output" val="true"/>
     </tool>
     <sep/>
-    <tool lib="1" name="NOT Gate">
-      <a name="facing" val="south"/>
-    </tool>
+    <tool lib="1" name="NOT Gate"/>
     <tool lib="1" name="AND Gate"/>
     <tool lib="1" name="OR Gate"/>
     <tool lib="1" name="XOR Gate"/>
@@ -868,25 +878,19 @@
       <a name="output" val="true"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="1" loc="(190,510)" name="NOT Gate">
+    <comp lib="12" loc="(190,450)" name="mx2i_1">
       <a name="facing" val="south"/>
     </comp>
-    <comp lib="1" loc="(280,430)" name="NOT Gate">
-      <a name="width" val="4"/>
-    </comp>
-    <comp lib="12" loc="(190,450)" name="mx2i_2">
-      <a name="facing" val="south"/>
-    </comp>
-    <comp lib="8" loc="(293,500)" name="Text">
+    <comp lib="8" loc="(290,500)" name="Text">
       <a name="text" val="10.5"/>
     </comp>
-    <comp lib="8" loc="(394,557)" name="Text">
+    <comp lib="8" loc="(390,555)" name="Text">
       <a name="text" val="8-bit Carry Select"/>
     </comp>
-    <comp lib="8" loc="(399,572)" name="Text">
+    <comp lib="8" loc="(395,570)" name="Text">
       <a name="text" val="Malcolmb Roalson"/>
     </comp>
-    <comp lib="8" loc="(450,447)" name="Text">
+    <comp lib="8" loc="(450,445)" name="Text">
       <a name="text" val="10.5"/>
     </comp>
     <comp loc="(190,300)" name="Ripple4_0"/>
@@ -915,16 +919,14 @@
     <wire from="(190,330)" to="(190,360)"/>
     <wire from="(190,360)" to="(210,360)"/>
     <wire from="(190,390)" to="(190,430)"/>
-    <wire from="(190,430)" to="(250,430)"/>
-    <wire from="(190,470)" to="(190,480)"/>
-    <wire from="(190,510)" to="(190,520)"/>
+    <wire from="(190,430)" to="(330,430)"/>
+    <wire from="(190,470)" to="(190,520)"/>
     <wire from="(190,520)" to="(270,520)"/>
     <wire from="(210,150)" to="(210,230)"/>
     <wire from="(210,230)" to="(210,270)"/>
     <wire from="(210,360)" to="(210,370)"/>
     <wire from="(210,440)" to="(210,450)"/>
     <wire from="(230,150)" to="(360,150)"/>
-    <wire from="(280,430)" to="(330,430)"/>
     <wire from="(300,280)" to="(300,340)"/>
     <wire from="(300,280)" to="(310,280)"/>
     <wire from="(320,190)" to="(320,250)"/>
@@ -955,7 +957,7 @@
       <circ-port dir="in" pin="100,570" x="60" y="170"/>
       <circ-port dir="in" pin="130,150" x="50" y="120"/>
       <circ-port dir="in" pin="130,190" x="50" y="160"/>
-      <circ-port dir="out" pin="380,580" x="70" y="140"/>
+      <circ-port dir="out" pin="450,580" x="70" y="140"/>
     </appear>
     <comp lib="0" loc="(100,570)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -981,22 +983,22 @@
       <a name="fanout" val="4"/>
       <a name="incoming" val="4"/>
     </comp>
-    <comp lib="0" loc="(380,580)" name="Pin">
+    <comp lib="0" loc="(380,580)" name="Splitter">
+      <a name="facing" val="north"/>
+      <a name="fanout" val="4"/>
+      <a name="incoming" val="4"/>
+    </comp>
+    <comp lib="0" loc="(450,580)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="z"/>
       <a name="output" val="true"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="0" loc="(380,580)" name="Splitter">
-      <a name="facing" val="north"/>
-      <a name="fanout" val="4"/>
-      <a name="incoming" val="4"/>
-    </comp>
-    <comp lib="12" loc="(260,220)" name="mx2i_2"/>
-    <comp lib="12" loc="(260,320)" name="mx2i_2"/>
-    <comp lib="12" loc="(260,420)" name="mx2i_2"/>
-    <comp lib="12" loc="(260,520)" name="mx2i_2"/>
+    <comp lib="12" loc="(260,220)" name="mx2i_1"/>
+    <comp lib="12" loc="(260,320)" name="mx2i_1"/>
+    <comp lib="12" loc="(260,420)" name="mx2i_1"/>
+    <comp lib="12" loc="(260,520)" name="mx2i_1"/>
     <wire from="(100,570)" to="(250,570)"/>
     <wire from="(130,150)" to="(200,150)"/>
     <wire from="(130,190)" to="(150,190)"/>
@@ -1035,6 +1037,7 @@
     <wire from="(350,420)" to="(350,560)"/>
     <wire from="(360,320)" to="(360,560)"/>
     <wire from="(370,220)" to="(370,560)"/>
+    <wire from="(380,580)" to="(450,580)"/>
   </circuit>
   <circuit name="CSA16">
     <a name="appearance" val="logisim_evolution"/>
@@ -1126,25 +1129,19 @@
       <a name="radix" val="10unsigned"/>
       <a name="width" val="16"/>
     </comp>
-    <comp lib="1" loc="(190,510)" name="NOT Gate">
+    <comp lib="12" loc="(190,450)" name="mx2i_1">
       <a name="facing" val="south"/>
     </comp>
-    <comp lib="1" loc="(280,430)" name="NOT Gate">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="12" loc="(190,450)" name="mx2i_2">
-      <a name="facing" val="south"/>
-    </comp>
-    <comp lib="8" loc="(293,500)" name="Text">
+    <comp lib="8" loc="(290,500)" name="Text">
       <a name="text" val="13"/>
     </comp>
-    <comp lib="8" loc="(398,558)" name="Text">
+    <comp lib="8" loc="(395,555)" name="Text">
       <a name="text" val="16-bit Carry Select"/>
     </comp>
-    <comp lib="8" loc="(399,572)" name="Text">
+    <comp lib="8" loc="(395,570)" name="Text">
       <a name="text" val="Malcolmb Roalson"/>
     </comp>
-    <comp lib="8" loc="(450,447)" name="Text">
+    <comp lib="8" loc="(450,445)" name="Text">
       <a name="text" val="13"/>
     </comp>
     <comp loc="(190,300)" name="CSA8_0"/>
@@ -1173,16 +1170,14 @@
     <wire from="(190,330)" to="(190,360)"/>
     <wire from="(190,360)" to="(210,360)"/>
     <wire from="(190,390)" to="(190,430)"/>
-    <wire from="(190,430)" to="(250,430)"/>
-    <wire from="(190,470)" to="(190,480)"/>
-    <wire from="(190,510)" to="(190,520)"/>
+    <wire from="(190,430)" to="(330,430)"/>
+    <wire from="(190,470)" to="(190,520)"/>
     <wire from="(190,520)" to="(270,520)"/>
     <wire from="(210,150)" to="(210,230)"/>
     <wire from="(210,230)" to="(210,270)"/>
     <wire from="(210,360)" to="(210,370)"/>
     <wire from="(210,440)" to="(210,450)"/>
     <wire from="(230,150)" to="(360,150)"/>
-    <wire from="(280,430)" to="(330,430)"/>
     <wire from="(300,280)" to="(300,340)"/>
     <wire from="(300,280)" to="(310,280)"/>
     <wire from="(320,190)" to="(320,250)"/>
@@ -1274,25 +1269,19 @@
       <a name="output" val="true"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="1" loc="(190,510)" name="NOT Gate">
+    <comp lib="12" loc="(190,450)" name="mx2i_1">
       <a name="facing" val="south"/>
     </comp>
-    <comp lib="1" loc="(280,430)" name="NOT Gate">
-      <a name="width" val="4"/>
-    </comp>
-    <comp lib="12" loc="(190,450)" name="mx2i_2">
-      <a name="facing" val="south"/>
-    </comp>
-    <comp lib="8" loc="(293,500)" name="Text">
+    <comp lib="8" loc="(290,500)" name="Text">
       <a name="text" val="10.5"/>
     </comp>
-    <comp lib="8" loc="(394,557)" name="Text">
+    <comp lib="8" loc="(390,555)" name="Text">
       <a name="text" val="8-bit Carry Select"/>
     </comp>
-    <comp lib="8" loc="(399,572)" name="Text">
+    <comp lib="8" loc="(395,570)" name="Text">
       <a name="text" val="Malcolmb Roalson"/>
     </comp>
-    <comp lib="8" loc="(450,447)" name="Text">
+    <comp lib="8" loc="(450,445)" name="Text">
       <a name="text" val="10.5"/>
     </comp>
     <comp loc="(190,300)" name="Ripple4_0"/>
@@ -1321,16 +1310,14 @@
     <wire from="(190,330)" to="(190,360)"/>
     <wire from="(190,360)" to="(210,360)"/>
     <wire from="(190,390)" to="(190,430)"/>
-    <wire from="(190,430)" to="(250,430)"/>
-    <wire from="(190,470)" to="(190,480)"/>
-    <wire from="(190,510)" to="(190,520)"/>
+    <wire from="(190,430)" to="(330,430)"/>
+    <wire from="(190,470)" to="(190,520)"/>
     <wire from="(190,520)" to="(270,520)"/>
     <wire from="(210,150)" to="(210,230)"/>
     <wire from="(210,230)" to="(210,270)"/>
     <wire from="(210,360)" to="(210,370)"/>
     <wire from="(210,440)" to="(210,450)"/>
     <wire from="(230,150)" to="(360,150)"/>
-    <wire from="(280,430)" to="(330,430)"/>
     <wire from="(300,280)" to="(300,340)"/>
     <wire from="(300,280)" to="(310,280)"/>
     <wire from="(320,190)" to="(320,250)"/>

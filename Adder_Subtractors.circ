@@ -12,6 +12,9 @@
     <tool name="Tunnel">
       <a name="facing" val="north"/>
     </tool>
+    <tool name="Constant">
+      <a name="facing" val="south"/>
+    </tool>
   </lib>
   <lib desc="#Gates" name="1">
     <tool name="NOT Gate">
@@ -528,9 +531,6 @@
       <a name="radix" val="10unsigned"/>
       <a name="width" val="16"/>
     </comp>
-    <comp lib="1" loc="(280,430)" name="NOT Gate">
-      <a name="width" val="8"/>
-    </comp>
     <comp lib="12" loc="(190,300)" name="CSA8_0"/>
     <comp lib="12" loc="(190,370)" name="mx2i_8">
       <a name="facing" val="south"/>
@@ -559,7 +559,7 @@
     <wire from="(190,330)" to="(190,360)"/>
     <wire from="(190,360)" to="(210,360)"/>
     <wire from="(190,390)" to="(190,430)"/>
-    <wire from="(190,430)" to="(250,430)"/>
+    <wire from="(190,430)" to="(330,430)"/>
     <wire from="(210,150)" to="(210,230)"/>
     <wire from="(210,230)" to="(210,270)"/>
     <wire from="(210,360)" to="(210,370)"/>
@@ -569,7 +569,6 @@
     <wire from="(280,330)" to="(300,330)"/>
     <wire from="(280,350)" to="(410,350)"/>
     <wire from="(280,400)" to="(290,400)"/>
-    <wire from="(280,430)" to="(330,430)"/>
     <wire from="(290,380)" to="(290,400)"/>
     <wire from="(290,380)" to="(330,380)"/>
     <wire from="(300,280)" to="(300,330)"/>

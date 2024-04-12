@@ -9,11 +9,11 @@
     <tool name="Pin">
       <a name="appearance" val="classic"/>
     </tool>
-    <tool name="Tunnel">
-      <a name="facing" val="north"/>
-    </tool>
     <tool name="Constant">
       <a name="facing" val="south"/>
+    </tool>
+    <tool name="Ground">
+      <a name="facing" val="north"/>
     </tool>
   </lib>
   <lib desc="#Gates" name="1">
@@ -33,7 +33,7 @@
   <lib desc="#Soc" name="11"/>
   <lib desc="file#Adder_Subtractors.circ" name="12"/>
   <lib desc="file#Full_Adders.circ" name="13"/>
-  <main name="main"/>
+  <main name="FA"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
     <a name="simlimit" val="1000"/>
@@ -66,12 +66,6 @@
     <tool lib="4" name="D Flip-Flop"/>
     <tool lib="4" name="Register"/>
   </toolbar>
-  <circuit name="main">
-    <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="main"/>
-    <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="1.0"/>
-  </circuit>
   <circuit name="FA">
     <a name="appearance" val="custom"/>
     <a name="circuit" val="FA"/>
@@ -2457,60 +2451,118 @@
     <wire from="(280,150)" to="(290,150)"/>
     <wire from="(310,140)" to="(330,140)"/>
   </circuit>
-  <circuit name="sMull16">
+  <circuit name="mul16">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="sMull16"/>
+    <a name="circuit" val="mul16"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
-    <comp lib="0" loc="(140,220)" name="Pin">
+    <comp lib="0" loc="(1040,120)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="s"/>
+    </comp>
+    <comp lib="0" loc="(1070,100)" name="Pin">
       <a name="appearance" val="NewPins"/>
-      <a name="label" val="B"/>
-      <a name="radix" val="16"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="AB"/>
+      <a name="output" val="true"/>
+      <a name="radix" val="10signed"/>
       <a name="width" val="16"/>
     </comp>
-    <comp lib="0" loc="(140,90)" name="Pin">
+    <comp lib="0" loc="(220,100)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="A"/>
-      <a name="radix" val="16"/>
+      <a name="radix" val="10signed"/>
       <a name="width" val="16"/>
     </comp>
-    <comp lib="0" loc="(790,150)" name="Pin">
+    <comp lib="0" loc="(220,230)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="B"/>
+      <a name="radix" val="10signed"/>
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="0" loc="(220,410)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="s"/>
+    </comp>
+    <comp lib="0" loc="(220,410)" name="Tunnel">
+      <a name="label" val="s"/>
+    </comp>
+    <comp lib="0" loc="(540,120)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="s"/>
+    </comp>
+    <comp lib="0" loc="(610,150)" name="Tunnel">
+      <a name="label" val="s"/>
+    </comp>
+    <comp lib="0" loc="(980,160)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="O"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(790,90)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-      <a name="facing" val="west"/>
-      <a name="label" val="AB"/>
-      <a name="output" val="true"/>
-      <a name="radix" val="16"/>
+    <comp lib="1" loc="(650,190)" name="XOR Gate"/>
+    <comp lib="2" loc="(1060,100)" name="Multiplexer">
       <a name="width" val="16"/>
     </comp>
-    <comp lib="1" loc="(520,180)" name="XOR Gate"/>
-    <comp loc="(380,220)" name="GetSign"/>
-    <comp loc="(380,90)" name="GetSign"/>
-    <comp loc="(490,100)" name="uMull16"/>
-    <comp loc="(780,90)" name="SetSign"/>
-    <wire from="(140,220)" to="(160,220)"/>
-    <wire from="(140,90)" to="(160,90)"/>
-    <wire from="(380,110)" to="(380,160)"/>
-    <wire from="(380,160)" to="(460,160)"/>
-    <wire from="(380,220)" to="(430,220)"/>
-    <wire from="(380,240)" to="(390,240)"/>
-    <wire from="(380,90)" to="(470,90)"/>
-    <wire from="(390,200)" to="(390,240)"/>
-    <wire from="(390,200)" to="(460,200)"/>
-    <wire from="(430,110)" to="(430,220)"/>
-    <wire from="(430,110)" to="(470,110)"/>
-    <wire from="(510,110)" to="(510,150)"/>
-    <wire from="(510,150)" to="(790,150)"/>
-    <wire from="(510,90)" to="(560,90)"/>
-    <wire from="(520,180)" to="(540,180)"/>
-    <wire from="(540,110)" to="(540,180)"/>
-    <wire from="(540,110)" to="(560,110)"/>
-    <wire from="(780,90)" to="(790,90)"/>
+    <comp lib="2" loc="(580,140)" name="Multiplexer">
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="2" loc="(580,80)" name="Multiplexer">
+      <a name="width" val="16"/>
+    </comp>
+    <comp loc="(510,100)" name="GetSign"/>
+    <comp loc="(510,230)" name="GetSign"/>
+    <comp loc="(620,110)" name="uMull16"/>
+    <comp loc="(970,100)" name="SetSign"/>
+    <wire from="(1000,100)" to="(1000,110)"/>
+    <wire from="(1000,110)" to="(1030,110)"/>
+    <wire from="(1020,60)" to="(1020,90)"/>
+    <wire from="(1020,90)" to="(1030,90)"/>
+    <wire from="(1060,100)" to="(1070,100)"/>
+    <wire from="(220,100)" to="(260,100)"/>
+    <wire from="(220,230)" to="(260,230)"/>
+    <wire from="(260,100)" to="(290,100)"/>
+    <wire from="(260,190)" to="(260,230)"/>
+    <wire from="(260,190)" to="(540,190)"/>
+    <wire from="(260,230)" to="(290,230)"/>
+    <wire from="(260,70)" to="(260,100)"/>
+    <wire from="(260,70)" to="(550,70)"/>
+    <wire from="(510,100)" to="(520,100)"/>
+    <wire from="(510,120)" to="(510,170)"/>
+    <wire from="(510,170)" to="(590,170)"/>
+    <wire from="(510,230)" to="(520,230)"/>
+    <wire from="(510,250)" to="(540,250)"/>
+    <wire from="(520,150)" to="(520,230)"/>
+    <wire from="(520,150)" to="(550,150)"/>
+    <wire from="(520,90)" to="(520,100)"/>
+    <wire from="(520,90)" to="(550,90)"/>
+    <wire from="(540,120)" to="(550,120)"/>
+    <wire from="(540,130)" to="(540,190)"/>
+    <wire from="(540,130)" to="(550,130)"/>
+    <wire from="(540,210)" to="(540,250)"/>
+    <wire from="(540,210)" to="(590,210)"/>
+    <wire from="(550,110)" to="(550,120)"/>
+    <wire from="(550,110)" to="(560,110)"/>
+    <wire from="(560,100)" to="(560,110)"/>
+    <wire from="(560,160)" to="(590,160)"/>
+    <wire from="(580,140)" to="(590,140)"/>
+    <wire from="(580,80)" to="(590,80)"/>
+    <wire from="(590,100)" to="(600,100)"/>
+    <wire from="(590,120)" to="(590,140)"/>
+    <wire from="(590,120)" to="(600,120)"/>
+    <wire from="(590,150)" to="(590,160)"/>
+    <wire from="(590,150)" to="(610,150)"/>
+    <wire from="(590,80)" to="(590,100)"/>
+    <wire from="(640,100)" to="(690,100)"/>
+    <wire from="(640,120)" to="(640,160)"/>
+    <wire from="(640,160)" to="(980,160)"/>
+    <wire from="(650,190)" to="(680,190)"/>
+    <wire from="(680,120)" to="(680,190)"/>
+    <wire from="(680,120)" to="(750,120)"/>
+    <wire from="(690,100)" to="(750,100)"/>
+    <wire from="(690,60)" to="(1020,60)"/>
+    <wire from="(690,60)" to="(690,100)"/>
+    <wire from="(970,100)" to="(1000,100)"/>
   </circuit>
   <circuit name="uDiv16">
     <a name="appearance" val="logisim_evolution"/>
