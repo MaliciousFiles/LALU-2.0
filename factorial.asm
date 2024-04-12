@@ -14,7 +14,7 @@ loop:	bsr		R6,[1]
 
 		bsl		R5,[1]
 		mv		R6,R6
-		usm		[8]
+		usm		{1000}
 		jmpx	loop:
 		nop
 		ret
@@ -27,7 +27,7 @@ loop:	bsr		R6,[1]
 # overwrites R1
 fac:	mv		R2,R2
 
-		usm		[8]
+		usm		{1000}
 		jmprx	[3]
 		nop
 		mv		R2,[1]
@@ -46,14 +46,9 @@ fac:	mv		R2,R2
 
 		call	fac:
 		nop
-		
+
 		ret
 		nop
-
-
-
-
-
 
 
 main:	ld		R0,[0]

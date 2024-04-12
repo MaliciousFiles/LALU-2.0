@@ -14,12 +14,12 @@ def __CALL_LINE__() -> int:
 # valid instructions, case insensitive
 OPCODES = {
     'INFO':             ('Opcode' ,'Opclass'),
-    'nop':		('0000000',-1),
-    'add':	    	('0000001',2),
-    'sub':  		('0000010',2),
-    'ld':		('0000011',2),
-    'mv':		('0000100',2),
-    'st':		('0000101',2),
+    'nop':		        ('0000000',-1),
+    'add':              ('0000001',2),
+    'sub':  		    ('0000010',2),
+    'ld':		        ('0000011',2),
+    'mv':               ('0000100',2),
+    'st':		        ('0000101',2),
 
     'bsl':              ('0001100',2),
     'bsr':              ('0001101',2),
@@ -38,7 +38,7 @@ OPCODES = {
     'lfmz':             ('0011010',2),
     'hsb':              ('0011011',2),
     
-    'exjmp':            ('0011110',0),
+    'exjmp':            ('0011110',-2),
     'jmp':              ('10'     ,3),
     
     'halt':             ('1111111',-1),
@@ -138,7 +138,7 @@ def run(contents):
                 error("args found for op class -1")
                 break
 ##            print('Check 4')
-            if ("[" in args[0] or "]" in args[0]) and opClass not in [0, 1, 3]:
+            if ("[" in args[0] or "]" in args[0] or "(" in args[0] or ")" in args[0] or "{" in args[0] or "}" in args[0]) and opClass not in [0, 1, 3]:
 ##                print('Check 4 Err')
                 error("immediates not allowed in Rd")
                 break
@@ -160,18 +160,18 @@ def run(contents):
                     break
 
             if opClass in [0, 1, 3]:
-                if args[0][0] == "[":
+                if args[0][0] in ["[","(","{"]:
                     try:
-                        value = int(args[0][1:-1], 16)
+                        value = int(args[0][1:-1], 16 if args[0][0] == "[" else 10 if args[0][0] == "(" else 2)
                         iFlag = True
                     except:
                         error("invalid immediate")
                         break
 
             if len(args) > 1:
-                if args[1][0] == "[":
+                if args[1][0]in ["[","(","{"]:
                     try:
-                        value = int(args[1][1:-1], 16)
+                        value = int(args[1][1:-1], 16 if args[1][0] == "[" else 10 if args[1][0] == "(" else 2)
                         iFlag = True
                     except:
                         error("invalid immediate")
@@ -206,12 +206,12 @@ def run(contents):
     else:
         print('First Scan Normal')
 
-    def to_binary(num, bits):
+    def to_binary(num, bits, err=True):
         ret = bin(num)[2:]
-        if len(ret) > bits:
+        if err and len(ret) > bits:
             print(f"ERROR: invalid binary number '{num}' for bit length '{bits}': {ret}")
 
-        return ret.rjust(bits, "0")
+        return ret.rjust(bits, "0" if num >= 0 else "1")
 
     print('Program print')
 
@@ -223,13 +223,38 @@ def run(contents):
 
     if len(list(filter(lambda i: i is not None, instructions))) > 0:
         casc_err = list(filter(lambda i: i is not None, instructions))[-1]['error'] is not None
-        
+
+        previnstr = None
         for instr in instructions:
             if instr is None:
                 print()
                 continue
+
+            if previnstr is not None and previnstr['op'] == 'exjmp' and instr['op'] != 'jmp':
+                print("ERROR: exjmp precedes non-jmp instruction")
+                return
         
             code = ""
+
+            def addLabel():                
+                if instr['label'] is not None:
+                    if instr['label'] not in labels:
+                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
+                        return ('ret' if not casc_error else '',)
+                    else:
+                        loc = to_binary(labels[instr['label']], 9, False)
+                        prog = ""
+                        if len(loc) > 9:
+                            if previnstr is None or previnstr['op'] != 'exjmp':
+                                print("ERROR: exjmp required immediately above to expand jump destination")
+                                return ('ret',)
+
+                            code = "00" + to_binary(labels[instr['label']], 16)[:7] + OPCODES['exjmp'][0]
+                            prog = hex(int(code, 2))[2:].rjust(4, "0")+" "
+
+                            print(f"[{hex(addr-1)[2:].rjust(3, '0')}] {prog}  {previnstr['labelDef'].rjust(labelLen+1, ' ')} {previnstr['op_asm'].ljust(opLen, ' ')}\t\t{previnstr['argStr']}\t\t{previnstr.get('annot','')}")
+                        return (loc[-9:], prog)
+
             
             if instr['error'] is not None:
                 print(f"ERROR: {instr['error']}")
@@ -246,14 +271,12 @@ def run(contents):
                 code += OPCODES[instr['op']][0]
 
             if opclass == 1:
-                if instr['label'] is not None:
-                    if instr['label'] not in labels:
-                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
-                        if not casc_err:
-                            return
-                    else:
-                        code += to_binary(labels[instr['label']], 9)
-
+                lbl = addLabel()
+                if type(lbl) == tuple:
+                    if lbl[0] == 'ret':
+                        return
+                    code += lbl[0]
+                    program += lbl[1]
                 else:
                     code += '0000' 
                     if (pl:=instr['partial_label'])!=None:
@@ -267,14 +290,12 @@ def run(contents):
                 code += OPCODES[instr['op']][0]
 
             if opclass == 2:
-                if instr['label'] is not None:
-                    if instr['label'] not in labels:
-                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
-                        if not casc_err:
-                            return
-                    else:
-                        code += to_binary(labels[instr['label']], 9)
-
+                lbl = addLabel()
+                if type(lbl) == tuple:
+                    if lbl[0] == 'ret':
+                        return
+                    code += lbl[0]
+                    program += lbl[1]
                 else:
                     code += to_binary(instr['Rd'] if instr['Rd'] is not None else instr['value'], 4) 
                     if (pl:=instr['partial_label'])!=None:
@@ -290,14 +311,12 @@ def run(contents):
                 code += OPCODES[instr['op']][0]
 
             elif opclass == 3:
-                if instr['label'] is not None:
-                    if instr['label'] not in labels:
-                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
-                        if not casc_err:
-                            return
-                    else:
-                        code += to_binary(labels[instr['label']], 9)
-
+                lbl = addLabel()
+                if type(lbl) == tuple:
+                    if lbl[0] == 'ret':
+                        return
+                    code += lbl[0]
+                    program += lbl[1]
                 else:
     ##                print(instr)
                     code += to_binary(instr['value'] if instr['value'] is not None else instr['Rd'], 9)
@@ -309,14 +328,12 @@ def run(contents):
                 code += to_binary(instr['jFlags'], 3)
 
             elif opclass == 4:
-                if instr['label'] is not None:
-                    if instr['label'] not in labels:
-                        print("ERROR: label not found"+(" caused by cascade error")*casc_err)
-                        if not casc_err:
-                            return
-                    else:
-                        code += to_binary(labels[instr['label']], 9)
-
+                lbl = addLabel()
+                if type(lbl) == tuple:
+                    if lbl[0] == 'ret':
+                        return
+                    code += lbl[0]
+                    program += lbl[1]
                 else:
                     code += to_binary(instr['value'] if instr['value'] is not None else instr['Rd'], 9)
                     
@@ -326,15 +343,18 @@ def run(contents):
             if len(code) > 16:
                 return
 
-            code = hex(int(code, 2))[2:].rjust(4, "0")
-            program += code+" "
+            if len(code) > 0:
+                code = hex(int(code, 2))[2:].rjust(4, "0")
+                program += code+" "
 
 
     ##        print(instr)
-            print(f"[{hex(addr)[2:].rjust(2, '0')}] {code}  {instr['labelDef'].rjust(labelLen+1, ' ')} {instr['op_asm'].ljust(opLen, ' ')}\t\t{instr['argStr']}\t\t{instr.get('annot','')}")
+                print(f"[{hex(addr)[2:].rjust(3, '0')}] {code}  {instr['labelDef'].rjust(labelLen+1, ' ')} {instr['op_asm'].ljust(opLen, ' ')}\t\t{instr['argStr']}\t\t{instr.get('annot','')}")
 
 
             addr += 1
+
+            previnstr = instr
 
         
     
