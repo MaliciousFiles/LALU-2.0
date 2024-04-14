@@ -45,7 +45,96 @@ OPCODES = {
 }
 
 fName = sys.argv[1] if len(sys.argv) > 1 else input("Program File: ")
-def run(contents):
+
+def macroEXP(contents,verb=False):
+    print('Macro Expansion begin')
+
+    macs = {}
+    olines = []
+
+    def error(msg):
+        print('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
+        return
+
+    isMac = False
+
+    lines = [('Line '+str(lnum+1), line) for lnum, line in enumerate(contents.split("\n"))]
+    while len(lines)>0:
+        source,line = lines.pop(0)
+        if verb:
+            print(f'Read {line!r} from {source}')
+        line = (line[:line.index("#")] if "#" in line else line).split()
+        if len(line) == 0:
+            continue
+        if isMac:
+            if line[0][0] == ';':
+                line[0]=line[0][1:]
+                if line[0] == '':
+                    del line[0]
+                macsource = macs[macname][0]
+                newsource = macname+' '+source
+                macs[macname][2].append((newsource, ' '.join(line)))
+            else:
+                isMac = False
+        if not isMac:
+            if line[0] == 'DEFINE':
+                isMac = True
+                macname = line[1]
+                if not ('$' == macname[0] and (macname[1].isalpha() or macname[1] == '_')):
+                    if not '$' == macname[0]:
+                        error(f'macro @ {source} does not begin with $')
+                    else:
+                        error(f'macro @ {source} does not begin with letter or _')
+                    return
+                if macname in macs.keys():
+                    error(f'macro @ line: {source} has same name as prexisting macro')
+                    return
+                args = [x for x in [x.strip() for x in ''.join(line[2:]).split(',')] if x != None]
+                for arg in args:
+                    if not (arg[0]=='<' and arg[-1] == '>' and len(arg)>2 and ' ' not in arg):
+                        if not (arg[0]=='<' and arg[-1] == '>'):
+                            error(f'macro @ line: {source} argument must be wrapped in < >')
+                        if not (len(arg)>2):
+                            error(f'macro @ line: {source} argument must have identifier in angle brackets')
+                        if not (' ' not in arg):
+                            error(f'macro @ line: {source} argument cannot contain whitespace')
+                        return
+                macs[macname]=(source,args,[])
+            else:
+                op = line[0]
+                labelDef = None
+                if verb:
+                    print(f'Prewrite {line!r}')
+                if ":" in op:
+                    op = op.split(":")
+                    labelDef = op[0] + ":"
+                    
+                    op = op[1] if op[1] != '' else line[1]
+                if op[0]=='$':
+                    if op not in macs:
+                        error(f'macro call @ line: {source} is undefined')
+                        return
+                    else:
+                        ms, margs, mlines = macs[op]
+                        args = [x for x in [x.strip() for x in ''.join(line[1:]).split(',')] if x != None]
+                        if len(args) != len(margs):
+                            error(f'macro call @ line: {source} has argument mismatch')
+                        app=[]
+                        for line in mlines:
+                            ls, lv = line
+                            for marg,arg in zip(margs,args):
+                                lv = lv.replace(marg,arg)
+                            ls = source + ' -> '+ls
+                            app.append((ls, lv))
+                        lines = app + lines
+                else:
+                    if verb:
+                        print(f'Write {line!r} from {source}')
+                    olines.append((source,line))
+    return olines
+            
+
+def run(contents, preprocessed = True):
     print('Run begin')
     # Rx = register index x (in hex)
     # [x] = value of x (only works for Rs)
@@ -55,19 +144,23 @@ def run(contents):
     labels = {}
 
     def error(msg):
-        instructions.append({'error': msg+' (@ Py: '+str(__CALL_LINE__())+')'})
+        nonlocal source, line
+        instructions.append({'error': msg+f' (@ {source}) '+'(@ Py: '+str(__CALL_LINE__())+')'+'\n->\t'+f'{" ".join(line)}'+'\nInternally: '+f'{line!r}'})
         return
 
+    def ImGetNib(val, nibID):
+        return int(val // 16**nibID) % 16
 
-
-    labelLen = opLen = 0
+    labelLen = opLen = antLen = argLen = 0
     addr = 0
-    for line in contents.split("\n"):
-        line = (line[:line.index("#")] if "#" in line else line).split()
-##        print(line)
-        if len(line) == 0:
-            instructions.append(None)
-            continue
+
+    data = contents if preprocessed else list(enumerate(contents.split("\n")))
+    for source, line in data:
+        if not preprocessed:
+            line = (line[:line.index("#")] if "#" in line else line).split()
+            if len(line) == 0:
+                instructions.append(None)
+                continue
         
 
         # get instruction, and parse label if necessary
@@ -80,7 +173,7 @@ def run(contents):
             labelLen = max(labelLen,len(op[0]))
             labels[op[0]] = addr
             op = op[1] if op[1] != '' else line.pop(1)
-            opLen = max(opLen,len(op))
+        opLen = max(opLen,len(op))
         if op not in OPCODES.keys() and not op[:3] == 'jmp':
             error("invalid operation")
             break
@@ -162,16 +255,26 @@ def run(contents):
             if opClass in [0, 1, 3]:
                 if args[0][0] in ["[","(","{"]:
                     try:
+                        nib = None
+                        if '$' in args[0]:
+                            args[0],nib = args[0].split('$')
                         value = int(args[0][1:-1], 16 if args[0][0] == "[" else 10 if args[0][0] == "(" else 2)
+                        if nib != None:
+                            value = ImGetNib(value,nib)
                         iFlag = True
                     except:
                         error("invalid immediate")
                         break
 
             if len(args) > 1:
-                if args[1][0]in ["[","(","{"]:
+                if args[1][0] in ["[","(","{"]:
                     try:
+                        nib = None
+                        if '$' in args[1]:
+                            args[1],nib = args[1].split('$')
                         value = int(args[1][1:-1], 16 if args[1][0] == "[" else 10 if args[1][0] == "(" else 2)
+                        if nib != None:
+                            value = ImGetNib(value,int(nib))
                         iFlag = True
                     except:
                         error("invalid immediate")
@@ -183,12 +286,12 @@ def run(contents):
                             iFlag = True
                             
                         else:
-                            error("unrecognized arg is neither label nor register")
+                            error("unrecognized second arg is neither label nor register")
                             break
                     try:
                         Rs = int(args[1][1:], 16)
                         if Rs > 15:
-                            error("register index greater than 15")
+                            error("second register index greater than 15")
                             break
                     except:
                         if ':' in args[1]:
@@ -196,12 +299,13 @@ def run(contents):
                             iFlag = True
                             
                         else:
-                            error("unrecognized arg is neither label nor register")
+                            error("unrecognized second arg is neither label nor register")
                             break
 
         instructions.append({'op': op, 'op_asm': oop, 'labelDef': labelDef, 'argStr': argStr, 'label': label, 'partial_label': partial_label, 'Rd': Rd, 'Rs': Rs, 'value': value, 'iFlag': iFlag, 'error': None,
-                             'aFlag': aFlag, 'jFlags': jFlags, })
-
+                             'aFlag': aFlag, 'jFlags': jFlags, 'source': source})
+        argLen = max(argLen, len(argStr))
+        
         addr += 1
     else:
         print('First Scan Normal')
@@ -209,7 +313,7 @@ def run(contents):
     def to_binary(num, bits, err=True):
         ret = bin(num)[2:]
         if err and len(ret) > bits:
-            print(f"ERROR: invalid binary number '{num}' for bit length '{bits}': {ret}")
+            print(f"ERROR: invalid binary number '{num}' for bit length '{bits}': {ret}"+' (@ Py: '+str(__CALL_LINE__())+')')
 
         return ret.rjust(bits, "0" if num >= 0 else "1")
 
@@ -284,6 +388,7 @@ def run(contents):
                         partial_label = to_binary(labels[rootlabel], 16)[::-1][4*part:4+4*part][::-1]
                         code += partial_label
                         instr['annot']='#0b'+('....'*(2-part)+partial_label+'....'*(part))[3:]
+                        antLen = max(argLen, len(instr['annot']))
                     else:
                         code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
                     code += '1' if instr['iFlag'] else '0'
@@ -349,7 +454,10 @@ def run(contents):
 
 
     ##        print(instr)
-                print(f"[{hex(addr)[2:].rjust(3, '0')}] {code}  {instr['labelDef'].rjust(labelLen+1, ' ')} {instr['op_asm'].ljust(opLen, ' ')}\t\t{instr['argStr']}\t\t{instr.get('annot','')}")
+                print(f"[{hex(addr)[2:].rjust(3, '0')}] {code}  {instr['labelDef'].rjust(labelLen+1, ' ')} {instr['op_asm'].ljust(opLen, ' ')}"+
+                      f"\t\t{instr['argStr'].ljust(argLen, ' ')}"+
+                      f"\t\t{instr.get('annot','').ljust(antLen, ' ')}"+
+                      f"\t\t{instr['source']}")
 
 
             addr += 1
@@ -389,11 +497,18 @@ if __name__ == "__main__":
                 if inp is not None or newContents != contents:
                     inp = None
                     contents = newContents
-                    
-                    os.system("clear")
+
+                    if (platform := sys.platform) == 'win32':
+                        os.system("cls")
+                    elif platform == 'darwin':
+                        os.system("clear")
+                    else:
+                        exit('Unsupported Operating System `' + platform +'`')
                     run(contents)
         else:
-            run(f.read())
+            run(mx:=macroEXP(f.read()))
+##            print(mx)
+##            run(f.read())
 
 
 #y=0x0084;x=bin(y)[2:].rjust(16,'0');print(x[0:4],x[4:8],x[8],x[9:16])
