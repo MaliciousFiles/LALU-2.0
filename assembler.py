@@ -20,8 +20,6 @@ OPCODES = {
     'ld':		        ('0000011',2),
     'mv':               ('0000100',2),
     'st':		        ('0000101',2),
-    'smul':             ('0000110',2),
-    'umul':             ('0000111',2),
 
     'bsl':              ('0001100',2),
     'bsr':              ('0001101',2),
@@ -506,7 +504,7 @@ if __name__ == "__main__":
                         os.system("clear")
                     else:
                         exit('Unsupported Operating System `' + platform +'`')
-                    run(contents)
+                    run(mx:=macroEXP(contents))
         else:
             run(mx:=macroEXP(f.read()))
 ##            print(mx)
