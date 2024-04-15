@@ -116,7 +116,10 @@ def macroEXP(contents,verb=False):
                         return
                     else:
                         ms, margs, mlines = macs[op]
-                        args = [x for x in [x.strip() for x in ''.join(line[1:]).split(',')] if x != None]
+                        if labelDef != None:
+                            args = [x for x in [x.strip() for x in ''.join(line[2:]).split(',')] if x != None]
+                        else:
+                            args = [x for x in [x.strip() for x in ''.join(line[1:]).split(',')] if x != None]
                         if len(args) != len(margs):
                             error(f'macro call @ line: {source} has argument mismatch')
                         app=[]
@@ -126,6 +129,10 @@ def macroEXP(contents,verb=False):
                                 lv = lv.replace(marg,arg)
                             ls = source + ' -> '+ls
                             app.append((ls, lv))
+                        if labelDef != None:
+                            app[0]=(app[0][0],labelDef +' '+ app[0][1])
+                        if verb:
+                            print(f"Pushback: {app!r}")
                         lines = app + lines
                 else:
                     if verb:
@@ -135,6 +142,10 @@ def macroEXP(contents,verb=False):
             
 
 def run(contents, preprocessed = True):
+
+    if contents == None:
+        return
+    
     print('Run begin')
     # Rx = register index x (in hex)
     # [x] = value of x (only works for Rs)
@@ -194,6 +205,7 @@ def run(contents, preprocessed = True):
         partial_label = None
         oop = op
         annot = None
+        retNorm = False
         if len(line) > 1:
             argStr = ''.join(line[1:])
             
@@ -309,6 +321,9 @@ def run(contents, preprocessed = True):
         addr += 1
     else:
         print('First Scan Normal')
+        retNorm = True
+    if not retNorm:
+        print(f"First Scan Abnormal: {line}")
 
     def to_binary(num, bits, err=True):
         ret = bin(num)[2:]
@@ -344,7 +359,9 @@ def run(contents, preprocessed = True):
                 if instr['label'] is not None:
                     if instr['label'] not in labels:
                         print("ERROR: label not found"+(" caused by cascade error")*casc_err)
-                        return ('ret' if not casc_error else '',)
+                        if casc_err:
+                            print(f"ERROR: {list(filter(lambda i: i is not None, instructions))[-1]['error']}")
+                        return ('ret' if not casc_err else '',)
                     else:
                         loc = to_binary(labels[instr['label']], 9, False)
                         prog = ""
@@ -377,7 +394,7 @@ def run(contents, preprocessed = True):
             if opclass == 1:
                 lbl = addLabel()
                 if type(lbl) == tuple:
-                    if lbl[0] == 'ret':
+                    if lbl[0] == 'ret' or lbl[0]=='':
                         return
                     code += lbl[0]
                     program += lbl[1]
@@ -397,7 +414,7 @@ def run(contents, preprocessed = True):
             if opclass == 2:
                 lbl = addLabel()
                 if type(lbl) == tuple:
-                    if lbl[0] == 'ret':
+                    if lbl[0] == 'ret' or lbl[0]=='':
                         return
                     code += lbl[0]
                     program += lbl[1]
@@ -418,7 +435,7 @@ def run(contents, preprocessed = True):
             elif opclass == 3:
                 lbl = addLabel()
                 if type(lbl) == tuple:
-                    if lbl[0] == 'ret':
+                    if lbl[0] == 'ret' or lbl[0]=='':
                         return
                     code += lbl[0]
                     program += lbl[1]
@@ -435,7 +452,7 @@ def run(contents, preprocessed = True):
             elif opclass == 4:
                 lbl = addLabel()
                 if type(lbl) == tuple:
-                    if lbl[0] == 'ret':
+                    if lbl[0] == 'ret' or lbl[0]=='':
                         return
                     code += lbl[0]
                     program += lbl[1]
@@ -504,7 +521,7 @@ if __name__ == "__main__":
                         os.system("clear")
                     else:
                         exit('Unsupported Operating System `' + platform +'`')
-                    run(mx:=macroEXP(contents))
+                    run(mx:=macroEXP(contents, verb=False))
         else:
             run(mx:=macroEXP(f.read()))
 ##            print(mx)
