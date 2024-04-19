@@ -11,15 +11,6 @@ def __LINE__() -> int:
 def __CALL_LINE__() -> int:
     return inspect.currentframe().f_back.f_back.f_lineno
 
-# OP Classes
-# -2 = exjmp (handled really weird)
-# -1 = no parameters
-# 1 = one parameter (Rs)
-# 1.5 = one parameter (Rd)
-# 2 = two parameters
-# 3 = 
-# 4 = 
-
 # valid instructions, case insensitive
 OPCODES = {
     'INFO':             ('Opcode' ,'Opclass'),
@@ -43,8 +34,6 @@ OPCODES = {
     'lfm':              ('0010110',2),
     'usm':              ('0010111',1),
     'usmz':             ('0011000',1),
-    'psh':              ('0001000',1),
-    'pop':              ('0001001',1.5),
     
     'lfmz':             ('0011010',2),
     'hsb':              ('0011011',2),
@@ -246,8 +235,8 @@ def run(contents, preprocessed = True):
                 error("more than one arg found for op class 3")
                 break
 ##            print('Check 2')
-            if len(args) > 1 and int(opClass) == 1:
-                error("more than one arg found for op class 1/1.5")
+            if len(args) > 1 and opClass == 1:
+                error("more than one arg found for op class 1")
                 break
 ##            print('Check 3')
             if len(args) > 0 and opClass == -1:
@@ -324,10 +313,6 @@ def run(contents, preprocessed = True):
                         else:
                             error("unrecognized second arg is neither label nor register")
                             break
-            
-            if opClass == 1:
-                Rs = Rd
-                Rd = None
 
         instructions.append({'op': op, 'op_asm': oop, 'labelDef': labelDef, 'argStr': argStr, 'label': label, 'partial_label': partial_label, 'Rd': Rd, 'Rs': Rs, 'value': value, 'iFlag': iFlag, 'error': None,
                              'aFlag': aFlag, 'jFlags': jFlags, 'source': source})
@@ -353,6 +338,7 @@ def run(contents, preprocessed = True):
     
     program = ""
     addr = 0
+
 
     if len(list(filter(lambda i: i is not None, instructions))) > 0:
         casc_err = list(filter(lambda i: i is not None, instructions))[-1]['error'] is not None
@@ -424,9 +410,6 @@ def run(contents, preprocessed = True):
                         code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
                     code += '1' if instr['iFlag'] else '0'
                 code += OPCODES[instr['op']][0]
-
-            if opclass == 1.5:
-                code = to_binary(instr['Rd'], 4)+"00000"+OPCODES[instr['op']][0]
 
             if opclass == 2:
                 lbl = addLabel()
@@ -525,6 +508,7 @@ if __name__ == "__main__":
             
             contents = None
             while True:
+                sleep(.1)
                 f.seek(0)
                 newContents = f.read()
                 

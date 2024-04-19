@@ -8,18 +8,80 @@ DEFINE $LDIEX	<Rd>, <val>
 ;	$SAD	<Rd>, <val>$1
 ;	$SAD	<Rd>, <val>$0
 
+DEFINE $LDI	<Rd>, <val>
+;	mv	<Rd>, <val>$1
+;	$SAD	<Rd>, <val>$0
+
+
 DEFINE $CDIV	<Rd>, <Div>
 ;	bsr	<Rd>, <Div>
 ;	jmpru	[3]
 ;	add	<Rd>, [1]
 ;	sub	<Rd>, [1]
 
-	mv	R1, [1]
-	bsl	R1, [6]		#Load 64 into R1
+DEFINE	 $N <OP>, <Ra>, <Rb>, <Label>, <Rd>
+;	<OP>	<Ra>, <Rb>, <Label>, <Rd>
+;	nop
+
+DEFINE 	$MV <Rd>, <OP>, <Ra>, <Rb>
+;	mv	<Rd>, <Ra>
+;	<OP>	<Rd>, <Rb>
+
+DEFINE 	$JNE <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	usm	{1000}		#Nonzero
+;	jmpx	<Label>		#jmp non-zero
+
+DEFINE 	$JEQ <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	jmpz	<Label>		#jmp zero
+
+DEFINE 	$JGE <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	usm	{0100}		#Negative
+;	jmpnx	<Label>		#jmp non-neg
+
+DEFINE 	$JGT <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	usmz	{1100}		#Zero or Negative
+;	jmpnx	<Label>		#Not (Zero or Neg) -> Pos
+
+DEFINE 	$JLE <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	usmz	{1100}		#Zero or Negative
+;	jmpx	<Label>		#jmp Zero or Negative
+
+DEFINE 	$JLT <Ra>, <Rb>, <Label>, <Rd>
+;	$MV 	<Rd>, sub, <Ra>, <Rb>
+;	jmpn	<Label>		#jmp neg
+
+#Modifies <Ptr> in place, leaving data unmodified
+DEFINE 	$BNX <Ptr>, <Data>, <Util>
+;	$MV <Util>, 	bsr, <Data>, [1]
+;			bsl 	<Data>, [1]
+;			add	<Ptr>, [2]
+;			add	<Ptr>, <Util>
+
+#Modifies <Ptr> in place, leaving data unmodified
+DEFINE 	$BPR <Ptr>, <Data>, <Util>
+;	$MV <Util>, 	bsr, <Data>, [1]
+;			bsl 	<Data>, [1]
+;			sub	<Ptr>, [2]
+;			sub	<Ptr>, <Util>
+
+DEFINE	$SUSPEND <narg>
+;	halt
+;	nop
+;	nop
+
+# - - - - Malloc Init - - - - 
+
+	$LDIEX	R1, (64)	#Load 64 into R1
 	st	R1, [0]  	#Amt of heap memory at mem[1]
-	mv	R1, [1]
-	bsl	R1, [7]		#Load 64 into R1
-	sub	R1, [4]		#Subtract off size of block
+	
+	$LDIEX	R1, (64)	#Load 64 into R1.
+	sub	R1, [2]		#Subtract off size of block
+	bsl	R1, [1]		#Double to add free tag
 	add	R1, [1]		#Set data to free
 	st	R1, [2] 	#Init the first memblock
 
@@ -27,12 +89,26 @@ DEFINE $CDIV	<Rd>, <Div>
 
 # - - - - Program Begin - - - - 
 	
-	$LDIEX	Ra, (17)
-	mv	R0, Ra
-	call	malloc:
+	$LDIEX	Ra, (17)	#Initialize some data
+	mv	R0, Ra		#Move it into call register
+
+	#$SUSPEND
+
+	call	malloc:		#Call
 	nop
 	
+	st	Ra, R0		#Write the arg to the result as a sample usage
+	mv	Rc, R0		#Write back this ptr for later usage
+
+	#$SUSPEND
+
+lpp1:	sub	Ra, [1]
 	st	Ra, R0
+	add	R0, [1]
+	$JNE	Ra, [0], lpp1:, Re
+	nop
+
+	#$SUSPEND
 
 	$LDIEX	Rb, (100)
 	mv	R0, Rb
@@ -43,10 +119,91 @@ DEFINE $CDIV	<Rd>, <Div>
 	nop
 	
 	st	Rb, R0
-	
-	halt
+	mv	Rd, R0		#Write back this ptr for later usage
+
+	#$SUSPEND
+
+	mv	R0, Rc		#Load Rc / inital malloc ptr
+	call	free:
 	nop
 
+	mv	R1, Rc
+	sub	Rc, [2]
+	ld	R0, Rc
+	$BNX	Rc, R0, Re
+	add	Rc, [2]
+	$LDIEX	R0, [abcd]
+	st	R0, Rc
+	
+	$SUSPEND
+
+
+
+
+#Frees the block found at R0
+# in 	R0  clob
+#  	R1  clob
+#  	R2  clob
+#  	R3  clob
+#	R4  clob
+#  	R7  clob
+#	Re  clob
+
+free:	sub	R0, [2]			#Offset to tab data
+	ld	R1, R0			#Load data at ptr
+	or	R1, {1}			#Set last bit to 1, marking it as free
+	st	R1, R0
+	mv	R2, R0			#Copy R0 (blockptr)
+	$BNX	R2, R1, Re		#Get the next block of blockptr in R0, (R3 is junk)
+	
+	ld	R7, [0]			#Set R7 to EOH ptr
+	$JEQ	R2, R7, eif1:, Re	#If next block == EOH (Junk R3)
+	ld	R3, R2			#R3 = *R2 = *next
+	bsr	R3, [1]			#Lop off last bit of R3, which is if it its free, now holds size of R2
+	usm	{0001}			#Underflow bit
+	jmpnx	eif1:			#Jmp if that last bit was not free
+	nop	
+
+#Free and not EOH
+	mv	R4, R3
+	add	R4, [1]
+	$MV	Re, bsr, R1, [1]	#Get size of R1 in Re
+	add	R4, Re			#Add that
+	mv	R1, R4			#Set data of R2 to the new data width
+	bsl	R1, [1]			#Fast double it back so it can be marked as free
+	or	R1, [1]			#Unfortunately have to add back the free bit
+	st	R1, R0			#Write back data to memory
+	add	R2, [1]			#Increment R2 to point to previous size block
+	st	R4, R2			#Write back the original unmodified size
+	
+eif1:	nop
+
+	mv	R2, R0			#Copy R0 (blockptr)
+	$BPR	R2, R1, Re		#Get the prev block of blockptr in R0, (R3 is junk)
+	
+	$JEQ	R2, [0], eif2:, Re	#If next block == null (Junk R3)
+	ld	R3, R2			#R3 = *R2 = *prev
+	bsr	R3, [1]			#Lop off last bit of R3, which is if it its free, now holds size of R2
+	usm	{0001}			#Underflow bit
+	jmpnx	eif2:			#Jmp if that last bit was not free
+
+#Free and not null
+
+	mv	R4, R3			#R4 = R2->size = R3.size = prev.size
+	add	R4, [1]
+	$MV	Re, bsr, R1, [1]	#Get size of R1 in Re
+	add	R4, Re			#Add that
+	mv	R1, R4			#Set data of R2 to the new data width
+	bsl	R1, [1]			#Fast double it back so it can be marked as free
+	or	R1, [1]			#Unfortunately have to add back the free bit
+	st	R1, R2			#Write back data to memory at previous node spot
+	$BNX	R2, R1, Re		#Make R2 point to the next node of R2 inplace using the just written data and a junk reg
+	add	R2, [1]			#Increment to prev size block
+	st	R4, R2			#Store prev size
+
+eif2:	ret
+	nop
+	
 
 #Malloc Struct Found at Mem[0]
 # 0bAAAAAAAA_AAAAAAAB
@@ -64,13 +221,12 @@ DEFINE $CDIV	<Rd>, <Div>
 #	R8  clob
 #	R9  clob
 
-
 malloc:	$CDIV	R0, [2]
 	mv	R1, [2]		#Ptr to first data
 	
 	#R7 = EOH ptr
 	ld	R7, [0]		#Set R7 to size of heap
-	add	R7, [2]		#offset by first block
+	add	R7, [0]		#offset by first block
 
 	#R4 = target ptr
 	#R5 = hijack ptr
@@ -81,9 +237,7 @@ lp01:	ld	R2, R1		# R2 = *R1
 		#Undeflow flag now happens to store `isFree`
 	usm	{0001}
 	jmpnx	nfree:
-	mv	R3, R2		#Copy R2
-	sub	R3, R0		#Difference between current mem and target mem
-	jmpz	eq:
+	$N $JEQ, R2, R0, eq:, 	R3	#Jmp if R2 == R0 (using R3)
 	sub	R3, [1]		#Decr R3 to test if 1
 	jmpn	nfree:		#Skip if negative (will only be if was before, 0 jmp'd away already)
 	jmpz	hj:	
@@ -164,4 +318,3 @@ nsplt:	mv	R5, R2		#Else, copy size
 end2:	add	R4, [2]
 	mv	R0, R4		#      mv to ret reg
 	ret			#      return
-	
