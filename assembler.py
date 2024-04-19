@@ -17,8 +17,8 @@ def __CALL_LINE__() -> int:
 # 1 = one parameter (Rs)
 # 1.5 = one parameter (Rd)
 # 2 = two parameters
-# 3 = 
-# 4 = 
+# 3 = jump
+# 3.5 = call
 
 # valid instructions, case insensitive
 OPCODES = {
@@ -38,7 +38,7 @@ OPCODES = {
     'or':               ('0010001',2),
     'xor':              ('0010010',2),
     'any':              ('0010011',2),
-    'call':             ('0010100',4),
+    'call':             ('0010100',3.5),
     'ret':              ('0010101',-1),
     'lfm':              ('0010110',2),
     'usm':              ('0010111',1),
@@ -48,6 +48,16 @@ OPCODES = {
     
     'lfmz':             ('0011010',2),
     'hsb':              ('0011011',2),
+
+    'prreg':            ('0100000',2),
+    'prmem':            ('0100001',2),
+    'prprg':            ('0100010',2),
+    'prext':            ('0100011',3.6),
+    'prhdl':            ('0100100',3.6),
+    'enpr':             ('0100101',3.6),
+    'expr':             ('0100110',0),
+    'sar':              ('0100111',0),
+    'par':              ('0101000',0),
     
     'exjmp':            ('0011110',-2),
     'jmp':              ('10'     ,3),
@@ -242,7 +252,7 @@ def run(contents, preprocessed = True):
                 error("more than two args found for op class 2")
                 break
 ##            print('Check 1')
-            if len(args) > 1 and opClass in [3, 4]:
+            if len(args) > 1 and int(opClass) == 3:
                 error("more than one arg found for op class 3")
                 break
 ##            print('Check 2')
@@ -363,13 +373,15 @@ def run(contents, preprocessed = True):
                 print()
                 continue
 
-            if previnstr is not None and previnstr['op'] == 'exjmp' and instr['op'] != 'jmp':
+            opclass = OPCODES[instr['op']][1]
+
+            if previnstr is not None and previnstr['op'] == 'exjmp' and int(opclass) != 3:
                 print("ERROR: exjmp precedes non-jmp instruction")
                 return
-        
+
             code = ""
 
-            def addLabel():                
+            def addLabel():
                 if instr['label'] is not None:
                     if instr['label'] not in labels:
                         print("ERROR: label not found"+(" caused by cascade error")*casc_err)
@@ -377,25 +389,25 @@ def run(contents, preprocessed = True):
                             print(f"ERROR: {list(filter(lambda i: i is not None, instructions))[-1]['error']}")
                         return ('ret' if not casc_err else '',)
                     else:
-                        loc = to_binary(labels[instr['label']], 9, False)
+                        immLen = 8 if opcode == 3.6 else 9
+
+                        loc = to_binary(labels[instr['label']], immLen, False)
                         prog = ""
-                        if len(loc) > 9:
+                        if len(loc) > immLen:
                             if previnstr is None or previnstr['op'] != 'exjmp':
                                 print("ERROR: exjmp required immediately above to expand jump destination")
                                 return ('ret',)
 
-                            code = "00" + to_binary(labels[instr['label']], 16)[:7] + OPCODES['exjmp'][0]
+                            code = "00" + to_binary(labels[instr['label']], 16)[:(16-immLen)] + OPCODES['exjmp'][0]
                             prog = hex(int(code, 2))[2:].rjust(4, "0")+" "
 
                             print(f"[{hex(addr-1)[2:].rjust(3, '0')}] {prog}  {previnstr['labelDef'].rjust(labelLen+1, ' ')} {previnstr['op_asm'].ljust(opLen, ' ')}\t\t{previnstr['argStr']}\t\t{previnstr.get('annot','')}")
-                        return (loc[-9:], prog)
+                        return (loc[-immLen:], prog)
 
-            
+
             if instr['error'] is not None:
                 print(f"ERROR: {instr['error']}")
                 return
-
-            opclass = OPCODES[instr['op']][1]
 
             if opclass == -1:
                 code += '0'*9
@@ -449,7 +461,7 @@ def run(contents, preprocessed = True):
                     code += '1' if instr['iFlag'] else '0'
                 code += OPCODES[instr['op']][0]
 
-            elif opclass == 3:
+            elif int(opclass) == 3:
                 lbl = addLabel()
                 if type(lbl) == tuple:
                     if lbl[0] == 'ret' or lbl[0]=='':
@@ -459,24 +471,15 @@ def run(contents, preprocessed = True):
                 else:
     ##                print(instr)
                     code += to_binary(instr['value'] if instr['value'] is not None else instr['Rd'], 9)
-                    
+
+                if opclass == 3.6:
+                    code += '1' if instr['iFlag'] else '0'
 
                 code += OPCODES[instr['op']][0]
-                code += '1' if instr['aFlag'] else '0'
-                code += '1' if instr['iFlag'] else '0'
-                code += to_binary(instr['jFlags'], 3)
-
-            elif opclass == 4:
-                lbl = addLabel()
-                if type(lbl) == tuple:
-                    if lbl[0] == 'ret' or lbl[0]=='':
-                        return
-                    code += lbl[0]
-                    program += lbl[1]
-                else:
-                    code += to_binary(instr['value'] if instr['value'] is not None else instr['Rd'], 9)
-                    
-                code += OPCODES[instr['op']][0]
+                if opclass == 3:
+                    code += '1' if instr['aFlag'] else '0'
+                    code += '1' if instr['iFlag'] else '0'
+                    code += to_binary(instr['jFlags'], 3)
 
             # to_binary must have errored already, so don't need to worry about printing
             if len(code) > 16:
