@@ -528,6 +528,7 @@ if __name__ == "__main__":
             
             contents = None
             while True:
+                sleep(.1)
                 f.seek(0)
                 newContents = f.read()
                 
