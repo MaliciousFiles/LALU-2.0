@@ -11,8 +11,6 @@ def __LINE__() -> int:
 def __CALL_LINE__() -> int:
     return inspect.currentframe().f_back.f_back.f_lineno
 
-<<<<<<< HEAD
-=======
 # OP Classes
 # -2 = exjmp (handled really weird)
 # -1 = no parameters
@@ -22,7 +20,6 @@ def __CALL_LINE__() -> int:
 # 3 = jump
 # 3.5 = call
 
->>>>>>> 9aa9055f0369358a77e39e10b6f49876ffd931fa
 # valid instructions, case insensitive
 OPCODES = {
     'INFO':             ('Opcode' ,'Opclass'),
@@ -73,14 +70,39 @@ def macroEXP(contents,verb=False):
 
     macs = {}
     olines = []
+    nlines=[{}]
+    clines=[]
+    lbp=[]      #Out of scope labels
+    lbsp=[[]]     #Inscope labels
 
     def error(msg):
         print('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
         return
+    def tweakLabel(lbl):
+        lbl=lbl
+        abc='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+        flt = []
+        for lbs in lbsp:
+            flt += [x[0] for x in lbs]
+        flt+=lbp
+##        print(f'{flt=}')
+        while lbl in flt:
+            lbls=list(lbl)[:-1]
+            j = 1
+            while (i:=abc.index(lbls[-j]))==len(abc)-1:
+                lbls[-j]=abc[0]
+                j+=1
+                if j > len(lbls):
+                    lbls=['a']+lbls
+            lbls[-j]=abc[i+1]
+            lbl=''.join(lbls)+':'
+        return lbl
+            
 
     isMac = False
 
     lines = [('Line '+str(lnum+1), line) for lnum, line in enumerate(contents.split("\n"))]
+    lines = [(None,'SCOPE BEGIN')]+lines+[(None,'SCOPE END')]
     while len(lines)>0:
         source,line = lines.pop(0)
         if verb:
@@ -99,6 +121,25 @@ def macroEXP(contents,verb=False):
             else:
                 isMac = False
         if not isMac:
+            if line[0] == 'SCOPE' and line[1] == "BEGIN":
+                if verb:
+                    print('Scope begin')
+                lbsp.append([])
+                cldrn=nlines[-1].get('Children',[])
+                cldrn.append({})
+                nlines[-1]['Children']=cldrn
+                nlines.append(cldrn[-1])
+                continue
+            elif line[0] == 'SCOPE' and line[1] == "END":
+                if verb:
+                    print('Scope end')
+                nlps=lbsp.pop(-1)
+                lbp+=[x[0] for x in nlps]
+                child=nlines.pop(-1)
+                child['lbls']=nlps
+                child['code']=clines
+                clines=[]
+                continue
             if line[0] == 'DEFINE':
                 isMac = True
                 macname = line[1]
@@ -157,9 +198,42 @@ def macroEXP(contents,verb=False):
                             print(f"Pushback: {app!r}")
                         lines = app + lines
                 else:
+                    if labelDef != None:        #There was a label
+                        if verb:
+                            print(f"Label found: `{labelDef}`")
+                        for lps in lbsp:
+                            if labelDef in [x[0] for x in lps]:
+                                lbl, src, rep = [x for x in lps if x[0]==labelDef][0]
+                                error(f'Label definition @ {source} collides with previously named label `{labelDef}` from {src}')
+                        else:
+                            nlbl=labelDef
+                            if labelDef in lbp:
+                                nlbl = tweakLabel(labelDef)
+                                if verb:
+                                    print(f'Label `{labelDef}` renamed to `{nlbl}`')
+                            lbsp[-1].append((labelDef,source,nlbl))
+                            
                     if verb:
                         print(f'Write {line!r} from {source}')
+                    clines.append(line)
                     olines.append((source,line))
+##    nlines[-1]['lbls']=lbsp[-1]
+    
+    baseScope = nlines[0]['Children'][0]
+    if verb:
+        print(f'{baseScope=}')
+    scopes=[baseScope]
+    while scopes != []:
+        scope=scopes.pop(0)
+        cldrn = scope.get('Children',None)
+        if cldrn != None:
+            scopes=cldrn+scopes
+
+        lbs=[x[0] for x in scope['lbls']]
+        for line in scope['code']:
+            for i,v in enumerate(line):
+                if v in lbs:
+                    line[i]=scope['lbls'][lbs.index(v)][2]
     return olines
             
 
@@ -387,7 +461,7 @@ def run(contents, preprocessed = True):
                             print(f"ERROR: {list(filter(lambda i: i is not None, instructions))[-1]['error']}")
                         return ('ret' if not casc_err else '',)
                     else:
-                        immLen = 8 if opcode == 3.6 else 9
+                        immLen = 8 if opclass == 3.6 else 9
 
                         loc = to_binary(labels[instr['label']], immLen, False)
                         prog = ""
@@ -519,6 +593,7 @@ def monitor_input():
 if __name__ == "__main__":
     with open(fName) as f:
         if "--monitor" in sys.argv[2:]:
+            verb = "--verb" in sys.argv[2:]
             Thread(target=monitor_input).start()
             
             contents = None
@@ -537,7 +612,7 @@ if __name__ == "__main__":
                         os.system("clear")
                     else:
                         exit('Unsupported Operating System `' + platform +'`')
-                    run(mx:=macroEXP(contents, verb=False))
+                    run(mx:=macroEXP(contents, verb=verb))
         else:
             run(mx:=macroEXP(f.read()))
 ##            print(mx)
