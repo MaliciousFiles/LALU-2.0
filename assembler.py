@@ -65,6 +65,20 @@ OPCODES = {
 
 fName = sys.argv[1] if len(sys.argv) > 1 else input("Program File: ")
 
+class MacroError(Exception):        #Just makes a custom Exception class so its own errors can be caught
+    def __init__(self,message):
+        super().__init__(message)
+
+def errormsg(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except MacroError as e:
+            print(e)
+    return inner
+            
+
+@errormsg
 def macroEXP(contents,verb=False):
     print('Macro Expansion begin')
 
@@ -74,9 +88,10 @@ def macroEXP(contents,verb=False):
     clines=[]
     lbp=[]      #Out of scope labels
     lbsp=[[]]     #Inscope labels
+    nolbl=[]
 
     def error(msg):
-        print('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
+        raise MacroError('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
         return
     def tweakLabel(lbl):
         lbl=lbl
@@ -85,7 +100,9 @@ def macroEXP(contents,verb=False):
         for lbs in lbsp:
             flt += [x[0] for x in lbs]
         flt+=lbp
-##        print(f'{flt=}')
+        flt+=nolbl
+        if verb:
+            print(f'{flt=}')
         while lbl in flt:
             lbls=list(lbl)[:-1]
             j = 1
@@ -96,6 +113,7 @@ def macroEXP(contents,verb=False):
                     lbls=['a']+lbls
             lbls[-j]=abc[i+1]
             lbl=''.join(lbls)+':'
+        nolbl.append(lbl)
         return lbl
             
 
@@ -125,6 +143,7 @@ def macroEXP(contents,verb=False):
                 if verb:
                     print('Scope begin')
                 lbsp.append([])
+                clines.append([])
                 cldrn=nlines[-1].get('Children',[])
                 cldrn.append({})
                 nlines[-1]['Children']=cldrn
@@ -137,8 +156,7 @@ def macroEXP(contents,verb=False):
                 lbp+=[x[0] for x in nlps]
                 child=nlines.pop(-1)
                 child['lbls']=nlps
-                child['code']=clines
-                clines=[]
+                child['code']=clines.pop(-1)
                 continue
             if line[0] == 'DEFINE':
                 isMac = True
@@ -185,6 +203,7 @@ def macroEXP(contents,verb=False):
                             args = [x for x in [x.strip() for x in ''.join(line[1:]).split(',')] if x != None]
                         if len(args) != len(margs):
                             error(f'macro call @ line: {source} has argument mismatch')
+                            return
                         app=[]
                         for line in mlines:
                             ls, lv = line
@@ -201,21 +220,35 @@ def macroEXP(contents,verb=False):
                     if labelDef != None:        #There was a label
                         if verb:
                             print(f"Label found: `{labelDef}`")
-                        for lps in lbsp:
+                            print(f'{lbsp=}')
+                        for lps in lbsp[:-1]:                   #Label collisions in lower scopes result in an override cuz thats useful behavior
                             if labelDef in [x[0] for x in lps]:
                                 lbl, src, rep = [x for x in lps if x[0]==labelDef][0]
-                                error(f'Label definition @ {source} collides with previously named label `{labelDef}` from {src}')
-                        else:
-                            nlbl=labelDef
-                            if labelDef in lbp:
                                 nlbl = tweakLabel(labelDef)
+                                lbsp[-1].append((labelDef,source,nlbl))
                                 if verb:
-                                    print(f'Label `{labelDef}` renamed to `{nlbl}`')
-                            lbsp[-1].append((labelDef,source,nlbl))
+                                    print(f'Label `{labelDef}` renamed to `{nlbl}` from lower scope collision, {lbsp=}')
+                                break
+                        else:
+                            lps=lbsp[-1]
+                            if labelDef in [x[0] for x in lps]:
+                                lbl, src, rep = [x for x in lps if x[0]==labelDef][0]
+                                error(f'Label definition @ {source} collides with previously named label `{labelDef}` from {src} in current scope'+
+                                      f'\n :: {lps=}')
+                                return
+                            else:
+                                nlbl=labelDef
+                                if labelDef in lbp:
+                                    nlbl = tweakLabel(labelDef)
+                                    if verb:
+                                        print(f'Label `{labelDef}` renamed to `{nlbl}` from past scope collision')
+                                lbsp[-1].append((labelDef,source,nlbl))
+                                if verb:
+                                    print(f'Label `{labelDef}` pushed, {lbsp=}')
                             
                     if verb:
                         print(f'Write {line!r} from {source}')
-                    clines.append(line)
+                    clines[-1].append(line)
                     olines.append((source,line))
 ##    nlines[-1]['lbls']=lbsp[-1]
     
