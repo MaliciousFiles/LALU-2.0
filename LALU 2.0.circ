@@ -955,8 +955,6 @@
       <a name="label" val="dataRs"/>
       <a name="width" val="16"/>
     </comp>
-<<<<<<< HEAD
-=======
     <comp lib="0" loc="(2590,2400)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="dataRj"/>
@@ -965,7 +963,6 @@
     <comp lib="0" loc="(260,370)" name="Tunnel">
       <a name="label" val="clk"/>
     </comp>
->>>>>>> 9aa9055f0369358a77e39e10b6f49876ffd931fa
     <comp lib="0" loc="(260,500)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="pipeClk"/>
@@ -1660,16 +1657,11 @@
     <comp lib="0" loc="(990,510)" name="Tunnel">
       <a name="label" val="pipeClk"/>
     </comp>
-<<<<<<< HEAD
     <comp lib="1" loc="(100,280)" name="XOR Gate">
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(1000,2260)" name="OR Gate">
       <a name="inputs" val="3"/>
-=======
-    <comp lib="1" loc="(1000,2270)" name="OR Gate">
-      <a name="inputs" val="4"/>
->>>>>>> 9aa9055f0369358a77e39e10b6f49876ffd931fa
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(1040,2040)" name="AND Gate">
@@ -2350,13 +2342,8 @@
     <comp lib="8" loc="(2440,970)" name="Text">
       <a name="text" val="Util Register"/>
     </comp>
-<<<<<<< HEAD
     <comp lib="8" loc="(275,330)" name="Text">
       <a name="text" val="Inputs"/>
-=======
-    <comp lib="8" loc="(2638,2357)" name="Text">
-      <a name="text" val="Prot Handle Loc"/>
->>>>>>> 9aa9055f0369358a77e39e10b6f49876ffd931fa
     </comp>
     <comp lib="8" loc="(2890,1500)" name="Text">
       <a name="text" val="Stack Pointer"/>
@@ -2890,17 +2877,9 @@
     <wire from="(200,1490)" to="(270,1490)"/>
     <wire from="(200,1610)" to="(200,1620)"/>
     <wire from="(200,1620)" to="(210,1620)"/>
-<<<<<<< HEAD
     <wire from="(200,280)" to="(210,280)"/>
     <wire from="(2030,1490)" to="(2030,1560)"/>
     <wire from="(2030,1490)" to="(2070,1490)"/>
-=======
-    <wire from="(2000,1520)" to="(2000,1590)"/>
-    <wire from="(2000,1520)" to="(2010,1520)"/>
-    <wire from="(2020,1490)" to="(2020,1510)"/>
-    <wire from="(2020,1490)" to="(2070,1490)"/>
-    <wire from="(2030,1540)" to="(2030,1560)"/>
->>>>>>> 9aa9055f0369358a77e39e10b6f49876ffd931fa
     <wire from="(2030,1560)" to="(2040,1560)"/>
     <wire from="(2030,640)" to="(2060,640)"/>
     <wire from="(2040,1250)" to="(2060,1250)"/>
