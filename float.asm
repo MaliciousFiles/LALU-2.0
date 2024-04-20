@@ -17,6 +17,7 @@ DEFINE	$TRUEHALT <narg>
 ;SCOPE BEGIN
 ;loop:	halt
 ;	nop
+;	nop
 ;	jmp loop:
 ;SCOPE END
 
@@ -42,11 +43,4 @@ DEFINE $UPKFL <Ra>, <Sign>, <Exp>
 	$UPKFL	R0, R2, R3			#Sign = R2, Exp = R3, UMan = R0, LMan = R1
 
 
-loop:	mv R0, [1]
-	jmp loop:
-
 	$TRUEHALT
-SCOPE BEGIN
-loop:	mv R0, [1]
-	jmp loop:
-SCOPE END
