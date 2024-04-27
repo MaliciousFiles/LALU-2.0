@@ -4,6 +4,7 @@ from time import sleep
 from threading import Thread
 import os
 import inspect
+import traceback
 
 #Thx Stack Exchange (https://stackoverflow.com/questions/3056048/filename-and-line-number-of-python-script)
 def __LINE__() -> int:
@@ -31,6 +32,8 @@ OPCODES = {
     'st':		('0000101',2),
     'smul':             ('0000110',2),
     'umul':             ('0000111',2),
+    'psh':              ('0001000',1),
+    'pop':              ('0001001',1),
 
     'bsl':              ('0001100',2),
     'bsr':              ('0001101',2),
@@ -480,7 +483,12 @@ def run(contents, preprocessed = True):
                 print()
                 continue
 
-            opclass = OPCODES[instr['op']][1]
+            if 'op' in instr:
+                opclass = OPCODES[instr['op']][1]
+            else:
+                print(f"ERROR: no operand found for line caused by cascade error")
+                print(f"ERROR: {list(filter(lambda i: i is not None, instructions))[-1]['error']}")
+                return
 
             if previnstr is not None and previnstr['op'] == 'exjmp' and int(opclass) != 3:
                 print("ERROR: exjmp precedes non-jmp instruction")
@@ -540,7 +548,10 @@ def run(contents, preprocessed = True):
                         instr['annot']='#0b'+('....'*(2-part)+partial_label+'....'*(part))[3:]
                         antLen = max(argLen, len(instr['annot']))
                     else:
-                        code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
+                        if instr['value'] is not None or instr['Rs'] != None:
+                            code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
+                        else:
+                            code += to_binary(instr['Rd'],4)
                     code += '1' if instr['iFlag'] else '0'
                 code += OPCODES[instr['op']][0]
 
@@ -647,7 +658,15 @@ if __name__ == "__main__":
                         os.system("clear")
                     else:
                         exit('Unsupported Operating System `' + platform +'`')
-                    run(mx:=macroEXP(contents, verb=verb))
+                    try:
+                        run(mx:=macroEXP(contents, verb=verb))
+                    except Exception as e:
+                        print(f'Unexpected assembler crash')
+                        print(e)
+                        print(traceback.format_exc())
+
+                        if str(e) == "'NoneType' object cannot be interpreted as an integer":
+                            print("ErrorHint: This is likely caused by an empty field bypassing early detection")
         else:
             run(mx:=macroEXP(f.read()))
 ##            print(mx)

@@ -41,8 +41,8 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <lib desc="file#Multipliers.circ" name="12"/>
-  <lib desc="file#Adder_Subtractors.circ" name="13"/>
+  <lib desc="file#Adder_Subtractors.circ" name="12"/>
+  <lib desc="file#Multipliers.circ" name="13"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -99,6 +99,9 @@
     <a name="simulationFrequency" val="16000.0"/>
     <comp lib="0" loc="(1030,480)" name="Tunnel">
       <a name="label" val="rst"/>
+    </comp>
+    <comp lib="0" loc="(1040,1570)" name="Tunnel">
+      <a name="label" val="skiphalt"/>
     </comp>
     <comp lib="0" loc="(1040,2270)" name="Tunnel">
       <a name="label" val="jmpPC"/>
@@ -1514,6 +1517,10 @@
       <a name="facing" val="east"/>
       <a name="label" val="pop"/>
     </comp>
+    <comp lib="0" loc="(50,220)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="skiphalt"/>
+    </comp>
     <comp lib="0" loc="(510,500)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
@@ -2051,8 +2058,8 @@
     <comp lib="1" loc="(970,2010)" name="AND Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="12" loc="(4070,750)" name="mul16"/>
-    <comp lib="13" loc="(2290,590)" name="my16A_S"/>
+    <comp lib="12" loc="(2290,590)" name="my16A_S"/>
+    <comp lib="13" loc="(4070,750)" name="mul16"/>
     <comp lib="2" loc="(1990,1220)" name="Multiplexer">
       <a name="select" val="4"/>
       <a name="width" val="16"/>
@@ -2314,15 +2321,49 @@
       <a name="appearance" val="logisim_evolution"/>
       <a name="width" val="16"/>
     </comp>
+    <comp lib="5" loc="(1040,1570)" name="Button"/>
     <comp lib="5" loc="(3390,1220)" name="LED"/>
-    <comp lib="5" loc="(40,240)" name="Button">
-      <a name="facing" val="north"/>
-    </comp>
     <comp lib="8" loc="(1060,1915)" name="Text">
       <a name="text" val="Flag Map"/>
     </comp>
     <comp lib="8" loc="(1065,835)" name="Text">
       <a name="text" val="IR Handling"/>
+    </comp>
+    <comp lib="8" loc="(1725,2231)" name="Text">
+      <a name="text" val="Ra"/>
+    </comp>
+    <comp lib="8" loc="(1725,2754)" name="Text">
+      <a name="text" val="Re"/>
+    </comp>
+    <comp lib="8" loc="(1726,1972)" name="Text">
+      <a name="text" val="R8"/>
+    </comp>
+    <comp lib="8" loc="(1726,2628)" name="Text">
+      <a name="text" val="Rd"/>
+    </comp>
+    <comp lib="8" loc="(1727,1452)" name="Text">
+      <a name="text" val="R4"/>
+    </comp>
+    <comp lib="8" loc="(1727,1842)" name="Text">
+      <a name="text" val="R7"/>
+    </comp>
+    <comp lib="8" loc="(1727,2371)" name="Text">
+      <a name="text" val="Rb"/>
+    </comp>
+    <comp lib="8" loc="(1727,2492)" name="Text">
+      <a name="text" val="Rc"/>
+    </comp>
+    <comp lib="8" loc="(1728,1583)" name="Text">
+      <a name="text" val="R5"/>
+    </comp>
+    <comp lib="8" loc="(1728,2105)" name="Text">
+      <a name="text" val="R9"/>
+    </comp>
+    <comp lib="8" loc="(1730,1716)" name="Text">
+      <a name="text" val="R6"/>
+    </comp>
+    <comp lib="8" loc="(1730,2883)" name="Text">
+      <a name="text" val="Rf"/>
     </comp>
     <comp lib="8" loc="(1815,860)" name="Text">
       <a name="text" val="Register Control"/>
@@ -2339,7 +2380,7 @@
     <comp lib="8" loc="(2440,970)" name="Text">
       <a name="text" val="Util Register"/>
     </comp>
-    <comp lib="8" loc="(251,341)" name="Text">
+    <comp lib="8" loc="(250,340)" name="Text">
       <a name="text" val="Inputs"/>
     </comp>
     <comp lib="8" loc="(2635,2355)" name="Text">
@@ -2381,7 +2422,7 @@
     <comp loc="(680,300)" name="programCounter"/>
     <comp loc="(700,1920)" name="dataFlags"/>
     <wire from="(10,210)" to="(10,290)"/>
-    <wire from="(10,210)" to="(40,210)"/>
+    <wire from="(10,210)" to="(50,210)"/>
     <wire from="(10,290)" to="(10,330)"/>
     <wire from="(10,290)" to="(70,290)"/>
     <wire from="(10,330)" to="(80,330)"/>
@@ -3383,8 +3424,6 @@
     <wire from="(390,2290)" to="(390,2380)"/>
     <wire from="(390,2290)" to="(540,2290)"/>
     <wire from="(390,970)" to="(400,970)"/>
-    <wire from="(40,210)" to="(100,210)"/>
-    <wire from="(40,210)" to="(40,240)"/>
     <wire from="(400,170)" to="(410,170)"/>
     <wire from="(400,2220)" to="(400,2400)"/>
     <wire from="(400,2220)" to="(540,2220)"/>
@@ -3492,6 +3531,8 @@
     <wire from="(490,1710)" to="(630,1710)"/>
     <wire from="(490,1740)" to="(640,1740)"/>
     <wire from="(490,1770)" to="(650,1770)"/>
+    <wire from="(50,210)" to="(100,210)"/>
+    <wire from="(50,210)" to="(50,220)"/>
     <wire from="(500,500)" to="(510,500)"/>
     <wire from="(500,520)" to="(500,530)"/>
     <wire from="(500,530)" to="(510,530)"/>

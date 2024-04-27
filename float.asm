@@ -35,9 +35,9 @@ DEFINE	$TRUEHALT <narg>
 ;	jmp loop:
 ;SCOPE END
 
-DEFINE $JMPZ <label>
+DEFINE $JMPNZ <label>
 ;	usm	{1000}
-;	jmpnx	<label>
+;	jmpx	<label>
 
 #Note to self, this is the format of packed floats:
 # Ra: 0bSEEEEEEE_EMMMMMMM    Rb: 0xMMMM_MMMM
@@ -55,8 +55,8 @@ DEFINE $UPKFL <Ra>, <Sign>, <Exp>
 ;	bsr	<Ra>, [8]		#0b 00000000_1MMMMMMM
 
 # - - - - - - - - MAIN - - - - - - - - 
-	$LDIEX	R0, {00000000001000000}		#Sign = +, Exp = +0, Man = 1.5
-	$LDIEX	R1, {00000000000000000}		#More Man
+	$LDIEX	R0, {0000000000101010}		#Sign = +, Exp = +0, Man = 1.5
+	$LDIEX	R1, {1010101010101010}		#More Man
 	$UPKFL	R0, R2, R3			#Sign = R2, Exp = R3, UMan = R0, LMan = R1
 
 	$LDIEX	R4, {00000000000000000}		#Sign = +, Exp = +0, Man = 1.
@@ -66,40 +66,22 @@ DEFINE $UPKFL <Ra>, <Sign>, <Exp>
 	$SUSPEND
 
 # - - - - FLOAT TO DECIMAL - - - - 
-
-	$LDIEX	R8, {1000100010001000}		#Nibble high bits
-	mv	R9, [1]				#Lowest bit
-	brr	R9, [1]				#Highest bit
-	mv	Ra, [0]				#Initalize bcd rep
-
-	mv	Rc, (8)				#How many bits to read off
-	jmp	cmp:				#Jump to the test
-	nop
-
-1loop:	or	Ra, R9				#Set highest bit
-0loop:	bsr	Ra, [1]
-	mv	Ra, Rb				#Copy
-	and	Rb, R8				#And to create mask
-	xor	Ra, Rb				#Just go ahead and zero those bits
-	bsr	Rb, [3]				#Get its bit right align
-	umul	Rb, (5)				#Now all the ones have a 5, and otherwise 0
-	add	Ra, Rb
-
-	sub	Rc, [1]
-cmp:	$JMPZ	end:
-
-	bsr	R0, [1]
-	jmpu	1loop:				#if the lowest bit was 1
-	jmp	0loop:				#Otherwise jmp past
-end:	nop
+	psh	R0
+	psh	R1
 	
-
+	nop
+	call	fl2dec:
+	nop
+	
+	pop	R1
+	pop	R0
+	
 	$SUSPEND
 
 	$DADD	R0, R1, R4, R5			#Add Man0, Man1
 	mv	R8, R0
 	bsr	R8, [8]				#Nonzero means it has a higher exp now
-	$JMPZ	skip:				#Jmpz
+	jmpz	skip:				#Jmpz
 	bsr	R0, [1]				#Bitshift lower bits
 	jmpu	lbo:
 	bsr	R1, [1]				#Exploit always run to truncate right
@@ -110,3 +92,64 @@ lbo:	nop
 skip:	nop
 
 	$TRUEHALT
+
+
+#  in  R0  clob		#Upper 8 bits
+#  in  R1  clob		#Lower 16 bits
+#      R9  clob
+#      Ra  out		#Upper 4 digs
+#      Rb  clob
+#      Rc  clob
+#      Rd  out		#Lower 4 digs
+
+fl2dec:	$LDIEX	R8, {1000100010001000}		#Nibble high bits
+SCOPE BEGIN
+	mv	R9, [1]				#Lowest bit
+	brr	R9, [1]				#Highest bit
+	mv	Ra, [0]				#Initalize bcd rep
+	mv	Rd, [0]				#Initalize bcd rep reg 2
+
+	mv	Rc, (8)				#How many bits to read off
+	jmp	cmp:				#Jump to the test
+	nop
+
+1loop:	or	Ra, R9				#Set highest bit
+0loop:	mv	Rb, Ra				#Copy
+	and	Rb, R8				#And to create mask
+	xor	Ra, Rb				#Just go ahead and zero those bits
+	bsr	Rb, [3]				#Get its bit right align
+	umul	Rb, (5)				#Now all the ones have a 5, and otherwise 0
+	add	Ra, Rb
+
+	mv	Rb, Rd				#Copy
+	and	Rb, R8				#And to create mask
+	xor	Rd, Rb				#Just go ahead and zero those bits
+	bsr	Rb, [3]				#Get its bit right align
+	umul	Rb, (5)				#Now all the ones have a 5, and otherwise 0
+	add	Rd, Rb
+
+	#$SUSPEND
+
+	sub	Rc, [1]
+cmp:	jmpz	end:
+	nop
+	bsr	Rd, [1]
+	bsr	Ra, [1]
+	jmpru	[3]				#If the bit knocked off was 1
+	jmpr	[3]
+	nop
+	or	Rd, R9
+
+	bsr	R0, [1]
+	jmpu	1loop:				#if the lowest bit was 1
+	jmp	0loop:				#Otherwise jmp past
+end:	nop
+	mv	R0, R1				#Load in extra bits
+	usm	{1000}				#Store util flag for jmp
+	mv	R1, [0]				#Zero R1 so that next time through it doesnt repeat
+	mv	Rc, [1]				#number of bits to read off
+	bsl	Rc, [4]				#Load 16
+	jmpx	cmp:				#jump if util flag set actually matters	
+	nop
+	ret
+SCOPE END
