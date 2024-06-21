@@ -45,6 +45,8 @@ OPCODES = {
     'lfm':              ('0010110',2),
     'usm':              ('0010111',1),
     'usmz':             ('0011000',1),
+    'psh':              ('0001000',1),
+    'pop':              ('0001001',1.5),
     
     'lfmz':             ('0011010',2),
     'hsb':              ('0011011',2),
@@ -366,8 +368,8 @@ def run(contents, preprocessed = True):
                 error("more than one arg found for op class 3")
                 break
 ##            print('Check 2')
-            if len(args) > 1 and opClass == 1:
-                error("more than one arg found for op class 1")
+            if len(args) > 1 and int(opClass) == 1:
+                error("more than one arg found for op class 1/1.5")
                 break
 ##            print('Check 3')
             if len(args) > 0 and opClass == -1:
@@ -544,6 +546,9 @@ def run(contents, preprocessed = True):
                     code += '1' if instr['iFlag'] else '0'
                 code += OPCODES[instr['op']][0]
 
+            if opclass == 1.5:
+                code = to_binary(instr['Rd'], 4)+"00000"+OPCODES[instr['op']][0]
+            
             if opclass == 2:
                 lbl = addLabel()
                 if type(lbl) == tuple:
