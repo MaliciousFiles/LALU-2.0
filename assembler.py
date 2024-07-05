@@ -18,18 +18,20 @@ def __CALL_LINE__() -> int:
 # 1 = one parameter (Rs)
 # 1.5 = one parameter (Rd)
 # 2 = two parameters
+# 2.5 = prot mask (immediate)
+# 2.6 = prot mask (register)
 # 3 = jump
 # 3.5 = call
 
 # valid instructions, case insensitive
 OPCODES = {
     'INFO':             ('Opcode' ,'Opclass'),
-    'nop':		('0000000',-1),
+    'nop':              ('0000000',-1),
     'add':              ('0000001',2),
-    'sub':  		('0000010',2),
-    'ld':		('0000011',2),
+    'sub':              ('0000010',2),
+    'ld':               ('0000011',2),
     'mv':               ('0000100',2),
-    'st':		('0000101',2),
+    'st':               ('0000101',2),
     'smul':             ('0000110',2),
     'umul':             ('0000111',2),
     'psh':              ('0001000',1),
@@ -48,19 +50,21 @@ OPCODES = {
     'lfm':              ('0010110',2),
     'usm':              ('0010111',1),
     'usmz':             ('0011000',1),
+    'psh':              ('0001000',1.5),
+    'pop':              ('0001001',1.5),
     
     'lfmz':             ('0011010',2),
     'hsb':              ('0011011',2),
 
-    'prreg':            ('0100000',2),
-    'prmem':            ('0100001',2),
-    'prprg':            ('0100010',2),
-    'prext':            ('0100011',3.6),
+    'prreg':            ('0100000',2.5),
+    'prmem':            ('0100001',2.6),
+    'prprg':            ('0100010',2.6),
+    #'prext':            ('0100011',3.6),
     'prhdl':            ('0100100',3.6),
     'enpr':             ('0100101',3.6),
-    'expr':             ('0100110',0),
-    'sar':              ('0100111',0),
-    'par':              ('0101000',0),
+    'expr':             ('0100110',-1),
+    'sar':              ('0100111',-1),
+    'par':              ('0101000',-1),
     
     'exjmp':            ('0011110',-2),
     'jmp':              ('10'     ,3),
@@ -319,7 +323,7 @@ def run(contents, preprocessed = True):
             labels[op[0]] = addr
             op = op[1] if op[1] != '' else line.pop(1)
         opLen = max(opLen,len(op))
-        if op not in OPCODES.keys() and not op[:3] == 'jmp':
+        if op not in OPCODES and not op[:3] == 'jmp' and not (op[:2] == 'pr' and op[:5] in OPCODES):
             error("invalid operation")
             break
 
@@ -329,6 +333,7 @@ def run(contents, preprocessed = True):
         Rd = None
 
         value = None
+        rdValue = None
         Rs = None
 
         iFlag = False
@@ -357,6 +362,14 @@ def run(contents, preprocessed = True):
                 except:
                     error('unexpected jmp flag: `'+xfl+'`')
                     break
+
+            protMaskRe = None
+            if op not in OPCODES and op[:2] == 'pr' and op[:5] in OPCODES:
+                if op[5:] not in ['RE', 'WR']:
+                    error('unexpected prot mask flag: `'+op[5:]+'`')
+                protMaskRe = op[5:] == 'RE'
+                op = op[:5]
+
 ##                print(xfl,aFlag)
 ##            print('Prevalidate')
             opClass = OPCODES[op][1]
@@ -369,15 +382,15 @@ def run(contents, preprocessed = True):
                 error("more than one arg found for op class 3")
                 break
 ##            print('Check 2')
-            if len(args) > 1 and opClass == 1:
-                error("more than one arg found for op class 1")
+            if len(args) > 1 and int(opClass) == 1:
+                error("more than one arg found for op class 1/1.5")
                 break
 ##            print('Check 3')
             if len(args) > 0 and opClass == -1:
                 error("args found for op class -1")
                 break
 ##            print('Check 4')
-            if ("[" in args[0] or "]" in args[0] or "(" in args[0] or ")" in args[0] or "{" in args[0] or "}" in args[0]) and opClass not in [0, 1, 3]:
+            if ("[" in args[0] or "]" in args[0] or "(" in args[0] or ")" in args[0] or "{" in args[0] or "}" in args[0]) and opClass not in [0, 1, 2.5, 3]:
 ##                print('Check 4 Err')
                 error("immediates not allowed in Rd")
                 break
@@ -390,7 +403,7 @@ def run(contents, preprocessed = True):
                     Rd = int(args[0][1:], 16)
                 except:
                     pass
-            if Rd is None and opClass not in [0, 1]:
+            if Rd is None and opClass not in [0, 1, 2.5]:
                 if ':' in args[0]:
                     label = args[0][:-1]
                     iFlag = True
@@ -398,15 +411,15 @@ def run(contents, preprocessed = True):
                     error("unrecognized arg is neither label nor register")
                     break
 
-            if opClass in [0, 1, 3]:
+            if opClass in [0, 1, 2.5, 3]:
                 if args[0][0] in ["[","(","{"]:
                     try:
                         nib = None
                         if '$' in args[0]:
                             args[0],nib = args[0].split('$')
-                        value = int(args[0][1:-1], 16 if args[0][0] == "[" else 10 if args[0][0] == "(" else 2)
+                        rdValue = int(args[0][1:-1], 16 if args[0][0] == "[" else 10 if args[0][0] == "(" else 2)
                         if nib != None:
-                            value = ImGetNib(value,nib)
+                            rdValue = ImGetNib(rdValue,nib)
                         iFlag = True
                     except:
                         error("invalid immediate")
@@ -414,6 +427,8 @@ def run(contents, preprocessed = True):
 
             if len(args) > 1:
                 if args[1][0] in ["[","(","{"]:
+                    if opClass == 2.6:
+                        error("immediates not allowed in opclass 2.6")
                     try:
                         nib = None
                         if '$' in args[1]:
@@ -448,8 +463,11 @@ def run(contents, preprocessed = True):
                             error("unrecognized second arg is neither label nor register")
                             break
 
+            if opClass == 2.5 and (rdValue is None or value is None):
+                error("only immediates allowed in opclass 2.5")
+
         instructions.append({'op': op, 'op_asm': oop, 'labelDef': labelDef, 'argStr': argStr, 'label': label, 'partial_label': partial_label, 'Rd': Rd, 'Rs': Rs, 'value': value, 'iFlag': iFlag, 'error': None,
-                             'aFlag': aFlag, 'jFlags': jFlags, 'source': source})
+                             'aFlag': aFlag, 'jFlags': jFlags, 'source': source, 'protMaskRe': protMaskRe, 'rdValue': rdValue})
         argLen = max(argLen, len(argStr))
         
         addr += 1
@@ -483,12 +501,12 @@ def run(contents, preprocessed = True):
                 print()
                 continue
 
-            if 'op' in instr:
-                opclass = OPCODES[instr['op']][1]
-            else:
-                print(f"ERROR: no operand found for line caused by cascade error")
-                print(f"ERROR: {list(filter(lambda i: i is not None, instructions))[-1]['error']}")
+            if instr['error'] is not None:
+                print(f"ERROR: {instr['error']}")
                 return
+
+
+            opclass = OPCODES[instr['op']][1]
 
             if previnstr is not None and previnstr['op'] == 'exjmp' and int(opclass) != 3:
                 print("ERROR: exjmp precedes non-jmp instruction")
@@ -519,17 +537,12 @@ def run(contents, preprocessed = True):
                             print(f"[{hex(addr-1)[2:].rjust(3, '0')}] {prog}  {previnstr['labelDef'].rjust(labelLen+1, ' ')} {previnstr['op_asm'].ljust(opLen, ' ')}\t\t{previnstr['argStr']}\t\t{previnstr.get('annot','')}")
                         return (loc[-immLen:], prog)
 
-
-            if instr['error'] is not None:
-                print(f"ERROR: {instr['error']}")
-                return
-
             if opclass == -1:
                 code += '0'*9
                 code += OPCODES[instr['op']][0]
 
             if opclass == 0:
-                code += to_binary(instr['value'],9)
+                code += to_binary(instr['rdValue'],9)
                 code += OPCODES[instr['op']][0]
 
             if opclass == 1:
@@ -548,14 +561,14 @@ def run(contents, preprocessed = True):
                         instr['annot']='#0b'+('....'*(2-part)+partial_label+'....'*(part))[3:]
                         antLen = max(argLen, len(instr['annot']))
                     else:
-                        if instr['value'] is not None or instr['Rs'] != None:
-                            code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
-                        else:
-                            code += to_binary(instr['Rd'],4)
+                        code += to_binary(instr['value'] if instr['value'] is not None else instr['rdValue'] if instr['rdValue'] is not None else instr['Rs'], 4)
                     code += '1' if instr['iFlag'] else '0'
                 code += OPCODES[instr['op']][0]
 
-            if opclass == 2:
+            if opclass == 1.5:
+                code = to_binary(instr['Rd'], 4)+"00000"+OPCODES[instr['op']][0]
+            
+            if int(opclass) == 2:
                 lbl = addLabel()
                 if type(lbl) == tuple:
                     if lbl[0] == 'ret' or lbl[0]=='':
@@ -563,17 +576,19 @@ def run(contents, preprocessed = True):
                     code += lbl[0]
                     program += lbl[1]
                 else:
-                    code += to_binary(instr['Rd'] if instr['Rd'] is not None else instr['value'], 4) 
+                    code += to_binary(instr['Rd'] if instr['Rd'] is not None else instr['rdValue'], 4) 
                     if (pl:=instr['partial_label'])!=None:
                         rootlabel,part = pl.split('$');part = int(part,16)
                         partial_label = to_binary(labels[rootlabel], 16)[::-1][4*part:4+4*part][::-1]
                         code += partial_label
                         instr['annot']='#0b'+('....'*(2-part)+partial_label+'....'*(part))[3:]
-                    elif opclass == 2:
-                        code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
                     else:
-                        code += '0000'
-                    code += '1' if instr['iFlag'] else '0'
+                        code += to_binary(instr['value'] if instr['value'] is not None else instr['Rs'], 4)
+                    
+                    if opclass == 2:
+                        code += '1' if instr['iFlag'] else '0'
+                    elif opclass == 2.5 or opclass == 2.6:
+                        code += '1' if instr['protMaskRe'] else '0'
                 code += OPCODES[instr['op']][0]
 
             elif int(opclass) == 3:
@@ -585,7 +600,7 @@ def run(contents, preprocessed = True):
                     program += lbl[1]
                 else:
     ##                print(instr)
-                    code += to_binary(instr['value'] if instr['value'] is not None else instr['Rd'], 9)
+                    code += to_binary(instr['rdValue'] if instr['rdValue'] is not None else instr['Rd'], 9)
 
                 if opclass == 3.6:
                     code += '1' if instr['iFlag'] else '0'
