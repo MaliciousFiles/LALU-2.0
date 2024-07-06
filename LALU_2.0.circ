@@ -4,18 +4,16 @@
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
-      <a name="facing" val="south"/>
+      <a name="facing" val="north"/>
     </tool>
     <tool name="Pin">
       <a name="appearance" val="classic"/>
     </tool>
     <tool name="Tunnel">
-      <a name="facing" val="south"/>
+      <a name="facing" val="north"/>
     </tool>
     <tool name="Constant">
       <a name="facing" val="south"/>
-      <a name="value" val="0xffff"/>
-      <a name="width" val="16"/>
     </tool>
     <tool name="Ground">
       <a name="facing" val="north"/>
@@ -43,8 +41,8 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <lib desc="file#Adder_Subtractors.circ" name="12"/>
-  <lib desc="file#Multipliers.circ" name="13"/>
+  <lib desc="file#Multipliers.circ" name="12"/>
+  <lib desc="file#Adder_Subtractors.circ" name="13"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -123,9 +121,14 @@
       <mc key="/dispIR" map="328,352"/>
       <mc key="/dispPC" map="306,352"/>
       <mc key="/dispReg" pmap="262_352_0,240_352_0,218_352_0,196_352_0"/>
+      <mc key="/frz" map="267,330"/>
+      <mc key="/mv" map="245,330"/>
       <mc key="/ovfl" map="158,330"/>
+      <mc key="/rd" map="158,287"/>
+      <mc key="/rs" map="182,287"/>
       <mc key="/rst" map="378,354"/>
       <mc key="/run" map="152,352"/>
+      <mc key="/we" map="289,330"/>
     </boardmap>
     <comp lib="0" loc="(100,520)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -327,10 +330,6 @@
     <comp lib="0" loc="(1160,220)" name="Tunnel">
       <a name="label" val="freeze"/>
     </comp>
-    <comp lib="0" loc="(1170,460)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="clk"/>
-    </comp>
     <comp lib="0" loc="(1180,3550)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="IR"/>
@@ -344,10 +343,6 @@
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="north"/>
       <a name="label" val="dispIR"/>
-    </comp>
-    <comp lib="0" loc="(1200,480)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="rst"/>
     </comp>
     <comp lib="0" loc="(1210,880)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -373,10 +368,18 @@
       <a name="label" val="opc"/>
       <a name="width" val="16"/>
     </comp>
+    <comp lib="0" loc="(1300,300)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="clk"/>
+    </comp>
     <comp lib="0" loc="(1310,3570)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="north"/>
       <a name="label" val="dispPC"/>
+    </comp>
+    <comp lib="0" loc="(1330,320)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="rst"/>
     </comp>
     <comp lib="0" loc="(1340,550)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -987,6 +990,11 @@
     <comp lib="0" loc="(1960,730)" name="Tunnel">
       <a name="label" val="parIR"/>
     </comp>
+    <comp lib="0" loc="(1960,830)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="Rd"/>
+      <a name="width" val="4"/>
+    </comp>
     <comp lib="0" loc="(1970,690)" name="Tunnel">
       <a name="label" val="expr"/>
     </comp>
@@ -995,6 +1003,11 @@
     </comp>
     <comp lib="0" loc="(1980,650)" name="Tunnel">
       <a name="label" val="altJmp"/>
+    </comp>
+    <comp lib="0" loc="(2020,830)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="Rs"/>
+      <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(2030,430)" name="Tunnel">
       <a name="label" val="jmpFlags"/>
@@ -1037,6 +1050,18 @@
       <a name="facing" val="north"/>
       <a name="label" val="dispReg"/>
       <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(2160,810)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="mv"/>
+    </comp>
+    <comp lib="0" loc="(2160,840)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="freeze"/>
+    </comp>
+    <comp lib="0" loc="(2160,870)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="we"/>
     </comp>
     <comp lib="0" loc="(220,1890)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -3131,17 +3156,9 @@
     <comp lib="0" loc="(840,1390)" name="Tunnel">
       <a name="label" val="we"/>
     </comp>
-    <comp lib="0" loc="(850,990)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="clk"/>
-    </comp>
     <comp lib="0" loc="(870,480)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="clk"/>
-    </comp>
-    <comp lib="0" loc="(880,1010)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="rst"/>
     </comp>
     <comp lib="0" loc="(880,380)" name="Ground">
       <a name="facing" val="west"/>
@@ -3897,11 +3914,11 @@
       <a name="facing" val="south"/>
       <a name="size" val="30"/>
     </comp>
-    <comp lib="12" loc="(2470,610)" name="logisim16A_S">
-      <a name="label" val="logisim16A_S_1"/>
-    </comp>
-    <comp lib="13" loc="(4250,770)" name="mul16">
+    <comp lib="12" loc="(4250,770)" name="mul16">
       <a name="label" val="mul16_1"/>
+    </comp>
+    <comp lib="13" loc="(2470,610)" name="logisim16A_S">
+      <a name="label" val="logisim16A_S_1"/>
     </comp>
     <comp lib="2" loc="(1130,3530)" name="Multiplexer">
       <a name="width" val="16"/>
@@ -4161,7 +4178,7 @@
     <comp lib="3" loc="(680,570)" name="Adder">
       <a name="width" val="16"/>
     </comp>
-    <comp lib="4" loc="(1170,390)" name="Register">
+    <comp lib="4" loc="(1300,230)" name="Register">
       <a name="appearance" val="logisim_evolution"/>
       <a name="width" val="16"/>
     </comp>
@@ -4285,10 +4302,6 @@
       <a name="appearance" val="logisim_evolution"/>
       <a name="width" val="1"/>
     </comp>
-    <comp lib="4" loc="(850,920)" name="Register">
-      <a name="appearance" val="logisim_evolution"/>
-      <a name="width" val="16"/>
-    </comp>
     <comp lib="4" loc="(890,330)" name="RAM">
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
@@ -4311,6 +4324,23 @@
     <comp lib="5" loc="(1350,3450)" name="Hex Digit Display">
       <a name="decimalPoint" val="false"/>
       <a name="label" val="c0"/>
+    </comp>
+    <comp lib="5" loc="(1960,830)" name="Hex Digit Display">
+      <a name="decimalPoint" val="false"/>
+      <a name="label" val="rd"/>
+    </comp>
+    <comp lib="5" loc="(2020,830)" name="Hex Digit Display">
+      <a name="decimalPoint" val="false"/>
+      <a name="label" val="rs"/>
+    </comp>
+    <comp lib="5" loc="(2180,810)" name="LED">
+      <a name="label" val="mv"/>
+    </comp>
+    <comp lib="5" loc="(2180,840)" name="LED">
+      <a name="label" val="frz"/>
+    </comp>
+    <comp lib="5" loc="(2180,870)" name="LED">
+      <a name="label" val="we"/>
     </comp>
     <comp lib="5" loc="(300,240)" name="LED">
       <a name="facing" val="south"/>
@@ -4342,7 +4372,7 @@
     <comp lib="8" loc="(170,485)" name="Text">
       <a name="text" val="Cycle Counter"/>
     </comp>
-    <comp lib="8" loc="(1995,880)" name="Text">
+    <comp lib="8" loc="(1992,880)" name="Text">
       <a name="text" val="Register Control"/>
     </comp>
     <comp lib="8" loc="(2375,570)" name="Text">
@@ -4369,19 +4399,19 @@
     <comp lib="8" loc="(3610,1125)" name="Text">
       <a name="text" val="Overflow/Underflow"/>
     </comp>
-    <comp lib="8" loc="(3679,2212)" name="Text">
+    <comp lib="8" loc="(3675,2210)" name="Text">
       <a name="text" val="Protected Stack Bottom"/>
     </comp>
-    <comp lib="8" loc="(3682,1820)" name="Text">
+    <comp lib="8" loc="(3680,1820)" name="Text">
       <a name="text" val="Frame Pointer"/>
     </comp>
-    <comp lib="8" loc="(3888,2504)" name="Text">
+    <comp lib="8" loc="(3885,2500)" name="Text">
       <a name="text" val="SAR Frame Header"/>
     </comp>
-    <comp lib="8" loc="(3893,2707)" name="Text">
+    <comp lib="8" loc="(3890,2705)" name="Text">
       <a name="text" val="ENPR Frame Header"/>
     </comp>
-    <comp lib="8" loc="(3896,1503)" name="Text">
+    <comp lib="8" loc="(3895,1500)" name="Text">
       <a name="text" val="Stack Pointer"/>
     </comp>
     <comp lib="8" loc="(540,2510)" name="Text">
@@ -4390,7 +4420,7 @@
     <comp lib="8" loc="(640,2040)" name="Text">
       <a name="text" val="Masked Operations"/>
     </comp>
-    <comp lib="8" loc="(719,830)" name="Text">
+    <comp lib="8" loc="(715,830)" name="Text">
       <a name="text" val="Data Memory"/>
     </comp>
     <comp lib="8" loc="(725,1320)" name="Text">
@@ -4404,13 +4434,21 @@
       <a name="font" val="SansSerif bold 18"/>
       <a name="text" val="REMOVE FOR FPGA"/>
     </comp>
-    <comp loc="(1020,2100)" name="checkMask16"/>
-    <comp loc="(1020,2240)" name="checkMask4"/>
-    <comp loc="(1020,2380)" name="checkMask4"/>
+    <comp loc="(1020,2100)" name="checkMask16">
+      <a name="label" val="checkMask16_2"/>
+    </comp>
+    <comp loc="(1020,2240)" name="checkMask4">
+      <a name="label" val="checkMask4_1"/>
+    </comp>
+    <comp loc="(1020,2380)" name="checkMask4">
+      <a name="label" val="checkMask4_3"/>
+    </comp>
     <comp loc="(1100,2150)" name="freezeReg">
       <a name="label" val="freezeReg_2"/>
     </comp>
-    <comp loc="(1130,210)" name="freezeReg16"/>
+    <comp loc="(1130,210)" name="freezeReg16">
+      <a name="label" val="freezeReg16_3"/>
+    </comp>
     <comp loc="(1380,520)" name="freezeReg16">
       <a name="label" val="freezeReg16_1"/>
     </comp>
@@ -4420,40 +4458,84 @@
     <comp loc="(1900,430)" name="jumpDecoder">
       <a name="label" val="jumpDecoder_1"/>
     </comp>
-    <comp loc="(2450,2640)" name="freezeReg4"/>
-    <comp loc="(2450,2800)" name="freezeReg4"/>
-    <comp loc="(2450,2980)" name="freezeReg16"/>
-    <comp loc="(2450,3140)" name="freezeReg16"/>
-    <comp loc="(2450,3320)" name="freezeReg16"/>
-    <comp loc="(2450,3480)" name="freezeReg16"/>
+    <comp loc="(2450,2640)" name="freezeReg4">
+      <a name="label" val="freezeReg4_1"/>
+    </comp>
+    <comp loc="(2450,2800)" name="freezeReg4">
+      <a name="label" val="freezeReg4_3"/>
+    </comp>
+    <comp loc="(2450,2980)" name="freezeReg16">
+      <a name="label" val="freezeReg16_10"/>
+    </comp>
+    <comp loc="(2450,3140)" name="freezeReg16">
+      <a name="label" val="freezeReg16_12"/>
+    </comp>
+    <comp loc="(2450,3320)" name="freezeReg16">
+      <a name="label" val="freezeReg16_14"/>
+    </comp>
+    <comp loc="(2450,3480)" name="freezeReg16">
+      <a name="label" val="freezeReg16_16"/>
+    </comp>
     <comp loc="(2600,2010)" name="freezeReg">
       <a name="label" val="freezeReg_1"/>
     </comp>
-    <comp loc="(2790,2420)" name="freezeReg16"/>
-    <comp loc="(2850,2640)" name="freezeReg4"/>
-    <comp loc="(2850,2800)" name="freezeReg4"/>
-    <comp loc="(2850,2980)" name="freezeReg16"/>
-    <comp loc="(2850,3140)" name="freezeReg16"/>
-    <comp loc="(2850,3320)" name="freezeReg16"/>
-    <comp loc="(2850,3480)" name="freezeReg16"/>
+    <comp loc="(2790,2420)" name="freezeReg16">
+      <a name="label" val="freezeReg16_5"/>
+    </comp>
+    <comp loc="(2850,2640)" name="freezeReg4">
+      <a name="label" val="freezeReg4_2"/>
+    </comp>
+    <comp loc="(2850,2800)" name="freezeReg4">
+      <a name="label" val="freezeReg4_4"/>
+    </comp>
+    <comp loc="(2850,2980)" name="freezeReg16">
+      <a name="label" val="freezeReg16_11"/>
+    </comp>
+    <comp loc="(2850,3140)" name="freezeReg16">
+      <a name="label" val="freezeReg16_13"/>
+    </comp>
+    <comp loc="(2850,3320)" name="freezeReg16">
+      <a name="label" val="freezeReg16_15"/>
+    </comp>
+    <comp loc="(2850,3480)" name="freezeReg16">
+      <a name="label" val="freezeReg16_17"/>
+    </comp>
     <comp loc="(2920,710)" name="bitShift">
       <a name="label" val="bitShift_1"/>
     </comp>
     <comp loc="(320,520)" name="cycleCounter">
       <a name="label" val="cycleCounter_1"/>
     </comp>
-    <comp loc="(3250,2620)" name="freezeReg"/>
-    <comp loc="(3700,2360)" name="freezeReg16"/>
-    <comp loc="(3750,2770)" name="freezeReg16"/>
-    <comp loc="(3760,2570)" name="freezeReg16"/>
+    <comp loc="(3250,2620)" name="freezeReg">
+      <a name="label" val="freezeReg_3"/>
+    </comp>
+    <comp loc="(3700,2360)" name="freezeReg16">
+      <a name="label" val="freezeReg16_4"/>
+    </comp>
+    <comp loc="(3750,2770)" name="freezeReg16">
+      <a name="label" val="freezeReg16_8"/>
+    </comp>
+    <comp loc="(3760,2570)" name="freezeReg16">
+      <a name="label" val="freezeReg16_6"/>
+    </comp>
     <comp loc="(3970,680)" name="highestSetBit">
       <a name="label" val="highestSetBit_1"/>
     </comp>
-    <comp loc="(4150,2770)" name="freezeReg16"/>
-    <comp loc="(4160,2570)" name="freezeReg16"/>
-    <comp loc="(500,2100)" name="checkMask16"/>
-    <comp loc="(500,2240)" name="checkMask16"/>
-    <comp loc="(500,2380)" name="checkMask4"/>
+    <comp loc="(4150,2770)" name="freezeReg16">
+      <a name="label" val="freezeReg16_9"/>
+    </comp>
+    <comp loc="(4160,2570)" name="freezeReg16">
+      <a name="label" val="freezeReg16_7"/>
+    </comp>
+    <comp loc="(500,2100)" name="checkMask16">
+      <a name="label" val="checkMask16_1"/>
+    </comp>
+    <comp loc="(500,2240)" name="checkMask16">
+      <a name="label" val="checkMask16_3"/>
+    </comp>
+    <comp loc="(500,2380)" name="checkMask4">
+      <a name="label" val="checkMask4_2"/>
+    </comp>
     <comp loc="(500,3310)" name="dataFlags">
       <a name="label" val="dataFlags_2"/>
     </comp>
@@ -4463,7 +4545,9 @@
     <comp loc="(860,320)" name="programCounter">
       <a name="label" val="programCounter_1"/>
     </comp>
-    <comp loc="(970,210)" name="freezeReg16"/>
+    <comp loc="(970,210)" name="freezeReg16">
+      <a name="label" val="freezeReg16_2"/>
+    </comp>
     <wire from="(100,1420)" to="(100,1430)"/>
     <wire from="(100,1430)" to="(110,1430)"/>
     <wire from="(100,1450)" to="(100,1460)"/>
@@ -4558,7 +4642,7 @@
     <wire from="(1110,3260)" to="(1120,3260)"/>
     <wire from="(1120,2980)" to="(1380,2980)"/>
     <wire from="(1130,3530)" to="(1190,3530)"/>
-    <wire from="(1130,420)" to="(1170,420)"/>
+    <wire from="(1130,420)" to="(1310,420)"/>
     <wire from="(1140,2960)" to="(1140,3000)"/>
     <wire from="(1140,3000)" to="(1160,3000)"/>
     <wire from="(1150,3230)" to="(1220,3230)"/>
@@ -4571,7 +4655,6 @@
     <wire from="(1200,3040)" to="(1210,3040)"/>
     <wire from="(1200,3060)" to="(1210,3060)"/>
     <wire from="(1220,3540)" to="(1300,3540)"/>
-    <wire from="(1230,420)" to="(1310,420)"/>
     <wire from="(1240,3050)" to="(1330,3050)"/>
     <wire from="(1260,2960)" to="(1260,3080)"/>
     <wire from="(1260,3080)" to="(1280,3080)"/>
@@ -5342,6 +5425,9 @@
     <wire from="(2150,1080)" to="(2150,1090)"/>
     <wire from="(2150,1320)" to="(2150,1330)"/>
     <wire from="(2150,1550)" to="(2150,1560)"/>
+    <wire from="(2160,810)" to="(2180,810)"/>
+    <wire from="(2160,840)" to="(2180,840)"/>
+    <wire from="(2160,870)" to="(2180,870)"/>
     <wire from="(2170,1000)" to="(2240,1000)"/>
     <wire from="(2170,1240)" to="(2200,1240)"/>
     <wire from="(2170,1470)" to="(2360,1470)"/>
@@ -6591,7 +6677,7 @@
     <wire from="(810,1440)" to="(810,1730)"/>
     <wire from="(820,1390)" to="(840,1390)"/>
     <wire from="(820,1440)" to="(820,1760)"/>
-    <wire from="(820,950)" to="(850,950)"/>
+    <wire from="(820,950)" to="(910,950)"/>
     <wire from="(830,1440)" to="(830,1790)"/>
     <wire from="(850,2910)" to="(890,2910)"/>
     <wire from="(850,2930)" to="(890,2930)"/>
@@ -6726,7 +6812,9 @@
     <comp loc="(670,180)" name="freezeReg16">
       <a name="label" val="freezeReg16_1"/>
     </comp>
-    <comp loc="(770,180)" name="freezeReg16"/>
+    <comp loc="(770,180)" name="freezeReg16">
+      <a name="label" val="freezeReg16_3"/>
+    </comp>
     <wire from="(190,290)" to="(240,290)"/>
     <wire from="(240,210)" to="(240,290)"/>
     <wire from="(240,210)" to="(280,210)"/>
@@ -8366,10 +8454,18 @@
     <comp loc="(340,3560)" name="freezeReg">
       <a name="label" val="freezeReg_30"/>
     </comp>
-    <comp loc="(340,3660)" name="freezeReg"/>
-    <comp loc="(340,3760)" name="freezeReg"/>
-    <comp loc="(340,3860)" name="freezeReg"/>
-    <comp loc="(340,3960)" name="freezeReg"/>
+    <comp loc="(340,3660)" name="freezeReg">
+      <a name="label" val="freezeReg_31"/>
+    </comp>
+    <comp loc="(340,3760)" name="freezeReg">
+      <a name="label" val="freezeReg_32"/>
+    </comp>
+    <comp loc="(340,3860)" name="freezeReg">
+      <a name="label" val="freezeReg_33"/>
+    </comp>
+    <comp loc="(340,3960)" name="freezeReg">
+      <a name="label" val="freezeReg_34"/>
+    </comp>
     <comp loc="(340,760)" name="freezeReg">
       <a name="label" val="freezeReg_2"/>
     </comp>
