@@ -1,18 +1,45 @@
-st:		ld		R0,[0]
-		ld		R1,[1]
-		ld		R2,[2]
-		ld		R3,[3]
-		ld		R4,[4]
-		ld		R5,[5]
-		ld		R6,[6]
-		ld		R7,[7]
-		ld		R8,[8]
-		ld		R9,[9]
-		ld		RA,[A]
-		ld		RB,[B]
-		ld		RC,[C]
-		ld		RD,[D]
-		ld		RE,[E]
-		ld		RF,[F]
+# R0 = idx
+# R1 = x pos
+# R2 = y pos
 
-		jmp 	st:
+# R6 = meta
+# R7 = x amt
+# R8 = y amt
+
+# RA = x sign
+# RB = y sign
+
+
+		mv		R0,(0)
+		mv		R1,(0)
+		mv		R2,(0)
+		
+loop:	ld		R6,R0
+		jmpz	loop:
+		add		R0,(1)
+
+		ld		R7,R0
+		add		R0, (1)
+
+		ld		R8,R0
+		add		R0,(1)
+
+		mv		RA,R6
+		bsr		RA,(4)
+		and		RA,{1}
+
+		jmprz	(3)
+		sub		R1,R7
+		jmpr	(2)
+		add		R1,R7
+
+		mv		RB,R6
+		bsr		RB,(5)
+		and		RB,{1}
+
+		jmprz	(3)
+		sub		R2,R8
+		jmpr	(2)
+		add		R2,R8
+
+		jmp		loop:
