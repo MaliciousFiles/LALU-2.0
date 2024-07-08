@@ -1,5 +1,5 @@
 Flow report for PS2_test
-Fri Jul  5 19:20:38 2024
+Sun Jul  7 19:27:22 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -41,16 +41,16 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +---------------------------------+------------------------------------------------+
-; Flow Status                     ; Successful - Fri Jul  5 19:20:38 2024          ;
+; Flow Status                     ; Successful - Sun Jul  7 19:27:22 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; PS2_test                                       ;
 ; Top-level Entity Name           ; PS2_test                                       ;
 ; Family                          ; Cyclone V                                      ;
 ; Device                          ; 5CSEMA5F31C6                                   ;
 ; Timing Models                   ; Final                                          ;
-; Logic utilization (in ALMs)     ; 53 / 32,070 ( < 1 % )                          ;
-; Total registers                 ; 92                                             ;
-; Total pins                      ; 32 / 457 ( 7 % )                               ;
+; Logic utilization (in ALMs)     ; 78 / 32,070 ( < 1 % )                          ;
+; Total registers                 ; 97                                             ;
+; Total pins                      ; 48 / 457 ( 11 % )                              ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0 / 4,065,280 ( 0 % )                          ;
 ; Total DSP Blocks                ; 0 / 87 ( 0 % )                                 ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 07/05/2024 19:19:38 ;
+; Start date & time ; 07/07/2024 19:26:04 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; PS2_test            ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+-------------------------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                                 ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+-------------------------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 146225681132805.172022877716200                       ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 146225681132805.172039836403132                       ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                   ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                   ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                   ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -109,12 +109,12 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:08     ; 1.0                     ; 4862 MB             ; 00:00:22                           ;
-; Fitter               ; 00:00:37     ; 1.0                     ; 6936 MB             ; 00:02:06                           ;
-; Assembler            ; 00:00:05     ; 1.0                     ; 4866 MB             ; 00:00:05                           ;
-; Timing Analyzer      ; 00:00:05     ; 1.1                     ; 5211 MB             ; 00:00:05                           ;
-; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 4720 MB             ; 00:00:01                           ;
-; Total                ; 00:00:56     ; --                      ; --                  ; 00:02:39                           ;
+; Analysis & Synthesis ; 00:00:10     ; 1.0                     ; 4864 MB             ; 00:00:25                           ;
+; Fitter               ; 00:00:52     ; 1.0                     ; 6940 MB             ; 00:02:55                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4859 MB             ; 00:00:06                           ;
+; Timing Analyzer      ; 00:00:05     ; 1.2                     ; 5182 MB             ; 00:00:05                           ;
+; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 4729 MB             ; 00:00:01                           ;
+; Total                ; 00:01:14     ; --                      ; --                  ; 00:03:32                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

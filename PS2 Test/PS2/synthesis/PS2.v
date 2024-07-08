@@ -7,7 +7,8 @@ module PS2 (
 		input  wire  clk_clk,                      //                      clk.clk
 		inout  wire  ps2_0_external_interface_CLK, // ps2_0_external_interface.CLK
 		inout  wire  ps2_0_external_interface_DAT, //                         .DAT
-		input  wire  reset_reset_n                 //                    reset.reset_n
+		input  wire  reset_reset_n,                 //                    reset.reset_n,
+		output wire	[31:0] readdata
 	);
 
 	wire    rst_controller_reset_out_reset; // rst_controller:reset_out -> ps2_0:reset
@@ -16,12 +17,12 @@ module PS2 (
 		.clk         (clk_clk),                        //                clk.clk
 		.reset       (rst_controller_reset_out_reset), //              reset.reset
 		.address     (),                               //   avalon_ps2_slave.address
-		.chipselect  (),                               //                   .chipselect
-		.byteenable  (),                               //                   .byteenable
-		.read        (),                               //                   .read
+		.chipselect  (1'b1),                               //                   .chipselect
+		.byteenable  (4'b1111),                               //                   .byteenable
+		.read        (1'b1),                               //                   .read
 		.write       (),                               //                   .write
 		.writedata   (),                               //                   .writedata
-		.readdata    (),                               //                   .readdata
+		.readdata    (readdata),                               //                   .readdata
 		.waitrequest (),                               //                   .waitrequest
 		.irq         (),                               //          interrupt.irq
 		.PS2_CLK     (ps2_0_external_interface_CLK),   // external_interface.export

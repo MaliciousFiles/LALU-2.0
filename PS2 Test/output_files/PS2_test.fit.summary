@@ -1,13 +1,13 @@
-Fitter Status : Successful - Fri Jul  5 19:20:23 2024
+Fitter Status : Successful - Sun Jul  7 19:27:06 2024
 Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 Revision Name : PS2_test
 Top-level Entity Name : PS2_test
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 53 / 32,070 ( < 1 % )
-Total registers : 92
-Total pins : 32 / 457 ( 7 % )
+Logic utilization (in ALMs) : 78 / 32,070 ( < 1 % )
+Total registers : 97
+Total pins : 48 / 457 ( 11 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 4,065,280 ( 0 % )
 Total RAM Blocks : 0 / 397 ( 0 % )

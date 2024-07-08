@@ -1,0 +1,18 @@
+st:		ld		R0,[0]
+		ld		R1,[1]
+		ld		R2,[2]
+		ld		R3,[3]
+		ld		R4,[4]
+		ld		R5,[5]
+		ld		R6,[6]
+		ld		R7,[7]
+		ld		R8,[8]
+		ld		R9,[9]
+		ld		RA,[A]
+		ld		RB,[B]
+		ld		RC,[C]
+		ld		RD,[D]
+		ld		RE,[E]
+		ld		RF,[F]
+
+		jmp 	st:

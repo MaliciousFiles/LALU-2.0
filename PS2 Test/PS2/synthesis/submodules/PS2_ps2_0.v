@@ -141,7 +141,7 @@ begin
 	else if (chipselect == 1'b1)
 	begin
 		if (address == 1'b0)
-			readdata <= {7'h00,data_available,data_valid,7'h00,data_in_fifo};
+			readdata <= {7'hFF,data_available,data_valid,7'h00,data_in_fifo};
 		else
 			readdata <= control_register;
 	end
