@@ -8,5 +8,4 @@ ptr.* = $17
 
 0.* = ptr
 @push(x)
-func_call(x)
 x = @pop()

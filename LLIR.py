@@ -316,6 +316,29 @@ def run(contents, verb = False):
                         lhsreg = UseVar(line[0])
                         LDIEX(lhsreg, rhs)
 ##                        immexp.append( {'op': opname, 'Rd': lhsreg, 'Rs': rhs, 'Imm': True} )
+
+                    #RHS intrinsic functions
+                    elif line[2][0] == '@' and line[1]=='=':
+                        lhsreg = UseVar(line[0])
+                        line.insert(3, line[2].split('(')[1])
+                        line.insert(3, '(')
+                        line[2]=line[2].split('(')[0]
+                        if line[-1][-1] == ')':
+                            line[-1]=line[-1][:-1]
+                        else:
+                            ErrorWithHighlight(f'Expected `)` at end of: `{line[-1]}`', len(line)-1)
+                        line.append(')')
+
+                        #Pop
+                        if line[2] == '@pop':
+                            if line[4] == '':
+                                immexp.append( {'op': 'pop', 'Rs': lhsreg} )
+                            else:
+                                ErrorWithHighlight(f'Expected `)` for function of arity 0: `{line[4]}`',4)
+                            if line[5] != ')':
+                                ErrorWithHighlight(f'Expected `)`, found: `{line[5]}`', 5)
+                        else:
+                            ErrorWithHighlight(f'Unknown Intrinsic Function: `{line[0]}`', 0)
                     else:
                         ErrorWithHighlight(f'Usage of undeclared nonnumeric identifier: `{line[2]}`',2)
                 else:
