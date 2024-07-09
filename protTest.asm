@@ -1,3 +1,6 @@
+# DESIRED OUTPUT: 0009 000E 0014 0001 FFF7 0017 0000 0000 0000 0000 0000 0003 0000 0000 0000 0006
+
+
 		call		main:
 		mv			R0,(9)
 		halt
@@ -35,8 +38,8 @@ goto:	sub			R1,(1)		# valid
 
 ex:		mv			R1,(14)		# valid
 		psh			R1
-		mv			R5,[B]
-		mv			R1,(3)
+		mv			R5,[B]		# valid
+		mv			R1,(3)		# valid
 		sar
 		pop			R1
 		expr

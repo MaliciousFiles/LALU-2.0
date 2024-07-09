@@ -1,0 +1,38 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate "C:\Users\Malcolm\Documents\Logisim\LALU-2.0\PS2 Test\PS2.qsys" --block-symbol-file --output-directory="C:\Users\Malcolm\Documents\Logisim\LALU-2.0\PS2 Test\PS2" --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading PS2 Test/PS2.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 23.1]
+Progress: Parameterizing module clk_0
+Progress: Adding ps2_0 [altera_up_avalon_ps2 18.0]
+Progress: Parameterizing module ps2_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: PS2.ps2_0: Interrupt sender ps2_0.interrupt is not connected to an interrupt receiver
+Warning: PS2.ps2_0: ps2_0.avalon_ps2_slave must be connected to an Avalon-MM master
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate "C:\Users\Malcolm\Documents\Logisim\LALU-2.0\PS2 Test\PS2.qsys" --synthesis=VERILOG --output-directory="C:\Users\Malcolm\Documents\Logisim\LALU-2.0\PS2 Test\PS2\synthesis" --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading PS2 Test/PS2.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 23.1]
+Progress: Parameterizing module clk_0
+Progress: Adding ps2_0 [altera_up_avalon_ps2 18.0]
+Progress: Parameterizing module ps2_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: PS2.ps2_0: Interrupt sender ps2_0.interrupt is not connected to an interrupt receiver
+Warning: PS2.ps2_0: ps2_0.avalon_ps2_slave must be connected to an Avalon-MM master
+Info: PS2: Generating PS2 "PS2" for QUARTUS_SYNTH
+Info: ps2_0: Starting Generation of PS2 Controller
+Info: ps2_0: "PS2" instantiated altera_up_avalon_ps2 "ps2_0"
+Info: rst_controller: "PS2" instantiated altera_reset_controller "rst_controller"
+Info: PS2: Done "PS2" with 3 modules, 8 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
