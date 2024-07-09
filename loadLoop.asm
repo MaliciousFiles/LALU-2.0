@@ -10,7 +10,7 @@
 # RB = y sign
 
 
-		mv		R0,(0)
+		mv		R0,(3)
 		mv		R1,(0)
 		mv		R2,(0)
 		
