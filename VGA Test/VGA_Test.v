@@ -116,7 +116,7 @@ begin
 		end
 	end
 	
-	else if (vStage == 1)
+   else if (vStage == 1)
 	begin
 		vbp_count <= vbp_count - 6'b1;
 		

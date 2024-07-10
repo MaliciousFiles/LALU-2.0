@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module tb();
 
 reg CLOCK;
@@ -16,6 +18,7 @@ VGA_Test inst (
 	.CLOCK_50(CLOCK),
 	.VGA_R(VGA_R),
 	.VGA_B(VGA_B),
+	.VGA_G(VGA_G),
 	.VGA_CLK(VGA_CLK),
 	.VGA_SYNC_N(VGA_SYNC_N),
 	.VGA_BLANK_N(VGA_BLANK_N),
@@ -26,13 +29,13 @@ VGA_Test inst (
 );
 
 always
-	#1 CLOCK = ~CLOCK;
+	#10 CLOCK = ~CLOCK;
 initial
 begin
 	$display($time, " << Starting Simulation >> ");
 	CLOCK = 1'b0;
 	
-	#17276000;
+	#16779736;
 	$display($time, "<< Simulation Complete >>");
 	$stop;
 end
