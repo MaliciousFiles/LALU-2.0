@@ -30,7 +30,7 @@ end
 // 1 = back porch
 // 2 = display
 // 3 = front porch
-reg [2:0] hStage = 3'b0;
+reg [2:0] hStage = 2;
 
 reg [7:0] hs_count = 8'd190;
 reg [6:0] hbp_count = 7'd95;
@@ -89,7 +89,7 @@ end
 // 1 = back porch
 // 2 = display
 // 3 = front porch
-reg [2:0] vStage = 0;
+reg [2:0] vStage = 2;
 
 
 reg [1:0] vs_count = 2'd3;
@@ -148,17 +148,17 @@ end
 wire [7:0] memData;
 reg [2:0] addr = 3'b0;
 
-reg [7:0] red;
-reg [7:0] green;
-reg [7:0] blue;
+reg [7:0] red = 8'b1;
+reg [7:0] green = 8'b1;
+reg [7:0] blue = 8'b1;
 
 always @(posedge CLOCK_50)
 begin
-	if (addr == 0) red <= memData;
-	if (addr == 1) green <= memData;
-	if (addr == 2) blue <= memData;
+	if (addr == 1) red <= memData;
+	if (addr == 2) green <= memData;
+	if (addr == 0) blue <= memData;
 	
-	adr <= addr == 2 ? 1'b0 : addr + 3'b1;
+	addr <= addr == 2 ? 3'b0 : addr + 3'b1;
 end
 
 altsyncram	altsyncram_component (
