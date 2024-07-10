@@ -43,46 +43,42 @@ always @(posedge CLOCK_50)
 begin
 	if (hStage == 0)
 	begin
-		hs_count <= hs_count - 8'b1;
-		
-		if (hs_count == 0)
+		if (hs_count == 1)
 		begin
 			hStage <= hStage+3'b1;
 			hs_count <= 8'd190;
 		end
+		else hs_count <= hs_count - 8'b1;
 	end
 	
 	else if (hStage == 1)
 	begin
-		hbp_count <= hbp_count - 7'b1;
-		
-		if (hbp_count == 0)
+		if (hbp_count == 1)
 		begin
 			hStage <= hStage+3'b1;
 			hbp_count <= 7'd95;
 		end
+		else hbp_count <= hbp_count - 7'b1;
 	end
 	
 	else if (hStage == 2)
 	begin
-		hdisp_count <= hdisp_count - 11'b1;
-		
-		if (hdisp_count == 0)
+		if (hdisp_count == 1)
 		begin
 			hStage <= hStage+3'b1;
 			hdisp_count <= 11'd1270;
 		end
+		else hdisp_count <= hdisp_count - 11'b1;
 	end
 	
 	else if (hStage == 3)
 	begin
-		hfp_count <= hfp_count - 6'b1;
-		
-		if (hfp_count == 0)
+		if (hfp_count == 1)
 		begin
 			hStage <= 3'b0;
 			hfp_count <= 6'd30;
 		end
+		else hfp_count <= hfp_count - 6'b1;
 	end
 end
 
@@ -107,46 +103,42 @@ always @(negedge hStage[1])
 begin
 	if (vStage == 0)
 	begin
-		vs_count <= vs_count - 2'b1;
-		
-		if (vs_count == 0)
+		if (vs_count == 1)
 		begin
 			vStage <= vStage+3'b1;
 			vs_count <= 2'd2;
 		end
+		else vs_count <= vs_count - 2'b1;
 	end
 	
    else if (vStage == 1)
 	begin
-		vbp_count <= vbp_count - 6'b1;
-		
-		if (vbp_count == 0)
+		if (vbp_count == 1)
 		begin
 			vStage <= vStage+3'b1;
 			vbp_count <= 6'd33;
 		end
+		else vbp_count <= vbp_count - 6'b1;
 	end
 	
 	else if (vStage == 2)
 	begin
-		vdisp_count <= vdisp_count - 9'b1;
-		
-		if (vdisp_count == 0)
+		if (vdisp_count == 1)
 		begin
 			vStage <= vStage+3'b1;
 			vdisp_count <= 9'd480;
 		end
+		else vdisp_count <= vdisp_count - 9'b1;
 	end
 	
 	else if (vStage == 3)
 	begin
-		vfp_count <= vfp_count - 4'b1;
-		
-		if (vfp_count == 0)
+		if (vfp_count == 1)
 		begin
 			vStage <= 3'b0;
 			vfp_count <= 4'd10;
 		end
+		else vfp_count <= vfp_count - 4'b1;
 	end
 end
 
@@ -156,12 +148,12 @@ end
  **   ASSIGNMENTS   **
  *********************/
 assign VGA_CLK = vga_clk;
-assign VGA_HS = hStage != 0;
-assign VGA_VS = vStage != 0;
-assign VGA_R = vStage == 2 && hStage == 2 ? 8'h3D : 8'b0;
-assign VGA_G = vStage == 2 && hStage == 2 ? 8'hD1 : 8'b0;
-assign VGA_B = vStage == 2 && hStage == 2 ? 8'h98 : 8'b0;
-assign VGA_BLANK_N = vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3;
+assign VGA_HS = ~(vStage == 2 && hStage == 0);
+assign VGA_VS = ~(vStage == 0);
+assign VGA_R = 8'h3D;//vStage == 2 && hStage == 2 ? 8'h3D : 8'b0;
+assign VGA_G = 8'hD1;//vStage == 2 && hStage == 2 ? 8'hD1 : 8'b0;
+assign VGA_B = 8'h98;//vStage == 2 && hStage == 2 ? 8'h98 : 8'b0;
+assign VGA_BLANK_N = ~(vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3);
 assign VGA_SYNC_N = 1'b0;
 assign ohs = hStage;
 assign ovs = vStage;

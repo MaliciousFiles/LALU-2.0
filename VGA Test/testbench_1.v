@@ -35,7 +35,7 @@ begin
 	$display($time, " << Starting Simulation >> ");
 	CLOCK = 1'b0;
 	
-	#16779736;
+	#16642500;
 	$display($time, "<< Simulation Complete >>");
 	$stop;
 end

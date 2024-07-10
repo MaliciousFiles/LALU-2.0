@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Test
-Wed Jul 10 14:51:58 2024
+Wed Jul 10 16:13:20 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -47,13 +47,13 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jul 10 14:51:58 2024          ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 10 16:13:20 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
-; Total registers                 ; 59                                             ;
+; Total registers                 ; 58                                             ;
 ; Total pins                      ; 36                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0                                              ;
@@ -185,16 +185,16 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 65             ;
+; Estimate of Logic utilization (ALMs needed) ; 58             ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 118            ;
+; Combinational ALUT usage for logic          ; 104            ;
 ;     -- 7 input functions                    ; 0              ;
-;     -- 6 input functions                    ; 11             ;
-;     -- 5 input functions                    ; 16             ;
+;     -- 6 input functions                    ; 12             ;
+;     -- 5 input functions                    ; 22             ;
 ;     -- 4 input functions                    ; 13             ;
-;     -- <=3 input functions                  ; 78             ;
+;     -- <=3 input functions                  ; 57             ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 59             ;
+; Dedicated logic registers                   ; 58             ;
 ;                                             ;                ;
 ; I/O pins                                    ; 36             ;
 ;                                             ;                ;
@@ -202,8 +202,8 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
 ; Maximum fan-out                             ; 35             ;
-; Total fan-out                               ; 562            ;
-; Average fan-out                             ; 2.26           ;
+; Total fan-out                               ; 560            ;
+; Average fan-out                             ; 2.39           ;
 +---------------------------------------------+----------------+
 
 
@@ -212,7 +212,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |VGA_Test                  ; 118 (118)           ; 59 (59)                   ; 0                 ; 0          ; 36   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
+; |VGA_Test                  ; 104 (104)           ; 58 (58)                   ; 0                 ; 0          ; 36   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -222,8 +222,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------------+----------------------------------------+
 ; Register name                         ; Reason for Removal                     ;
 +---------------------------------------+----------------------------------------+
+; vStage[2]                             ; Stuck at GND due to stuck port data_in ;
 ; hStage[2]                             ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 1 ;                                        ;
+; Total Number of Removed Registers = 2 ;                                        ;
 +---------------------------------------+----------------------------------------+
 
 
@@ -232,7 +233,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 59    ;
+; Total registers                              ; 58    ;
 ; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
@@ -247,34 +248,34 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------------------------+---------+
 ; Inverted Register                       ; Fan out ;
 +-----------------------------------------+---------+
-; vs_count[1]                             ; 3       ;
-; vbp_count[5]                            ; 3       ;
-; vbp_count[0]                            ; 6       ;
-; vdisp_count[5]                          ; 7       ;
-; vdisp_count[6]                          ; 7       ;
-; vdisp_count[7]                          ; 7       ;
-; vdisp_count[8]                          ; 7       ;
-; vfp_count[3]                            ; 3       ;
+; vdisp_count[5]                          ; 2       ;
+; vdisp_count[6]                          ; 2       ;
+; vdisp_count[7]                          ; 2       ;
+; vdisp_count[8]                          ; 2       ;
 ; vfp_count[1]                            ; 4       ;
-; hdisp_count[5]                          ; 6       ;
-; hdisp_count[10]                         ; 6       ;
+; vfp_count[3]                            ; 3       ;
+; vs_count[1]                             ; 2       ;
+; vbp_count[0]                            ; 7       ;
+; vbp_count[5]                            ; 3       ;
+; hdisp_count[5]                          ; 9       ;
+; hdisp_count[10]                         ; 9       ;
 ; hdisp_count[1]                          ; 2       ;
 ; hdisp_count[2]                          ; 2       ;
 ; hdisp_count[4]                          ; 2       ;
 ; hdisp_count[6]                          ; 2       ;
 ; hdisp_count[7]                          ; 2       ;
-; hfp_count[4]                            ; 4       ;
-; hfp_count[3]                            ; 5       ;
+; hfp_count[1]                            ; 6       ;
 ; hfp_count[2]                            ; 6       ;
-; hfp_count[1]                            ; 7       ;
-; hs_count[5]                             ; 4       ;
-; hs_count[7]                             ; 4       ;
+; hfp_count[3]                            ; 6       ;
+; hfp_count[4]                            ; 6       ;
+; hs_count[5]                             ; 8       ;
+; hs_count[7]                             ; 8       ;
 ; hs_count[1]                             ; 2       ;
 ; hs_count[2]                             ; 2       ;
 ; hs_count[3]                             ; 2       ;
 ; hs_count[4]                             ; 2       ;
-; hbp_count[4]                            ; 3       ;
-; hbp_count[6]                            ; 3       ;
+; hbp_count[4]                            ; 8       ;
+; hbp_count[6]                            ; 8       ;
 ; hbp_count[0]                            ; 2       ;
 ; hbp_count[1]                            ; 2       ;
 ; hbp_count[2]                            ; 2       ;
@@ -288,8 +289,8 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|hStage[0]        ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|vStage[1]        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|vStage[0]        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|hStage[2]        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
@@ -298,24 +299,24 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 59                          ;
+; arriav_ff             ; 58                          ;
 ;     ENA               ; 53                          ;
-;     plain             ; 6                           ;
-; arriav_lcell_comb     ; 120                         ;
+;     plain             ; 5                           ;
+; arriav_lcell_comb     ; 108                         ;
 ;     arith             ; 35                          ;
 ;         1 data inputs ; 35                          ;
-;     normal            ; 85                          ;
-;         0 data inputs ; 1                           ;
-;         1 data inputs ; 26                          ;
-;         2 data inputs ; 9                           ;
-;         3 data inputs ; 9                           ;
+;     normal            ; 73                          ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 6                           ;
+;         2 data inputs ; 11                          ;
+;         3 data inputs ; 7                           ;
 ;         4 data inputs ; 13                          ;
-;         5 data inputs ; 16                          ;
-;         6 data inputs ; 11                          ;
+;         5 data inputs ; 22                          ;
+;         6 data inputs ; 12                          ;
 ; boundary_port         ; 36                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 2.33                        ;
+; Average LUT depth     ; 2.22                        ;
 +-----------------------+-----------------------------+
 
 
@@ -334,7 +335,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Wed Jul 10 14:51:39 2024
+    Info: Processing started: Wed Jul 10 16:13:11 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Test -c VGA_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -344,33 +345,46 @@ Info (12021): Found 1 design units, including 1 entities, in source file testben
     Info (12023): Found entity 1: tb File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v Line: 3
 Info (12127): Elaborating entity "VGA_Test" for the top level hierarchy
 Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "VGA_R[0]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
     Warning (13410): Pin "VGA_R[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
+    Warning (13410): Pin "VGA_R[2]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
+    Warning (13410): Pin "VGA_R[3]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
+    Warning (13410): Pin "VGA_R[4]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
+    Warning (13410): Pin "VGA_R[5]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
     Warning (13410): Pin "VGA_R[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
     Warning (13410): Pin "VGA_R[7]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
+    Warning (13410): Pin "VGA_G[0]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_G[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_G[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_G[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
+    Warning (13410): Pin "VGA_G[4]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_G[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
+    Warning (13410): Pin "VGA_G[6]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
+    Warning (13410): Pin "VGA_G[7]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_B[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_B[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_B[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
+    Warning (13410): Pin "VGA_B[3]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
+    Warning (13410): Pin "VGA_B[4]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_B[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_B[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
+    Warning (13410): Pin "VGA_B[7]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 8
     Warning (13410): Pin "ohs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 12
+    Warning (13410): Pin "ovs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 13
 Info (286030): Timing-Driven Synthesis is running
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 155 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 140 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 1 input pins
     Info (21059): Implemented 35 output pins
-    Info (21061): Implemented 119 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 16 warnings
+    Info (21061): Implemented 104 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 29 warnings
     Info: Peak virtual memory: 4856 megabytes
-    Info: Processing ended: Wed Jul 10 14:51:58 2024
-    Info: Elapsed time: 00:00:19
-    Info: Total CPU time (on all processors): 00:00:53
+    Info: Processing ended: Wed Jul 10 16:13:20 2024
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:23
 
 
 +------------------------------------------+
