@@ -11,8 +11,6 @@ wire			VGA_SYNC_N;
 wire			VGA_BLANK_N;
 wire			VGA_HS;
 wire			VGA_VS;
-wire [2:0]	ohs;
-wire [2:0]	ovs;
 
 VGA_Test inst (
 	.CLOCK_50(CLOCK),
@@ -23,9 +21,7 @@ VGA_Test inst (
 	.VGA_SYNC_N(VGA_SYNC_N),
 	.VGA_BLANK_N(VGA_BLANK_N),
 	.VGA_HS(VGA_HS),
-	.VGA_VS(VGA_VS),
-	.ohs(ohs),
-	.ovs(ovs)
+	.VGA_VS(VGA_VS)
 );
 
 always
@@ -35,7 +31,7 @@ begin
 	$display($time, " << Starting Simulation >> ");
 	CLOCK = 1'b0;
 	
-	#16642500;
+	#33285000;
 	$display($time, "<< Simulation Complete >>");
 	$stop;
 end

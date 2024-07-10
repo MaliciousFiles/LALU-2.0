@@ -1,4 +1,4 @@
-module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS, ohs, ovs);
+module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS);
 
 input				CLOCK_50;
 output [7:0]	VGA_R;
@@ -9,8 +9,6 @@ output			VGA_SYNC_N;
 output			VGA_BLANK_N;
 output			VGA_HS;
 output			VGA_VS;
-output [2:0]	ohs;
-output [2:0]	ovs;
 
 
 
@@ -94,7 +92,7 @@ end
 reg [2:0] vStage = 0;
 
 
-reg [1:0] vs_count = 2'd2;
+reg [1:0] vs_count = 2'd3;
 reg [5:0] vbp_count = 6'd33;
 reg [8:0] vdisp_count = 9'd480;
 reg [3:0] vfp_count = 4'd10;
@@ -145,18 +143,79 @@ end
 
 
 /*********************
+ **      INPUT      **
+ *********************/
+wire [7:0] memData;
+reg [2:0] addr = 3'b0;
+
+reg [7:0] red;
+reg [7:0] green;
+reg [7:0] blue;
+
+always @(posedge CLOCK_50)
+begin
+	if (addr == 0) red <= memData;
+	if (addr == 1) green <= memData;
+	if (addr == 2) blue <= memData;
+	
+	adr <= addr == 2 ? 1'b0 : addr + 3'b1;
+end
+
+altsyncram	altsyncram_component (
+				  .address_a (addr),
+				  .clock0 (CLOCK_50),
+				  .data_a (),
+				  .wren_a (1'b0),
+				  .q_a (memData),
+				  .aclr0 (1'b0),
+				  .aclr1 (1'b0),
+				  .address_b (),
+				  .addressstall_a (1'b0),
+				  .addressstall_b (1'b0),
+				  .byteena_a (1'b1),
+				  .byteena_b (1'b1),
+				  .clock1 (),
+				  .clocken0 (1'b1),
+				  .clocken1 (1'b1),
+				  .clocken2 (1'b1),
+				  .clocken3 (1'b1),
+				  .data_b (),
+				  .eccstatus (),
+				  .q_b (),
+				  .rden_a (1'b1),
+				  .rden_b (1'b1),
+				  .wren_b ()
+				  );
+defparam
+		altsyncram_component.clock_enable_input_a = "BYPASS",
+		altsyncram_component.clock_enable_output_a = "BYPASS",
+		altsyncram_component.init_file = "RAMCONTENTS_RAM_2.mif",
+		altsyncram_component.intended_device_family = "Cyclone V",
+		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES, INSTANCE_NAME=DATA_MEM",
+		altsyncram_component.lpm_type = "altsyncram",
+		altsyncram_component.numwords_a = 3,
+		altsyncram_component.operation_mode = "SINGLE_PORT",
+		altsyncram_component.outdata_aclr_a = "NONE",
+		altsyncram_component.outdata_reg_a = "UNREGISTERED",
+		altsyncram_component.power_up_uninitialized = "FALSE",
+		altsyncram_component.widthad_a = 3,
+		altsyncram_component.width_a = 8,
+		altsyncram_component.width_byteena_a = 1;
+
+
+
+/*********************
  **   ASSIGNMENTS   **
  *********************/
 assign VGA_CLK = vga_clk;
-assign VGA_HS = ~(vStage == 2 && hStage == 0);
+assign VGA_HS = ~(hStage == 0);
 assign VGA_VS = ~(vStage == 0);
-assign VGA_R = 8'h3D;//vStage == 2 && hStage == 2 ? 8'h3D : 8'b0;
-assign VGA_G = 8'hD1;//vStage == 2 && hStage == 2 ? 8'hD1 : 8'b0;
-assign VGA_B = 8'h98;//vStage == 2 && hStage == 2 ? 8'h98 : 8'b0;
+assign VGA_R = red;
+assign VGA_G = green;
+assign VGA_B = blue;
 assign VGA_BLANK_N = ~(vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3);
-assign VGA_SYNC_N = 1'b0;
-assign ohs = hStage;
-assign ovs = vStage;
+assign VGA_SYNC_N = 1'b1;
+
 
 
 endmodule
