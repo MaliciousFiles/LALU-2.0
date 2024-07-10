@@ -47,6 +47,10 @@ end
 reg [2:0] hStage = 3'b0;
 
 reg [7:0] hs_count = 8'd190;
+reg [6:0] hbp_count = 7'd95;
+reg [10:0] hdisp_count = 11'd1270;
+reg [5:0] hfp_count = 6'd30;
+
 always @(posedge CLOCK_50)
 begin
 	if (hStage == 0)
@@ -59,12 +63,8 @@ begin
 			hs_count <= 8'd190;
 		end
 	end
-end
-
-reg [6:0] hbp_count = 7'd95;
-always @(posedge CLOCK_50)
-begin
-	if (hStage == 1)
+	
+	else if (hStage == 1)
 	begin
 		hbp_count <= hbp_count - 7'b1;
 		
@@ -74,12 +74,8 @@ begin
 			hbp_count <= 7'd95;
 		end
 	end
-end
-
-reg [10:0] hdisp_count = 11'd1270;
-always @(posedge CLOCK_50)
-begin
-	if (hStage == 2)
+	
+	else if (hStage == 2)
 	begin
 		hdisp_count <= hdisp_count - 11'b1;
 		
@@ -89,12 +85,8 @@ begin
 			hdisp_count <= 11'd1270;
 		end
 	end
-end
-
-reg [5:0] hfp_count = 6'd30;
-always @(posedge CLOCK_50)
-begin
-	if (hStage == 3)
+	
+	else if (hStage == 3)
 	begin
 		hfp_count <= hfp_count - 6'b1;
 		
@@ -119,6 +111,10 @@ reg [2:0] vStage = 0;
 
 
 reg [1:0] vs_count = 2'd2;
+reg [5:0] vbp_count = 6'd33;
+reg [8:0] vdisp_count = 9'd480;
+reg [3:0] vfp_count = 4'd10;
+
 always @(negedge hStage[1])
 begin
 	if (vStage == 0)
@@ -131,12 +127,8 @@ begin
 			vs_count <= 2'd2;
 		end
 	end
-end
-
-reg [5:0] vbp_count = 6'd33;
-always @(negedge hStage[1])
-begin
-	if (vStage == 0)
+	
+	else if (vStage == 1)
 	begin
 		vbp_count <= vbp_count - 6'b1;
 		
@@ -146,12 +138,8 @@ begin
 			vbp_count <= 6'd33;
 		end
 	end
-end
-
-reg [8:0] vdisp_count = 9'd480;
-always @(negedge hStage[1])
-begin
-	if (vStage == 0)
+	
+	else if (vStage == 2)
 	begin
 		vdisp_count <= vdisp_count - 9'b1;
 		
@@ -161,12 +149,8 @@ begin
 			vdisp_count <= 9'd480;
 		end
 	end
-end
-
-reg [3:0] vfp_count = 4'd10;
-always @(negedge hStage[1])
-begin
-	if (vStage == 0)
+	
+	else if (vStage == 3)
 	begin
 		vfp_count <= vfp_count - 4'b1;
 		
@@ -177,5 +161,6 @@ begin
 		end
 	end
 end
+
 
 endmodule
