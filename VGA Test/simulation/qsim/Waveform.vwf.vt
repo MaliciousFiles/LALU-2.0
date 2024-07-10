@@ -19,7 +19,7 @@
 // the top level entity of the current Quartus project .The user can use this   
 // testbench to simulate his design using a third-party simulation tool .       
 // *****************************************************************************
-// Generated on "07/10/2024 12:33:28"
+// Generated on "07/10/2024 13:08:19"
                                                                                 
 // Verilog Test Bench (with test vectors) for design :                          VGA_Test
 // 
@@ -63,8 +63,8 @@ end
 always
 begin
 	CLOCK_50 = 1'b0;
-	CLOCK_50 = #20000 1'b1;
-	#20000;
+	CLOCK_50 = #5000 1'b1;
+	#5000;
 end 
 endmodule
 

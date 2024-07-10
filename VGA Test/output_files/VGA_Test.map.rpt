@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Test
-Wed Jul 10 12:10:40 2024
+Wed Jul 10 14:02:52 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -47,14 +47,14 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jul 10 12:10:40 2024          ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 10 14:02:51 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
 ; Total registers                 ; 58                                             ;
-; Total pins                      ; 30                                             ;
+; Total pins                      ; 36                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0                                              ;
 ; Total DSP Blocks                ; 0                                              ;
@@ -196,14 +196,14 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                ;
 ; Dedicated logic registers                   ; 58             ;
 ;                                             ;                ;
-; I/O pins                                    ; 30             ;
+; I/O pins                                    ; 36             ;
 ;                                             ;                ;
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
 ; Maximum fan-out                             ; 35             ;
-; Total fan-out                               ; 534            ;
-; Average fan-out                             ; 2.27           ;
+; Total fan-out                               ; 544            ;
+; Average fan-out                             ; 2.20           ;
 +---------------------------------------------+----------------+
 
 
@@ -212,7 +212,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |VGA_Test                  ; 117 (117)           ; 58 (58)                   ; 0                 ; 0          ; 30   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
+; |VGA_Test                  ; 117 (117)           ; 58 (58)                   ; 0                 ; 0          ; 36   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -313,7 +313,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ;         4 data inputs ; 15                          ;
 ;         5 data inputs ; 11                          ;
 ;         6 data inputs ; 11                          ;
-; boundary_port         ; 30                          ;
+; boundary_port         ; 36                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.00                        ;
 ; Average LUT depth     ; 2.31                        ;
@@ -335,12 +335,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Wed Jul 10 12:10:27 2024
+    Info: Processing started: Wed Jul 10 14:02:40 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Test -c VGA_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file vga_test.v
     Info (12023): Found entity 1: VGA_Test File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file testbench_1.v
+    Info (12023): Found entity 1: tb File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v Line: 1
 Info (12127): Elaborating entity "VGA_Test" for the top level hierarchy
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "VGA_R[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 4
@@ -356,19 +358,21 @@ Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "VGA_B[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_B[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 8
+    Warning (13410): Pin "ohs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 12
+    Warning (13410): Pin "ovs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 13
 Info (286030): Timing-Driven Synthesis is running
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 147 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 153 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 1 input pins
-    Info (21059): Implemented 29 output pins
+    Info (21059): Implemented 35 output pins
     Info (21061): Implemented 117 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 15 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 17 warnings
     Info: Peak virtual memory: 4856 megabytes
-    Info: Processing ended: Wed Jul 10 12:10:40 2024
-    Info: Elapsed time: 00:00:13
-    Info: Total CPU time (on all processors): 00:00:36
+    Info: Processing ended: Wed Jul 10 14:02:52 2024
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:32
 
 
 +------------------------------------------+

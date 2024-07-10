@@ -1,4 +1,4 @@
-module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS);
+module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS, ohs, ovs);
 
 input				CLOCK_50;
 output [7:0]	VGA_R;
@@ -9,26 +9,14 @@ output			VGA_SYNC_N;
 output			VGA_BLANK_N;
 output			VGA_HS;
 output			VGA_VS;
+output [2:0]	ohs;
+output [2:0]	ovs;
 
-
-
-/*********************
- **   ASSIGNMENTS   **
- *********************/
-assign VGA_HS = hStage != 0;
-assign VGA_VS = vStage != 0;
-assign VGA_R = vStage == 2 && hStage == 2 ? 8'h3D : 8'b0;
-assign VGA_G = vStage == 2 && hStage == 2 ? 8'hD1 : 8'b0;
-assign VGA_B = vStage == 2 && hStage == 2 ? 8'h98 : 8'b0;
-assign VGA_BLANK_N = vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3;
-assign VGA_SYNC_N = 1'b0;
 
 
 /*********************
  **      CLOCK      **
  *********************/
-assign VGA_CLK = vga_clk;
-
 reg vga_clk = 1'b0;
 always @(posedge CLOCK_50)
 begin
@@ -161,6 +149,22 @@ begin
 		end
 	end
 end
+
+
+
+/*********************
+ **   ASSIGNMENTS   **
+ *********************/
+assign VGA_CLK = vga_clk;
+assign VGA_HS = hStage != 0;
+assign VGA_VS = vStage != 0;
+assign VGA_R = vStage == 2 && hStage == 2 ? 8'h3D : 8'b0;
+assign VGA_G = vStage == 2 && hStage == 2 ? 8'hD1 : 8'b0;
+assign VGA_B = vStage == 2 && hStage == 2 ? 8'h98 : 8'b0;
+assign VGA_BLANK_N = vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3;
+assign VGA_SYNC_N = 1'b0;
+assign ohs = hStage;
+assign ovs = vStage;
 
 
 endmodule

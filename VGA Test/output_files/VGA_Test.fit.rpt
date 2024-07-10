@@ -1,5 +1,5 @@
 Fitter report for VGA_Test
-Wed Jul 10 12:12:48 2024
+Wed Jul 10 13:54:16 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -63,7 +63,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Fitter Summary                                                                   ;
 +---------------------------------+------------------------------------------------+
-; Fitter Status                   ; Successful - Wed Jul 10 12:12:48 2024          ;
+; Fitter Status                   ; Successful - Wed Jul 10 13:54:16 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
@@ -71,8 +71,8 @@ https://fpgasoftware.intel.com/eula.
 ; Device                          ; 5CSEMA5F31C6                                   ;
 ; Timing Models                   ; Final                                          ;
 ; Logic utilization (in ALMs)     ; 65 / 32,070 ( < 1 % )                          ;
-; Total registers                 ; 73                                             ;
-; Total pins                      ; 30 / 457 ( 7 % )                               ;
+; Total registers                 ; 64                                             ;
+; Total pins                      ; 36 / 457 ( 8 % )                               ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0 / 4,065,280 ( 0 % )                          ;
 ; Total RAM Blocks                ; 0 / 397 ( 0 % )                                ;
@@ -158,13 +158,13 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
-;     Processor 3            ;   0.1%      ;
-;     Processor 4            ;   0.1%      ;
-;     Processor 5            ;   0.1%      ;
-;     Processor 6            ;   0.1%      ;
-;     Processor 7            ;   0.1%      ;
-;     Processor 8            ;   0.1%      ;
+;     Processor 2            ;   0.2%      ;
+;     Processor 3            ;   0.2%      ;
+;     Processor 4            ;   0.2%      ;
+;     Processor 5            ;   0.2%      ;
+;     Processor 6            ;   0.2%      ;
+;     Processor 7            ;   0.2%      ;
+;     Processor 8            ;   0.2%      ;
 +----------------------------+-------------+
 
 
@@ -174,21 +174,12 @@ https://fpgasoftware.intel.com/eula.
 ; Node                  ; Action     ; Operation                                         ; Reason                     ; Node Port ; Node Port Name ; Destination Node         ; Destination Port ; Destination Port Name ;
 +-----------------------+------------+---------------------------------------------------+----------------------------+-----------+----------------+--------------------------+------------------+-----------------------+
 ; CLOCK_50~inputCLKENA0 ; Created    ; Placement                                         ; Fitter Periphery Placement ;           ;                ;                          ;                  ;                       ;
-; vStage[0]             ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vStage[0]~DUPLICATE      ;                  ;                       ;
-; vStage[1]             ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vStage[1]~DUPLICATE      ;                  ;                       ;
-; vbp_count[0]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[0]~DUPLICATE   ;                  ;                       ;
-; vbp_count[1]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[1]~DUPLICATE   ;                  ;                       ;
-; vbp_count[2]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[2]~DUPLICATE   ;                  ;                       ;
 ; vbp_count[3]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[3]~DUPLICATE   ;                  ;                       ;
-; vbp_count[4]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[4]~DUPLICATE   ;                  ;                       ;
-; vdisp_count[1]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[1]~DUPLICATE ;                  ;                       ;
-; vdisp_count[3]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[3]~DUPLICATE ;                  ;                       ;
-; vdisp_count[5]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[5]~DUPLICATE ;                  ;                       ;
-; vdisp_count[7]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[7]~DUPLICATE ;                  ;                       ;
-; vdisp_count[8]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[8]~DUPLICATE ;                  ;                       ;
+; vbp_count[5]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vbp_count[5]~DUPLICATE   ;                  ;                       ;
+; vdisp_count[0]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[0]~DUPLICATE ;                  ;                       ;
+; vdisp_count[2]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[2]~DUPLICATE ;                  ;                       ;
+; vdisp_count[4]        ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vdisp_count[4]~DUPLICATE ;                  ;                       ;
 ; vfp_count[0]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vfp_count[0]~DUPLICATE   ;                  ;                       ;
-; vfp_count[1]          ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vfp_count[1]~DUPLICATE   ;                  ;                       ;
-; vs_count[1]           ; Duplicated ; Router Logic Cell Insertion and Logic Duplication ; Routability optimization   ;           ;                ; vs_count[1]~DUPLICATE    ;                  ;                       ;
 +-----------------------+------------+---------------------------------------------------+----------------------------+-----------+----------------+--------------------------+------------------+-----------------------+
 
 
@@ -198,8 +189,8 @@ https://fpgasoftware.intel.com/eula.
 ; Type                ; Total [A + B]      ; From Design Partitions [A] ; From Rapid Recompile [B] ;
 +---------------------+--------------------+----------------------------+--------------------------+
 ; Placement (by node) ;                    ;                            ;                          ;
-;     -- Requested    ; 0.00 % ( 0 / 237 ) ; 0.00 % ( 0 / 237 )         ; 0.00 % ( 0 / 237 )       ;
-;     -- Achieved     ; 0.00 % ( 0 / 237 ) ; 0.00 % ( 0 / 237 )         ; 0.00 % ( 0 / 237 )       ;
+;     -- Requested    ; 0.00 % ( 0 / 249 ) ; 0.00 % ( 0 / 249 )         ; 0.00 % ( 0 / 249 )       ;
+;     -- Achieved     ; 0.00 % ( 0 / 249 ) ; 0.00 % ( 0 / 249 )         ; 0.00 % ( 0 / 249 )       ;
 ;                     ;                    ;                            ;                          ;
 ; Routing (by net)    ;                    ;                            ;                          ;
 ;     -- Requested    ; 0.00 % ( 0 / 0 )   ; 0.00 % ( 0 / 0 )           ; 0.00 % ( 0 / 0 )         ;
@@ -222,7 +213,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 ; Partition Name                 ; Preservation Achieved ; Preservation Level Used ; Netlist Type Used ; Preservation Method ; Notes ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
-; Top                            ; 0.00 % ( 0 / 237 )    ; N/A                     ; Source File       ; N/A                 ;       ;
+; Top                            ; 0.00 % ( 0 / 249 )    ; N/A                     ; Source File       ; N/A                 ;       ;
 ; hard_block:auto_generated_inst ; 0.00 % ( 0 / 0 )      ; N/A                     ; Source File       ; N/A                 ;       ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 
@@ -240,12 +231,12 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 +-------------------------------------------------------------+--------------------+-------+
 ; Logic utilization (ALMs needed / total ALMs on device)      ; 65 / 32,070        ; < 1 % ;
 ; ALMs needed [=A-B+C]                                        ; 65                 ;       ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 69 / 32,070        ; < 1 % ;
-;         [a] ALMs used for LUT logic and registers           ; 23                 ;       ;
-;         [b] ALMs used for LUT logic                         ; 39                 ;       ;
-;         [c] ALMs used for registers                         ; 7                  ;       ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 66 / 32,070        ; < 1 % ;
+;         [a] ALMs used for LUT logic and registers           ; 26                 ;       ;
+;         [b] ALMs used for LUT logic                         ; 37                 ;       ;
+;         [c] ALMs used for registers                         ; 3                  ;       ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                  ;       ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 4 / 32,070         ; < 1 % ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 1 / 32,070         ; < 1 % ;
 ;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 0 / 32,070         ; 0 %   ;
 ;         [a] Due to location constrained logic               ; 0                  ;       ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                  ;       ;
@@ -254,8 +245,8 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;                                                             ;                    ;       ;
 ; Difficulty packing design                                   ; Low                ;       ;
 ;                                                             ;                    ;       ;
-; Total LABs:  partially or completely used                   ; 12 / 3,207         ; < 1 % ;
-;     -- Logic LABs                                           ; 12                 ;       ;
+; Total LABs:  partially or completely used                   ; 10 / 3,207         ; < 1 % ;
+;     -- Logic LABs                                           ; 10                 ;       ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                  ;       ;
 ;                                                             ;                    ;       ;
 ; Combinational ALUT usage for logic                          ; 118                ;       ;
@@ -264,18 +255,18 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;     -- 5 input functions                                    ; 11                 ;       ;
 ;     -- 4 input functions                                    ; 15                 ;       ;
 ;     -- <=3 input functions                                  ; 81                 ;       ;
-; Combinational ALUT usage for route-throughs                 ; 2                  ;       ;
+; Combinational ALUT usage for route-throughs                 ; 0                  ;       ;
 ;                                                             ;                    ;       ;
-; Dedicated logic registers                                   ; 73                 ;       ;
+; Dedicated logic registers                                   ; 64                 ;       ;
 ;     -- By type:                                             ;                    ;       ;
 ;         -- Primary logic registers                          ; 58 / 64,140        ; < 1 % ;
-;         -- Secondary logic registers                        ; 15 / 64,140        ; < 1 % ;
+;         -- Secondary logic registers                        ; 6 / 64,140         ; < 1 % ;
 ;     -- By function:                                         ;                    ;       ;
 ;         -- Design implementation registers                  ; 58                 ;       ;
-;         -- Routing optimization registers                   ; 15                 ;       ;
+;         -- Routing optimization registers                   ; 6                  ;       ;
 ;                                                             ;                    ;       ;
 ; Virtual pins                                                ; 0                  ;       ;
-; I/O pins                                                    ; 30 / 457           ; 7 %   ;
+; I/O pins                                                    ; 36 / 457           ; 8 %   ;
 ;     -- Clock pins                                           ; 3 / 8              ; 38 %  ;
 ;     -- Dedicated input pins                                 ; 0 / 21             ; 0 %   ;
 ;                                                             ;                    ;       ;
@@ -328,11 +319,11 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; Impedance control blocks                                    ; 0 / 4              ; 0 %   ;
 ; Hard Memory Controllers                                     ; 0 / 2              ; 0 %   ;
 ; Average interconnect usage (total/H/V)                      ; 0.1% / 0.1% / 0.1% ;       ;
-; Peak interconnect usage (total/H/V)                         ; 1.2% / 1.2% / 1.0% ;       ;
-; Maximum fan-out                                             ; 46                 ;       ;
-; Highest non-global fan-out                                  ; 46                 ;       ;
-; Total fan-out                                               ; 580                ;       ;
-; Average fan-out                                             ; 2.28               ;       ;
+; Peak interconnect usage (total/H/V)                         ; 1.3% / 1.4% / 0.9% ;       ;
+; Maximum fan-out                                             ; 38                 ;       ;
+; Highest non-global fan-out                                  ; 38                 ;       ;
+; Total fan-out                                               ; 563                ;       ;
+; Average fan-out                                             ; 2.21               ;       ;
 +-------------------------------------------------------------+--------------------+-------+
 
 
@@ -343,12 +334,12 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 +-------------------------------------------------------------+----------------------+--------------------------------+
 ; Logic utilization (ALMs needed / total ALMs on device)      ; 65 / 32070 ( < 1 % ) ; 0 / 32070 ( 0 % )              ;
 ; ALMs needed [=A-B+C]                                        ; 65                   ; 0                              ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 69 / 32070 ( < 1 % ) ; 0 / 32070 ( 0 % )              ;
-;         [a] ALMs used for LUT logic and registers           ; 23                   ; 0                              ;
-;         [b] ALMs used for LUT logic                         ; 39                   ; 0                              ;
-;         [c] ALMs used for registers                         ; 7                    ; 0                              ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 66 / 32070 ( < 1 % ) ; 0 / 32070 ( 0 % )              ;
+;         [a] ALMs used for LUT logic and registers           ; 26                   ; 0                              ;
+;         [b] ALMs used for LUT logic                         ; 37                   ; 0                              ;
+;         [c] ALMs used for registers                         ; 3                    ; 0                              ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                    ; 0                              ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 4 / 32070 ( < 1 % )  ; 0 / 32070 ( 0 % )              ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 1 / 32070 ( < 1 % )  ; 0 / 32070 ( 0 % )              ;
 ;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 0 / 32070 ( 0 % )    ; 0 / 32070 ( 0 % )              ;
 ;         [a] Due to location constrained logic               ; 0                    ; 0                              ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                    ; 0                              ;
@@ -357,8 +348,8 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;                                                             ;                      ;                                ;
 ; Difficulty packing design                                   ; Low                  ; Low                            ;
 ;                                                             ;                      ;                                ;
-; Total LABs:  partially or completely used                   ; 12 / 3207 ( < 1 % )  ; 0 / 3207 ( 0 % )               ;
-;     -- Logic LABs                                           ; 12                   ; 0                              ;
+; Total LABs:  partially or completely used                   ; 10 / 3207 ( < 1 % )  ; 0 / 3207 ( 0 % )               ;
+;     -- Logic LABs                                           ; 10                   ; 0                              ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                    ; 0                              ;
 ;                                                             ;                      ;                                ;
 ; Combinational ALUT usage for logic                          ; 118                  ; 0                              ;
@@ -367,7 +358,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;     -- 5 input functions                                    ; 11                   ; 0                              ;
 ;     -- 4 input functions                                    ; 15                   ; 0                              ;
 ;     -- <=3 input functions                                  ; 81                   ; 0                              ;
-; Combinational ALUT usage for route-throughs                 ; 2                    ; 0                              ;
+; Combinational ALUT usage for route-throughs                 ; 0                    ; 0                              ;
 ; Memory ALUT usage                                           ; 0                    ; 0                              ;
 ;     -- 64-address deep                                      ; 0                    ; 0                              ;
 ;     -- 32-address deep                                      ; 0                    ; 0                              ;
@@ -375,14 +366,14 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; Dedicated logic registers                                   ; 0                    ; 0                              ;
 ;     -- By type:                                             ;                      ;                                ;
 ;         -- Primary logic registers                          ; 58 / 64140 ( < 1 % ) ; 0 / 64140 ( 0 % )              ;
-;         -- Secondary logic registers                        ; 15 / 64140 ( < 1 % ) ; 0 / 64140 ( 0 % )              ;
+;         -- Secondary logic registers                        ; 6 / 64140 ( < 1 % )  ; 0 / 64140 ( 0 % )              ;
 ;     -- By function:                                         ;                      ;                                ;
 ;         -- Design implementation registers                  ; 58                   ; 0                              ;
-;         -- Routing optimization registers                   ; 15                   ; 0                              ;
+;         -- Routing optimization registers                   ; 6                    ; 0                              ;
 ;                                                             ;                      ;                                ;
 ;                                                             ;                      ;                                ;
 ; Virtual pins                                                ; 0                    ; 0                              ;
-; I/O pins                                                    ; 30                   ; 0                              ;
+; I/O pins                                                    ; 36                   ; 0                              ;
 ; I/O registers                                               ; 0                    ; 0                              ;
 ; Total block memory bits                                     ; 0                    ; 0                              ;
 ; Total block memory implementation bits                      ; 0                    ; 0                              ;
@@ -395,8 +386,8 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;     -- Registered Output Connections                        ; 0                    ; 0                              ;
 ;                                                             ;                      ;                                ;
 ; Internal Connections                                        ;                      ;                                ;
-;     -- Total Connections                                    ; 580                  ; 0                              ;
-;     -- Registered Connections                               ; 253                  ; 0                              ;
+;     -- Total Connections                                    ; 563                  ; 0                              ;
+;     -- Registered Connections                               ; 248                  ; 0                              ;
 ;                                                             ;                      ;                                ;
 ; External Connections                                        ;                      ;                                ;
 ;     -- Top                                                  ; 0                    ; 0                              ;
@@ -404,7 +395,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ;                                                             ;                      ;                                ;
 ; Partition Interface                                         ;                      ;                                ;
 ;     -- Input Ports                                          ; 1                    ; 0                              ;
-;     -- Output Ports                                         ; 29                   ; 0                              ;
+;     -- Output Ports                                         ; 35                   ; 0                              ;
 ;     -- Bidir Ports                                          ; 0                    ; 0                              ;
 ;                                                             ;                      ;                                ;
 ; Registered Ports                                            ;                      ;                                ;
@@ -466,6 +457,12 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; VGA_R[7]    ; F13   ; 8A       ; 26           ; 81           ; 40           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; User                 ; -                    ; -                   ;
 ; VGA_SYNC_N  ; C10   ; 8A       ; 28           ; 81           ; 34           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; User                 ; -                    ; -                   ;
 ; VGA_VS      ; D11   ; 8A       ; 34           ; 81           ; 40           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; User                 ; -                    ; -                   ;
+; ohs[0]      ; A8    ; 8A       ; 34           ; 81           ; 91           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
+; ohs[1]      ; A9    ; 8A       ; 34           ; 81           ; 74           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
+; ohs[2]      ; AG5   ; 3A       ; 14           ; 0            ; 34           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
+; ovs[0]      ; A10   ; 8A       ; 38           ; 81           ; 51           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
+; ovs[1]      ; D10   ; 8A       ; 34           ; 81           ; 57           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
+; ovs[2]      ; C8    ; 8A       ; 30           ; 81           ; 34           ; no              ; no                     ; 1         ; no              ; no         ; no            ; no       ; Off          ; 2.5 V        ; Default          ; Series 50 Ohm without Calibration ; --                        ; no                         ; no                          ; 0                   ; Off                         ; Fitter               ; -                    ; -                   ;
 +-------------+-------+----------+--------------+--------------+--------------+-----------------+------------------------+-----------+-----------------+------------+---------------+----------+--------------+--------------+------------------+-----------------------------------+---------------------------+----------------------------+-----------------------------+---------------------+-----------------------------+----------------------+----------------------+---------------------+
 
 
@@ -476,7 +473,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 +----------+------------------+---------------+--------------+---------------+
 ; B2L      ; 0 / 0 ( -- )     ; --            ; --           ; --            ;
 ; B1L      ; 0 / 0 ( -- )     ; --            ; --           ; --            ;
-; 3A       ; 0 / 32 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
+; 3A       ; 1 / 32 ( 3 % )   ; 2.5V          ; --           ; 2.5V          ;
 ; 3B       ; 1 / 48 ( 2 % )   ; 2.5V          ; --           ; 2.5V          ;
 ; 4A       ; 0 / 80 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
 ; 5A       ; 0 / 32 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
@@ -487,7 +484,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; 7B       ; 0 / 22 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
 ; 7C       ; 0 / 12 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
 ; 7D       ; 0 / 14 ( 0 % )   ; 2.5V          ; --           ; 2.5V          ;
-; 8A       ; 29 / 80 ( 36 % ) ; 2.5V          ; --           ; 2.5V          ;
+; 8A       ; 34 / 80 ( 43 % ) ; 2.5V          ; --           ; 2.5V          ;
 +----------+------------------+---------------+--------------+---------------+
 
 
@@ -502,9 +499,9 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; A5       ; 489        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; A6       ; 487        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; A7       ;            ; 8A             ; VCCIO8A                         ; power  ;              ; 2.5V                ; --           ;                 ; --       ; --           ;
-; A8       ; 473        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
-; A9       ; 471        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
-; A10      ; 465        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
+; A8       ; 473        ; 8A             ; ohs[0]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
+; A9       ; 471        ; 8A             ; ohs[1]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
+; A10      ; 465        ; 8A             ; ovs[0]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
 ; A11      ; 463        ; 8A             ; VGA_CLK                         ; output ; 2.5 V        ;                     ; Column I/O   ; Y               ; no       ; Off          ;
 ; A12      ;            ;                ; GND                             ; gnd    ;              ;                     ; --           ;                 ; --       ; --           ;
 ; A13      ; 461        ; 8A             ; VGA_R[0]                        ; output ; 2.5 V        ;                     ; Column I/O   ; Y               ; no       ; Off          ;
@@ -708,7 +705,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; AG2      ; 83         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; AG3      ; 63         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; AG4      ;            ; 3A             ; VCCIO3A                         ; power  ;              ; 2.5V                ; --           ;                 ; --       ; --           ;
-; AG5      ; 78         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
+; AG5      ; 78         ; 3A             ; ohs[2]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
 ; AG6      ; 73         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; AG7      ; 68         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; AG8      ; 65         ; 3A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
@@ -859,7 +856,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; C5       ; 497        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; C6       ;            ;                ; GND                             ; gnd    ;              ;                     ; --           ;                 ; --       ; --           ;
 ; C7       ; 475        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
-; C8       ; 479        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
+; C8       ; 479        ; 8A             ; ovs[2]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
 ; C9       ; 485        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; C10      ; 483        ; 8A             ; VGA_SYNC_N                      ; output ; 2.5 V        ;                     ; Column I/O   ; Y               ; no       ; Off          ;
 ; C11      ;            ; 8A             ; VCCIO8A                         ; power  ;              ; 2.5V                ; --           ;                 ; --       ; --           ;
@@ -891,7 +888,7 @@ The pin-out file can be found in C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA
 ; D7       ; 505        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
 ; D8       ;            ; 8A             ; VCCIO8A                         ; power  ;              ; 2.5V                ; --           ;                 ; --       ; --           ;
 ; D9       ; 480        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
-; D10      ; 472        ; 8A             ; RESERVED_INPUT_WITH_WEAK_PULLUP ;        ;              ;                     ; Column I/O   ;                 ; no       ; On           ;
+; D10      ; 472        ; 8A             ; ovs[1]                          ; output ; 2.5 V        ;                     ; Column I/O   ; N               ; no       ; Off          ;
 ; D11      ; 470        ; 8A             ; VGA_VS                          ; output ; 2.5 V        ;                     ; Column I/O   ; Y               ; no       ; Off          ;
 ; D12      ; 496        ; 8A             ; VGA_R[5]                        ; output ; 2.5 V        ;                     ; Column I/O   ; Y               ; no       ; Off          ;
 ; D13      ;            ;                ; GND                             ; gnd    ;              ;                     ; --           ;                 ; --       ; --           ;
@@ -1430,7 +1427,19 @@ Note: Pin directions (input, output or bidir) are based on device operating in u
 ; VGA_BLANK_N ; Incomplete set of assignments ;
 ; VGA_HS      ; Incomplete set of assignments ;
 ; VGA_VS      ; Incomplete set of assignments ;
+; ohs[0]      ; Incomplete set of assignments ;
+; ohs[1]      ; Incomplete set of assignments ;
+; ohs[2]      ; Incomplete set of assignments ;
+; ovs[0]      ; Incomplete set of assignments ;
+; ovs[1]      ; Incomplete set of assignments ;
+; ovs[2]      ; Incomplete set of assignments ;
 ; CLOCK_50    ; Incomplete set of assignments ;
+; ohs[0]      ; Missing location assignment   ;
+; ohs[1]      ; Missing location assignment   ;
+; ohs[2]      ; Missing location assignment   ;
+; ovs[0]      ; Missing location assignment   ;
+; ovs[1]      ; Missing location assignment   ;
+; ovs[2]      ; Missing location assignment   ;
 +-------------+-------------------------------+
 
 
@@ -1439,7 +1448,7 @@ Note: Pin directions (input, output or bidir) are based on device operating in u
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; ALMs needed [=A-B+C] ; [A] ALMs used in final placement ; [B] Estimate of ALMs recoverable by dense packing ; [C] Estimate of ALMs unavailable ; ALMs used for memory ; Combinational ALUTs ; Dedicated Logic Registers ; I/O Registers ; Block Memory Bits ; M10Ks ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+---------------------+-------------+--------------+
-; |VGA_Test                  ; 64.5 (64.5)          ; 68.0 (68.0)                      ; 3.5 (3.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 118 (118)           ; 73 (73)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 30   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
+; |VGA_Test                  ; 64.5 (64.5)          ; 65.5 (65.5)                      ; 1.0 (1.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 118 (118)           ; 64 (64)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 36   ; 0            ; |VGA_Test           ; VGA_Test    ; work         ;
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -1478,6 +1487,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; VGA_BLANK_N ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; VGA_HS      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; VGA_VS      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ohs[0]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ohs[1]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ohs[2]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ovs[0]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ovs[1]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
+; ovs[2]      ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; CLOCK_50    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 +-------------+----------+----+------+------+----+------+-------+--------+------------------------+--------------------------+
 
@@ -1499,15 +1514,15 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------+----------------------+---------+--------------+--------+----------------------+------------------+---------------------------+
 ; CLOCK_50  ; PIN_AF14             ; 2       ; Clock        ; no     ; --                   ; --               ; --                        ;
 ; CLOCK_50  ; PIN_AF14             ; 34      ; Clock        ; yes    ; Global Clock         ; GCLK4            ; --                        ;
-; Equal0~0  ; LABCELL_X33_Y76_N39  ; 9       ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal1~0  ; MLABCELL_X34_Y78_N51 ; 4       ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal2~0  ; LABCELL_X33_Y78_N39  ; 14      ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal2~1  ; LABCELL_X33_Y78_N57  ; 6       ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal2~2  ; LABCELL_X33_Y78_N54  ; 11      ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal3~0  ; MLABCELL_X34_Y75_N6  ; 11      ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal3~1  ; LABCELL_X35_Y75_N57  ; 6       ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; Equal3~2  ; MLABCELL_X34_Y75_N54 ; 7       ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; hStage[1] ; FF_X34_Y77_N50       ; 46      ; Clock        ; no     ; --                   ; --               ; --                        ;
+; Equal10~0 ; LABCELL_X36_Y77_N9   ; 12      ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal10~1 ; MLABCELL_X34_Y77_N51 ; 5       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal10~2 ; MLABCELL_X34_Y77_N18 ; 8       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal11~0 ; MLABCELL_X34_Y78_N3  ; 11      ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal11~1 ; MLABCELL_X34_Y78_N30 ; 6       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal11~2 ; LABCELL_X33_Y78_N33  ; 7       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal8~0  ; LABCELL_X35_Y78_N48  ; 9       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; Equal9~0  ; MLABCELL_X34_Y77_N39 ; 3       ; Clock enable ; no     ; --                   ; --               ; --                        ;
+; hStage[1] ; FF_X35_Y77_N44       ; 38      ; Clock        ; no     ; --                   ; --               ; --                        ;
 +-----------+----------------------+---------+--------------+--------+----------------------+------------------+---------------------------+
 
 
@@ -1525,14 +1540,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------------------+-------------------------+
 ; Routing Resource Type                       ; Usage                   ;
 +---------------------------------------------+-------------------------+
-; Block interconnects                         ; 172 / 289,320 ( < 1 % ) ;
+; Block interconnects                         ; 163 / 289,320 ( < 1 % ) ;
 ; C12 interconnects                           ; 11 / 13,420 ( < 1 % )   ;
-; C2 interconnects                            ; 50 / 119,108 ( < 1 % )  ;
-; C4 interconnects                            ; 26 / 56,300 ( < 1 % )   ;
+; C2 interconnects                            ; 40 / 119,108 ( < 1 % )  ;
+; C4 interconnects                            ; 30 / 56,300 ( < 1 % )   ;
 ; DQS bus muxes                               ; 0 / 25 ( 0 % )          ;
 ; DQS-18 I/O buses                            ; 0 / 25 ( 0 % )          ;
 ; DQS-9 I/O buses                             ; 0 / 25 ( 0 % )          ;
-; Direct links                                ; 38 / 289,320 ( < 1 % )  ;
+; Direct links                                ; 31 / 289,320 ( < 1 % )  ;
 ; Global clocks                               ; 1 / 16 ( 6 % )          ;
 ; HPS SDRAM PLL inputs                        ; 0 / 1 ( 0 % )           ;
 ; HPS SDRAM PLL outputs                       ; 0 / 1 ( 0 % )           ;
@@ -1588,10 +1603,10 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; HPS_INTERFACE_TPIU_TRACE_INPUTs             ; 0 / 2 ( 0 % )           ;
 ; HPS_INTERFACE_TPIU_TRACE_OUTPUTs            ; 0 / 33 ( 0 % )          ;
 ; Horizontal periphery clocks                 ; 0 / 72 ( 0 % )          ;
-; Local interconnects                         ; 78 / 84,580 ( < 1 % )   ;
+; Local interconnects                         ; 73 / 84,580 ( < 1 % )   ;
 ; Quadrant clocks                             ; 0 / 66 ( 0 % )          ;
-; R14 interconnects                           ; 25 / 12,676 ( < 1 % )   ;
-; R14/C12 interconnect drivers                ; 34 / 20,720 ( < 1 % )   ;
+; R14 interconnects                           ; 22 / 12,676 ( < 1 % )   ;
+; R14/C12 interconnect drivers                ; 32 / 20,720 ( < 1 % )   ;
 ; R3 interconnects                            ; 89 / 130,992 ( < 1 % )  ;
 ; R6 interconnects                            ; 80 / 266,960 ( < 1 % )  ;
 ; Spine clocks                                ; 1 / 360 ( < 1 % )       ;
@@ -1649,46 +1664,52 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------+-----------+-----------------------------------+------------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------+---------------------+-------------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; I/O Rules Matrix                                                                                                                                                                                                                                                                                                                                                                                                                     ;
-+--------------------+-----------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-; Pin/Rules          ; IO_000001 ; IO_000002    ; IO_000003 ; IO_000004    ; IO_000005    ; IO_000006 ; IO_000007 ; IO_000008    ; IO_000009 ; IO_000010 ; IO_000011    ; IO_000012    ; IO_000013    ; IO_000014    ; IO_000015    ; IO_000018    ; IO_000019    ; IO_000020    ; IO_000021    ; IO_000022    ; IO_000023    ; IO_000024    ; IO_000026    ; IO_000027    ; IO_000045    ; IO_000046    ; IO_000047    ; IO_000034    ;
-+--------------------+-----------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-; Total Pass         ; 30        ; 0            ; 30        ; 0            ; 0            ; 30        ; 30        ; 0            ; 30        ; 30        ; 0            ; 29           ; 0            ; 0            ; 0            ; 0            ; 29           ; 0            ; 0            ; 0            ; 0            ; 29           ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
-; Total Unchecked    ; 0         ; 0            ; 0         ; 0            ; 0            ; 0         ; 0         ; 0            ; 0         ; 0         ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
-; Total Inapplicable ; 0         ; 30           ; 0         ; 30           ; 30           ; 0         ; 0         ; 30           ; 0         ; 0         ; 30           ; 1            ; 30           ; 30           ; 30           ; 30           ; 1            ; 30           ; 30           ; 30           ; 30           ; 1            ; 30           ; 30           ; 30           ; 30           ; 30           ; 30           ;
-; Total Fail         ; 0         ; 0            ; 0         ; 0            ; 0            ; 0         ; 0         ; 0            ; 0         ; 0         ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
-; VGA_R[0]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[1]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[2]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[3]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[4]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[5]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[6]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_R[7]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[0]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[1]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[2]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[3]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[4]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[5]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[6]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_G[7]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[0]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[1]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[2]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[3]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[4]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[5]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[6]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_B[7]           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_CLK            ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_SYNC_N         ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_BLANK_N        ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_HS             ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; VGA_VS             ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-; CLOCK_50           ; Pass      ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
-+--------------------+-----------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; I/O Rules Matrix                                                                                                                                                                                                                                                                                                                                                                                                                              ;
++--------------------+--------------+--------------+--------------+--------------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
+; Pin/Rules          ; IO_000001    ; IO_000002    ; IO_000003    ; IO_000004    ; IO_000005    ; IO_000006 ; IO_000007    ; IO_000008    ; IO_000009 ; IO_000010 ; IO_000011    ; IO_000012    ; IO_000013    ; IO_000014    ; IO_000015    ; IO_000018    ; IO_000019    ; IO_000020    ; IO_000021    ; IO_000022    ; IO_000023    ; IO_000024    ; IO_000026    ; IO_000027    ; IO_000045    ; IO_000046    ; IO_000047    ; IO_000034    ;
++--------------------+--------------+--------------+--------------+--------------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
+; Total Pass         ; 30           ; 0            ; 30           ; 0            ; 0            ; 36        ; 30           ; 0            ; 36        ; 36        ; 0            ; 35           ; 0            ; 0            ; 0            ; 0            ; 35           ; 0            ; 0            ; 0            ; 0            ; 35           ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
+; Total Unchecked    ; 0            ; 0            ; 0            ; 0            ; 0            ; 0         ; 0            ; 0            ; 0         ; 0         ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
+; Total Inapplicable ; 6            ; 36           ; 6            ; 36           ; 36           ; 0         ; 6            ; 36           ; 0         ; 0         ; 36           ; 1            ; 36           ; 36           ; 36           ; 36           ; 1            ; 36           ; 36           ; 36           ; 36           ; 1            ; 36           ; 36           ; 36           ; 36           ; 36           ; 36           ;
+; Total Fail         ; 0            ; 0            ; 0            ; 0            ; 0            ; 0         ; 0            ; 0            ; 0         ; 0         ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ; 0            ;
+; VGA_R[0]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[1]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[2]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[3]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[4]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[5]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[6]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_R[7]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[0]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[1]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[2]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[3]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[4]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[5]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[6]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_G[7]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[0]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[1]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[2]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[3]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[4]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[5]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[6]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_B[7]           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_CLK            ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_SYNC_N         ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_BLANK_N        ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_HS             ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; VGA_VS             ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ohs[0]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ohs[1]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ohs[2]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ovs[0]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ovs[1]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; ovs[2]             ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass      ; Inapplicable ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
+; CLOCK_50           ; Pass         ; Inapplicable ; Pass         ; Inapplicable ; Inapplicable ; Pass      ; Pass         ; Inapplicable ; Pass      ; Pass      ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ; Inapplicable ;
++--------------------+--------------+--------------+--------------+--------------+--------------+-----------+--------------+--------------+-----------+-----------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
 
 
 +------------------------------------------------------------------------------------------------+
@@ -1739,9 +1760,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------+----------------------+-------------------+
 ; Source Clock(s) ; Destination Clock(s) ; Delay Added in ns ;
 +-----------------+----------------------+-------------------+
-; CLOCK_50        ; CLOCK_50             ; 66.4              ;
-; hStage[1]       ; hStage[1]            ; 30.5              ;
-; CLOCK_50        ; CLOCK_50,I/O         ; 2.5               ;
+; CLOCK_50        ; CLOCK_50             ; 68.3              ;
+; hStage[1]       ; hStage[1]            ; 21.0              ;
+; CLOCK_50        ; CLOCK_50,I/O         ; 2.6               ;
 +-----------------+----------------------+-------------------+
 Note: For more information on problematic transfers, consider running the Fitter again with the Optimize hold timing option (Settings Menu) turned off.
 This will disable optimization of problematic paths and expose them for further analysis using the Timing Analyzer.
@@ -1752,63 +1773,63 @@ This will disable optimization of problematic paths and expose them for further 
 +-----------------+----------------------+-------------------+
 ; Source Register ; Destination Register ; Delay Added in ns ;
 +-----------------+----------------------+-------------------+
-; hStage[1]       ; hStage[1]            ; 7.198             ;
-; hfp_count[5]    ; hStage[1]            ; 3.742             ;
-; hfp_count[4]    ; hStage[1]            ; 3.742             ;
-; hfp_count[3]    ; hStage[1]            ; 3.742             ;
-; hfp_count[2]    ; hStage[1]            ; 3.742             ;
-; hfp_count[0]    ; hStage[1]            ; 3.742             ;
-; hfp_count[1]    ; hStage[1]            ; 3.742             ;
-; hStage[0]       ; hStage[1]            ; 3.742             ;
-; hbp_count[0]    ; hStage[1]            ; 2.567             ;
-; hbp_count[1]    ; hStage[1]            ; 2.548             ;
-; hbp_count[2]    ; hStage[1]            ; 2.544             ;
-; hbp_count[3]    ; hStage[1]            ; 2.536             ;
-; hbp_count[5]    ; hStage[1]            ; 2.484             ;
-; hbp_count[4]    ; hStage[1]            ; 2.477             ;
-; hbp_count[6]    ; hStage[1]            ; 2.452             ;
-; vdisp_count[3]  ; vdisp_count[3]       ; 0.951             ;
-; vdisp_count[2]  ; vdisp_count[3]       ; 0.941             ;
-; vdisp_count[0]  ; vdisp_count[3]       ; 0.934             ;
-; vdisp_count[1]  ; vdisp_count[3]       ; 0.924             ;
-; vdisp_count[4]  ; vdisp_count[3]       ; 0.906             ;
-; vfp_count[2]    ; vfp_count[0]         ; 0.879             ;
-; vbp_count[2]    ; vbp_count[1]         ; 0.841             ;
-; vbp_count[3]    ; vbp_count[1]         ; 0.839             ;
-; vdisp_count[5]  ; vdisp_count[3]       ; 0.836             ;
-; vfp_count[0]    ; vfp_count[2]         ; 0.797             ;
-; vbp_count[5]    ; vbp_count[1]         ; 0.794             ;
-; vbp_count[0]    ; vbp_count[1]         ; 0.791             ;
-; vbp_count[4]    ; vbp_count[1]         ; 0.771             ;
-; vdisp_count[8]  ; vdisp_count[3]       ; 0.695             ;
-; vStage[0]       ; vbp_count[0]         ; 0.618             ;
-; vfp_count[3]    ; vStage[0]            ; 0.614             ;
-; vStage[1]       ; vbp_count[0]         ; 0.600             ;
-; hdisp_count[5]  ; hdisp_count[3]       ; 0.574             ;
-; hs_count[5]     ; hs_count[0]          ; 0.567             ;
-; vdisp_count[6]  ; vdisp_count[3]       ; 0.562             ;
-; hs_count[7]     ; hs_count[0]          ; 0.554             ;
-; vs_count[1]     ; vs_count[0]          ; 0.549             ;
-; vdisp_count[7]  ; vdisp_count[3]       ; 0.539             ;
-; hdisp_count[10] ; hdisp_count[8]       ; 0.530             ;
-; vfp_count[1]    ; vStage[0]            ; 0.526             ;
+; hStage[1]       ; hStage[1]            ; 6.983             ;
+; hfp_count[5]    ; hStage[1]            ; 4.057             ;
+; hfp_count[4]    ; hStage[1]            ; 4.057             ;
+; hfp_count[3]    ; hStage[1]            ; 4.057             ;
+; hfp_count[2]    ; hStage[1]            ; 4.057             ;
+; hfp_count[0]    ; hStage[1]            ; 4.057             ;
+; hfp_count[1]    ; hStage[1]            ; 4.057             ;
+; hStage[0]       ; hStage[1]            ; 4.057             ;
+; hbp_count[0]    ; hStage[1]            ; 2.721             ;
+; hbp_count[2]    ; hStage[1]            ; 2.698             ;
+; hbp_count[1]    ; hStage[1]            ; 2.691             ;
+; hbp_count[3]    ; hStage[1]            ; 2.681             ;
+; hbp_count[6]    ; hStage[1]            ; 2.629             ;
+; hbp_count[4]    ; hStage[1]            ; 2.602             ;
+; hbp_count[5]    ; hStage[1]            ; 2.574             ;
+; vdisp_count[2]  ; vdisp_count[0]       ; 0.954             ;
+; vdisp_count[1]  ; vdisp_count[0]       ; 0.930             ;
+; vdisp_count[4]  ; vdisp_count[0]       ; 0.907             ;
+; vbp_count[3]    ; vbp_count[4]         ; 0.686             ;
+; vdisp_count[3]  ; vdisp_count[0]       ; 0.669             ;
+; vfp_count[2]    ; vfp_count[3]         ; 0.651             ;
+; vbp_count[5]    ; vbp_count[4]         ; 0.625             ;
+; vStage[0]       ; vStage[1]            ; 0.625             ;
+; vs_count[0]     ; vs_count[1]          ; 0.624             ;
+; vfp_count[0]    ; vfp_count[3]         ; 0.602             ;
+; vStage[1]       ; vStage[0]            ; 0.589             ;
+; hdisp_count[5]  ; hdisp_count[8]       ; 0.569             ;
+; vfp_count[1]    ; vfp_count[2]         ; 0.569             ;
+; vfp_count[3]    ; vfp_count[2]         ; 0.569             ;
+; vs_count[1]     ; vs_count[0]          ; 0.565             ;
+; hs_count[5]     ; hs_count[6]          ; 0.563             ;
+; vbp_count[1]    ; vbp_count[4]         ; 0.555             ;
+; vbp_count[2]    ; vbp_count[5]         ; 0.554             ;
+; vdisp_count[5]  ; vdisp_count[0]       ; 0.551             ;
+; hdisp_count[10] ; hdisp_count[8]       ; 0.549             ;
+; hs_count[7]     ; hs_count[6]          ; 0.542             ;
+; vdisp_count[0]  ; vdisp_count[0]       ; 0.542             ;
 ; hs_count[6]     ; hs_count[0]          ; 0.523             ;
-; vbp_count[1]    ; vbp_count[2]         ; 0.517             ;
-; hdisp_count[1]  ; hdisp_count[3]       ; 0.459             ;
-; hs_count[1]     ; hs_count[0]          ; 0.458             ;
-; hdisp_count[2]  ; hdisp_count[3]       ; 0.455             ;
-; hdisp_count[0]  ; hdisp_count[3]       ; 0.455             ;
-; hs_count[2]     ; hs_count[0]          ; 0.454             ;
-; hs_count[0]     ; hs_count[0]          ; 0.453             ;
-; hdisp_count[6]  ; hdisp_count[8]       ; 0.451             ;
-; hs_count[3]     ; hs_count[0]          ; 0.447             ;
-; hdisp_count[7]  ; hdisp_count[8]       ; 0.428             ;
-; hdisp_count[3]  ; hdisp_count[3]       ; 0.427             ;
-; hs_count[4]     ; hs_count[0]          ; 0.427             ;
-; hdisp_count[8]  ; hdisp_count[8]       ; 0.422             ;
-; hdisp_count[4]  ; hdisp_count[3]       ; 0.414             ;
-; vs_count[0]     ; vs_count[1]          ; 0.368             ;
-; hdisp_count[9]  ; hdisp_count[8]       ; 0.248             ;
+; vbp_count[4]    ; vbp_count[4]         ; 0.447             ;
+; vbp_count[0]    ; vbp_count[4]         ; 0.447             ;
+; hs_count[0]     ; hs_count[6]          ; 0.445             ;
+; hs_count[2]     ; hs_count[6]          ; 0.424             ;
+; hs_count[1]     ; hs_count[6]          ; 0.423             ;
+; hs_count[3]     ; hs_count[6]          ; 0.422             ;
+; vdisp_count[6]  ; vdisp_count[2]       ; 0.420             ;
+; vdisp_count[7]  ; vdisp_count[2]       ; 0.417             ;
+; hs_count[4]     ; hs_count[6]          ; 0.390             ;
+; hdisp_count[1]  ; hStage[0]            ; 0.389             ;
+; hdisp_count[2]  ; hStage[0]            ; 0.388             ;
+; vdisp_count[8]  ; vdisp_count[2]       ; 0.359             ;
+; hdisp_count[6]  ; hdisp_count[8]       ; 0.172             ;
+; hdisp_count[3]  ; hStage[0]            ; 0.172             ;
+; hdisp_count[4]  ; hStage[0]            ; 0.172             ;
+; hdisp_count[0]  ; hStage[0]            ; 0.172             ;
+; hdisp_count[8]  ; hdisp_count[8]       ; 0.097             ;
+; hdisp_count[7]  ; hStage[0]            ; 0.070             ;
+; hdisp_count[9]  ; hStage[0]            ; 0.070             ;
 +-----------------+----------------------+-------------------+
 Note: This table only shows the top 57 path(s) that have the largest delay added for hold.
 
@@ -1824,6 +1845,7 @@ Info (21077): High junction temperature is 85 degrees C
 Info (171003): Fitter is performing an Auto Fit compilation, which may decrease Fitter effort to reduce compilation time
 Warning (292013): Feature LogicLock is only available with a valid subscription license. You can purchase a software subscription to gain full access to this feature.
 Warning (15714): Some pins have incomplete I/O assignments. Refer to the I/O Assignment Warnings report for details
+Critical Warning (169085): No exact pin location assignment(s) for 6 pins of 36 total pins. For the list of pins please refer to the I/O Assignment Warnings table in the fitter report.
 Info (184020): Starting Fitter periphery placement operations
 Info (11191): Automatically promoted 1 clock (1 global)
     Info (11162): CLOCK_50~inputCLKENA0 with 34 fanout uses global clock CLKCTRL_G4
@@ -1839,28 +1861,28 @@ Info (176235): Finished register packing
 Info (11798): Fitter preparation operations ending: elapsed time is 00:00:10
 Info (170189): Fitter placement preparation operations beginning
 Info (14951): The Fitter is using Advanced Physical Optimization.
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:15
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:11
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:03
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:02
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 0% of the available device resources
     Info (170196): Router estimated peak interconnect usage is 1% of the available device resources in the region that extends from location X33_Y70 to location X44_Y81
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
 Info (170194): Fitter routing operations ending: elapsed time is 00:00:03
-Info (11888): Total time spent on timing analysis during the Fitter is 1.17 seconds.
+Info (11888): Total time spent on timing analysis during the Fitter is 0.73 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:03
+Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:04
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.fit.smsg
-Info: Quartus Prime Fitter was successful. 0 errors, 4 warnings
-    Info: Peak virtual memory: 6905 megabytes
-    Info: Processing ended: Wed Jul 10 12:12:48 2024
-    Info: Elapsed time: 00:02:07
-    Info: Total CPU time (on all processors): 00:07:53
+Info: Quartus Prime Fitter was successful. 0 errors, 5 warnings
+    Info: Peak virtual memory: 6938 megabytes
+    Info: Processing ended: Wed Jul 10 13:54:17 2024
+    Info: Elapsed time: 00:00:53
+    Info: Total CPU time (on all processors): 00:02:54
 
 
 +----------------------------+
