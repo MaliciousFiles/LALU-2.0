@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Test
-Wed Jul 10 18:16:13 2024
+Wed Jul 10 19:10:20 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -15,18 +15,20 @@ Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis RAM Summary
   9. Analysis & Synthesis IP Cores Summary
- 10. Registers Removed During Synthesis
- 11. General Register Statistics
- 12. Inverted Register Statistics
- 13. Multiplexer Restructuring Statistics (Restructuring Performed)
- 14. Source assignments for altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|altsyncram_77g2:altsyncram1
- 15. Parameter Settings for User Entity Instance: altsyncram:altsyncram_component
- 16. altsyncram Parameter Settings by Entity Instance
- 17. In-System Memory Content Editor Settings
- 18. Post-Synthesis Netlist Statistics for Top Partition
- 19. Elapsed Time Per Partition
- 20. Analysis & Synthesis Messages
- 21. Analysis & Synthesis Suppressed Messages
+ 10. State Machine - |VGA_Test|vStage
+ 11. State Machine - |VGA_Test|hStage
+ 12. Registers Removed During Synthesis
+ 13. General Register Statistics
+ 14. Inverted Register Statistics
+ 15. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 16. Source assignments for altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|altsyncram_77g2:altsyncram1
+ 17. Parameter Settings for User Entity Instance: altsyncram:altsyncram_component
+ 18. altsyncram Parameter Settings by Entity Instance
+ 19. In-System Memory Content Editor Settings
+ 20. Post-Synthesis Netlist Statistics for Top Partition
+ 21. Elapsed Time Per Partition
+ 22. Analysis & Synthesis Messages
+ 23. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -53,14 +55,14 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jul 10 18:16:13 2024          ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 10 19:10:20 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
-; Total registers                 ; 199                                            ;
-; Total pins                      ; 30                                             ;
+; Total registers                 ; 244                                            ;
+; Total pins                      ; 36                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 24                                             ;
 ; Total DSP Blocks                ; 0                                              ;
@@ -214,18 +216,18 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 149                      ;
+; Estimate of Logic utilization (ALMs needed) ; 196                      ;
 ;                                             ;                          ;
-; Combinational ALUT usage for logic          ; 245                      ;
-;     -- 7 input functions                    ; 3                        ;
-;     -- 6 input functions                    ; 35                       ;
-;     -- 5 input functions                    ; 50                       ;
-;     -- 4 input functions                    ; 34                       ;
-;     -- <=3 input functions                  ; 123                      ;
+; Combinational ALUT usage for logic          ; 332                      ;
+;     -- 7 input functions                    ; 4                        ;
+;     -- 6 input functions                    ; 41                       ;
+;     -- 5 input functions                    ; 58                       ;
+;     -- 4 input functions                    ; 46                       ;
+;     -- <=3 input functions                  ; 183                      ;
 ;                                             ;                          ;
-; Dedicated logic registers                   ; 199                      ;
+; Dedicated logic registers                   ; 244                      ;
 ;                                             ;                          ;
-; I/O pins                                    ; 30                       ;
+; I/O pins                                    ; 36                       ;
 ; Total MLAB memory bits                      ; 0                        ;
 ; Total block memory bits                     ; 24                       ;
 ;                                             ;                          ;
@@ -233,8 +235,8 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; altera_internal_jtag~TDO ;
 ; Maximum fan-out                             ; 148                      ;
-; Total fan-out                               ; 1627                     ;
-; Average fan-out                             ; 3.12                     ;
+; Total fan-out                               ; 2033                     ;
+; Average fan-out                             ; 3.06                     ;
 +---------------------------------------------+--------------------------+
 
 
@@ -243,12 +245,12 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                  ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |VGA_Test                                                                                                                               ; 245 (114)           ; 199 (85)                  ; 24                ; 0          ; 30   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
-;    |altsyncram:altsyncram_component|                                                                                                    ; 32 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component                                                                                                                                                                                                                                                                                                            ; altsyncram                        ; work         ;
-;       |altsyncram_bcl1:auto_generated|                                                                                                  ; 32 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated                                                                                                                                                                                                                                                                             ; altsyncram_bcl1                   ; work         ;
+; |VGA_Test                                                                                                                               ; 332 (200)           ; 244 (130)                 ; 24                ; 0          ; 36   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
+;    |altsyncram:altsyncram_component|                                                                                                    ; 33 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component                                                                                                                                                                                                                                                                                                            ; altsyncram                        ; work         ;
+;       |altsyncram_bcl1:auto_generated|                                                                                                  ; 33 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated                                                                                                                                                                                                                                                                             ; altsyncram_bcl1                   ; work         ;
 ;          |altsyncram_77g2:altsyncram1|                                                                                                  ; 0 (0)               ; 0 (0)                     ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|altsyncram_77g2:altsyncram1                                                                                                                                                                                                                                                 ; altsyncram_77g2                   ; work         ;
-;          |sld_mod_ram_rom:mgl_prim2|                                                                                                    ; 32 (17)             ; 28 (19)                   ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2                                                                                                                                                                                                                                                   ; sld_mod_ram_rom                   ; work         ;
-;             |sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|                                                                        ; 15 (15)             ; 9 (9)                     ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr                                                                                                                                                                                                ; sld_rom_sr                        ; work         ;
+;          |sld_mod_ram_rom:mgl_prim2|                                                                                                    ; 33 (17)             ; 28 (19)                   ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2                                                                                                                                                                                                                                                   ; sld_mod_ram_rom                   ; work         ;
+;             |sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|                                                                        ; 16 (16)             ; 9 (9)                     ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr                                                                                                                                                                                                ; sld_rom_sr                        ; work         ;
 ;    |sld_hub:auto_hub|                                                                                                                   ; 99 (1)              ; 86 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|sld_hub:auto_hub                                                                                                                                                                                                                                                                                                                           ; sld_hub                           ; altera_sld   ;
 ;       |alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric| ; 98 (0)              ; 86 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric                                                                                                                                                                                           ; alt_sld_fab_with_jtag_input       ; altera_sld   ;
 ;          |alt_sld_fab:instrumentation_fabric|                                                                                           ; 98 (0)              ; 86 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |VGA_Test|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric                                                                                                                                                        ; alt_sld_fab                       ; alt_sld_fab  ;
@@ -283,15 +285,45 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------+--------------+---------+--------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
 
 
+Encoding Type:  One-Hot
++----------------------------------------------------------------+
+; State Machine - |VGA_Test|vStage                               ;
++------------+------------+------------+------------+------------+
+; Name       ; vStage.011 ; vStage.010 ; vStage.001 ; vStage.000 ;
++------------+------------+------------+------------+------------+
+; vStage.000 ; 0          ; 0          ; 0          ; 0          ;
+; vStage.001 ; 0          ; 0          ; 1          ; 1          ;
+; vStage.010 ; 0          ; 1          ; 0          ; 1          ;
+; vStage.011 ; 1          ; 0          ; 0          ; 1          ;
++------------+------------+------------+------------+------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------+
+; State Machine - |VGA_Test|hStage                               ;
++------------+------------+------------+------------+------------+
+; Name       ; hStage.011 ; hStage.010 ; hStage.001 ; hStage.000 ;
++------------+------------+------------+------------+------------+
+; hStage.000 ; 0          ; 0          ; 0          ; 0          ;
+; hStage.001 ; 0          ; 0          ; 1          ; 1          ;
+; hStage.010 ; 0          ; 1          ; 0          ; 1          ;
+; hStage.011 ; 1          ; 0          ; 0          ; 1          ;
++------------+------------+------------+------------+------------+
+
+
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Registers Removed During Synthesis                                                                                                                               ;
 +-------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 ; Register name                                                                                                           ; Reason for Removal                     ;
 +-------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
-; vStage[2]                                                                                                               ; Stuck at GND due to stuck port data_in ;
-; hStage[2]                                                                                                               ; Stuck at GND due to stuck port data_in ;
+; vStage~5                                                                                                                ; Lost fanout                            ;
+; vStage~6                                                                                                                ; Lost fanout                            ;
+; vStage~7                                                                                                                ; Lost fanout                            ;
+; hStage~5                                                                                                                ; Lost fanout                            ;
+; hStage~6                                                                                                                ; Lost fanout                            ;
+; hStage~7                                                                                                                ; Lost fanout                            ;
 ; altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_shift_cntr_reg[3] ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 3                                                                                   ;                                        ;
+; Total Number of Removed Registers = 7                                                                                   ;                                        ;
 +-------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 
 
@@ -300,12 +332,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 199   ;
-; Number of registers using Synchronous Clear  ; 7     ;
+; Total registers                              ; 244   ;
+; Number of registers using Synchronous Clear  ; 25    ;
 ; Number of registers using Synchronous Load   ; 9     ;
 ; Number of registers using Asynchronous Clear ; 44    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 158   ;
+; Number of registers using Clock Enable       ; 203   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -318,35 +350,53 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; red[0]                                                                                                                                                                                                                                                                                                                          ; 1       ;
 ; green[0]                                                                                                                                                                                                                                                                                                                        ; 1       ;
 ; blue[0]                                                                                                                                                                                                                                                                                                                         ; 1       ;
-; hStage[1]                                                                                                                                                                                                                                                                                                                       ; 29      ;
-; vStage[1]                                                                                                                                                                                                                                                                                                                       ; 6       ;
+; vfp_count[11]                                                                                                                                                                                                                                                                                                                   ; 7       ;
+; vfp_count[12]                                                                                                                                                                                                                                                                                                                   ; 7       ;
+; vfp_count[13]                                                                                                                                                                                                                                                                                                                   ; 7       ;
+; vfp_count[4]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vfp_count[0]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vfp_count[9]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vfp_count[10]                                                                                                                                                                                                                                                                                                                   ; 2       ;
+; vdisp_count[0]                                                                                                                                                                                                                                                                                                                  ; 2       ;
+; vdisp_count[2]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; vdisp_count[5]                                                                                                                                                                                                                                                                                                                  ; 2       ;
-; vdisp_count[6]                                                                                                                                                                                                                                                                                                                  ; 2       ;
-; vdisp_count[7]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; vdisp_count[8]                                                                                                                                                                                                                                                                                                                  ; 2       ;
-; vfp_count[1]                                                                                                                                                                                                                                                                                                                    ; 4       ;
-; vfp_count[3]                                                                                                                                                                                                                                                                                                                    ; 3       ;
-; vs_count[0]                                                                                                                                                                                                                                                                                                                     ; 3       ;
+; vdisp_count[9]                                                                                                                                                                                                                                                                                                                  ; 2       ;
+; vdisp_count[13]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; vdisp_count[15]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; vdisp_count[16]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; vdisp_count[17]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; vdisp_count[19]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; vs_count[5]                                                                                                                                                                                                                                                                                                                     ; 6       ;
+; vs_count[11]                                                                                                                                                                                                                                                                                                                    ; 6       ;
 ; vs_count[1]                                                                                                                                                                                                                                                                                                                     ; 2       ;
-; vbp_count[0]                                                                                                                                                                                                                                                                                                                    ; 7       ;
-; vbp_count[5]                                                                                                                                                                                                                                                                                                                    ; 3       ;
-; hdisp_count[5]                                                                                                                                                                                                                                                                                                                  ; 8       ;
-; hdisp_count[10]                                                                                                                                                                                                                                                                                                                 ; 8       ;
+; vs_count[3]                                                                                                                                                                                                                                                                                                                     ; 2       ;
+; vs_count[6]                                                                                                                                                                                                                                                                                                                     ; 2       ;
+; vs_count[10]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vbp_count[11]                                                                                                                                                                                                                                                                                                                   ; 7       ;
+; vbp_count[0]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vbp_count[4]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vbp_count[6]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vbp_count[7]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; vbp_count[10]                                                                                                                                                                                                                                                                                                                   ; 2       ;
+; vbp_count[14]                                                                                                                                                                                                                                                                                                                   ; 2       ;
+; vbp_count[15]                                                                                                                                                                                                                                                                                                                   ; 2       ;
+; hfp_count[5]                                                                                                                                                                                                                                                                                                                    ; 2       ;
+; hdisp_count[5]                                                                                                                                                                                                                                                                                                                  ; 11      ;
+; hdisp_count[0]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; hdisp_count[1]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; hdisp_count[2]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; hdisp_count[4]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; hdisp_count[6]                                                                                                                                                                                                                                                                                                                  ; 2       ;
 ; hdisp_count[7]                                                                                                                                                                                                                                                                                                                  ; 2       ;
-; hfp_count[1]                                                                                                                                                                                                                                                                                                                    ; 6       ;
-; hfp_count[2]                                                                                                                                                                                                                                                                                                                    ; 6       ;
-; hfp_count[3]                                                                                                                                                                                                                                                                                                                    ; 6       ;
-; hfp_count[4]                                                                                                                                                                                                                                                                                                                    ; 6       ;
-; hs_count[5]                                                                                                                                                                                                                                                                                                                     ; 8       ;
-; hs_count[7]                                                                                                                                                                                                                                                                                                                     ; 8       ;
+; hdisp_count[10]                                                                                                                                                                                                                                                                                                                 ; 2       ;
+; hs_count[5]                                                                                                                                                                                                                                                                                                                     ; 10      ;
+; hs_count[0]                                                                                                                                                                                                                                                                                                                     ; 2       ;
 ; hs_count[1]                                                                                                                                                                                                                                                                                                                     ; 2       ;
 ; hs_count[2]                                                                                                                                                                                                                                                                                                                     ; 2       ;
 ; hs_count[3]                                                                                                                                                                                                                                                                                                                     ; 2       ;
 ; hs_count[4]                                                                                                                                                                                                                                                                                                                     ; 2       ;
+; hs_count[7]                                                                                                                                                                                                                                                                                                                     ; 2       ;
 ; hbp_count[4]                                                                                                                                                                                                                                                                                                                    ; 8       ;
 ; hbp_count[6]                                                                                                                                                                                                                                                                                                                    ; 8       ;
 ; hbp_count[0]                                                                                                                                                                                                                                                                                                                    ; 2       ;
@@ -355,7 +405,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; hbp_count[3]                                                                                                                                                                                                                                                                                                                    ; 2       ;
 ; sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric|alt_sld_fab_alt_sld_fab:alt_sld_fab|alt_sld_fab_alt_sld_fab_sldfabric:sldfabric|sld_jtag_hub:\jtag_hub_gen:real_sld_jtag_hub|jtag_ir_reg[1] ; 3       ;
 ; sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric|alt_sld_fab_alt_sld_fab:alt_sld_fab|alt_sld_fab_alt_sld_fab_sldfabric:sldfabric|sld_jtag_hub:\jtag_hub_gen:real_sld_jtag_hub|jtag_ir_reg[2] ; 3       ;
-; Total number of inverted registers = 40                                                                                                                                                                                                                                                                                         ;         ;
+; Total number of inverted registers = 58                                                                                                                                                                                                                                                                                         ;         ;
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
 
 
@@ -364,13 +414,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                            ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_reg[0]                                                ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_shift_cntr_reg[0]                                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_reg[5]                                                ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_shift_cntr_reg[1]                                     ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_addr_reg[2]                                                ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|word_counter[4] ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|vStage[0]                                                                                                                                                   ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|hStage[0]                                                                                                                                                   ;
-; 26:1               ; 4 bits    ; 68 LEs        ; 48 LEs               ; 20 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|WORD_SR[3]      ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|word_counter[2] ;
+; 26:1               ; 4 bits    ; 68 LEs        ; 48 LEs               ; 20 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|WORD_SR[1]      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -478,30 +526,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 113                         ;
+; arriav_ff             ; 158                         ;
 ;     CLR               ; 5                           ;
-;     ENA               ; 86                          ;
+;     ENA               ; 113                         ;
 ;     ENA CLR           ; 6                           ;
+;     ENA SCLR          ; 18                          ;
 ;     ENA SLD           ; 8                           ;
 ;     plain             ; 8                           ;
-; arriav_lcell_comb     ; 150                         ;
-;     arith             ; 35                          ;
-;         1 data inputs ; 35                          ;
-;     extend            ; 2                           ;
-;         7 data inputs ; 2                           ;
-;     normal            ; 113                         ;
+; arriav_lcell_comb     ; 239                         ;
+;     arith             ; 88                          ;
+;         1 data inputs ; 88                          ;
+;     extend            ; 3                           ;
+;         7 data inputs ; 3                           ;
+;     normal            ; 148                         ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 11                          ;
-;         2 data inputs ; 14                          ;
-;         3 data inputs ; 16                          ;
-;         4 data inputs ; 19                          ;
-;         5 data inputs ; 31                          ;
-;         6 data inputs ; 20                          ;
-; boundary_port         ; 57                          ;
+;         1 data inputs ; 13                          ;
+;         2 data inputs ; 26                          ;
+;         3 data inputs ; 11                          ;
+;         4 data inputs ; 31                          ;
+;         5 data inputs ; 39                          ;
+;         6 data inputs ; 26                          ;
+; boundary_port         ; 63                          ;
 ; stratixv_ram_block    ; 8                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 1.69                        ;
+; Max LUT depth         ; 3.90                        ;
+; Average LUT depth     ; 2.24                        ;
 +-----------------------+-----------------------------+
 
 
@@ -520,7 +569,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Wed Jul 10 18:15:38 2024
+    Info: Processing started: Wed Jul 10 19:09:56 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Test -c VGA_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -529,9 +578,17 @@ Info (12021): Found 1 design units, including 1 entities, in source file vga_tes
 Info (12021): Found 1 design units, including 1 entities, in source file testbench_1.v
     Info (12023): Found entity 1: tb File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v Line: 3
 Info (12127): Elaborating entity "VGA_Test" for the top level hierarchy
-Info (12128): Elaborating entity "altsyncram" for hierarchy "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 188
-Info (12130): Elaborated megafunction instantiation "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 188
-Info (12133): Instantiated megafunction "altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 188
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(70): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 70
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(80): truncated value with size 32 to match size of target (7) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 80
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(90): truncated value with size 32 to match size of target (11) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 90
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(100): truncated value with size 32 to match size of target (6) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 100
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(112): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 112
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(122): truncated value with size 32 to match size of target (16) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 122
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(132): truncated value with size 32 to match size of target (20) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 132
+Warning (10230): Verilog HDL assignment warning at VGA_Test.v(142): truncated value with size 32 to match size of target (14) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 142
+Info (12128): Elaborating entity "altsyncram" for hierarchy "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 191
+Info (12130): Elaborated megafunction instantiation "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 191
+Info (12133): Instantiated megafunction "altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 191
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
     Info (12134): Parameter "init_file" = "RAMCONTENTS_RAM_2.mif"
@@ -555,7 +612,7 @@ Info (12128): Elaborating entity "altsyncram_bcl1" for hierarchy "altsyncram:alt
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_77g2.tdf
     Info (12023): Found entity 1: altsyncram_77g2 File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/altsyncram_77g2.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_77g2" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|altsyncram_77g2:altsyncram1" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/altsyncram_bcl1.tdf Line: 35
-Critical Warning (127003): Can't find Memory Initialization File or Hexadecimal (Intel-Format) File C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/RAMCONTENTS_RAM_2.mif -- setting all initial values to 0 File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 188
+Critical Warning (127003): Can't find Memory Initialization File or Hexadecimal (Intel-Format) File C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/RAMCONTENTS_RAM_2.mif -- setting all initial values to 0 File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 191
 Info (12128): Elaborating entity "sld_mod_ram_rom" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/altsyncram_bcl1.tdf Line: 36
 Info (12130): Elaborated megafunction instantiation "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/altsyncram_bcl1.tdf Line: 36
 Info (12133): Instantiated megafunction "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/altsyncram_bcl1.tdf Line: 36
@@ -571,7 +628,7 @@ Info (12128): Elaborating entity "sld_jtag_endpoint_adapter" for hierarchy "alts
 Info (12128): Elaborating entity "sld_jtag_endpoint_adapter_impl" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_jtag_endpoint_adapter:jtag_signal_adapter|sld_jtag_endpoint_adapter_impl:sld_jtag_endpoint_adapter_impl_inst" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd Line: 232
 Info (12128): Elaborating entity "sld_rom_sr" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd Line: 828
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.07.10.18:15:57 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.07.10.19:10:09 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -596,20 +653,23 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/ip/s
     Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_splitter File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/ip/sldd0716f44/submodules/alt_sld_fab_alt_sld_fab_splitter.sv Line: 3
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 8
+    Warning (13410): Pin "ohs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 12
+    Warning (13410): Pin "ovs[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 13
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
+Info (17049): 6 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 9 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 347 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 442 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 4 input pins
-    Info (21059): Implemented 30 output pins
-    Info (21061): Implemented 304 logic cells
+    Info (21059): Implemented 36 output pins
+    Info (21061): Implemented 393 logic cells
     Info (21064): Implemented 8 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 7 warnings
-    Info: Peak virtual memory: 4922 megabytes
-    Info: Processing ended: Wed Jul 10 18:16:13 2024
-    Info: Elapsed time: 00:00:35
-    Info: Total CPU time (on all processors): 00:01:17
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 17 warnings
+    Info: Peak virtual memory: 4918 megabytes
+    Info: Processing ended: Wed Jul 10 19:10:20 2024
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:51
 
 
 +------------------------------------------+

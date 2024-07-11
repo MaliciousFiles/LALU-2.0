@@ -116,6 +116,22 @@
 					"strict" : false
 				},
 				{
+					"name" : "ohs[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ohs[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ovs[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ovs[1]",
+					"strict" : false
+				},
+				{
 					"name" : "CLOCK_50",
 					"strict" : false
 				}

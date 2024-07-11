@@ -1,4 +1,4 @@
-module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS);
+module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS, ohs, ovs);
 
 input				CLOCK_50;
 output [7:0]	VGA_R;
@@ -9,6 +9,8 @@ output			VGA_SYNC_N;
 output			VGA_BLANK_N;
 output			VGA_HS;
 output			VGA_VS;
+output [2:0]	ohs;
+output [2:0]	ovs;
 
 
 
@@ -16,10 +18,7 @@ output			VGA_VS;
  **      CLOCK      **
  *********************/
 reg vga_clk = 1'b0;
-always @(posedge CLOCK_50)
-begin
-	vga_clk <= ~vga_clk;
-end
+
 
 
 
@@ -30,55 +29,12 @@ end
 // 1 = back porch
 // 2 = display
 // 3 = front porch
-reg [2:0] hStage = 2;
+reg [2:0] hStage = 0;
 
-reg [7:0] hs_count = 8'd190;
-reg [6:0] hbp_count = 7'd95;
-reg [10:0] hdisp_count = 11'd1270;
-reg [5:0] hfp_count = 6'd30;
-
-always @(posedge CLOCK_50)
-begin
-	if (hStage == 0)
-	begin
-		if (hs_count == 1)
-		begin
-			hStage <= hStage+3'b1;
-			hs_count <= 8'd190;
-		end
-		else hs_count <= hs_count - 8'b1;
-	end
-	
-	else if (hStage == 1)
-	begin
-		if (hbp_count == 1)
-		begin
-			hStage <= hStage+3'b1;
-			hbp_count <= 7'd95;
-		end
-		else hbp_count <= hbp_count - 7'b1;
-	end
-	
-	else if (hStage == 2)
-	begin
-		if (hdisp_count == 1)
-		begin
-			hStage <= hStage+3'b1;
-			hdisp_count <= 11'd1270;
-		end
-		else hdisp_count <= hdisp_count - 11'b1;
-	end
-	
-	else if (hStage == 3)
-	begin
-		if (hfp_count == 1)
-		begin
-			hStage <= 3'b0;
-			hfp_count <= 6'd30;
-		end
-		else hfp_count <= hfp_count - 6'b1;
-	end
-end
+reg [7:0] hs_count = 191;
+reg [6:0] hbp_count = 95;
+reg [10:0] hdisp_count = 1271;
+reg [5:0] hfp_count = 32;
 
 
 
@@ -89,54 +45,101 @@ end
 // 1 = back porch
 // 2 = display
 // 3 = front porch
-reg [2:0] vStage = 2;
+reg [2:0] vStage = 0;
 
 
-reg [1:0] vs_count = 2'd3;
-reg [5:0] vbp_count = 6'd33;
-reg [8:0] vdisp_count = 9'd480;
-reg [3:0] vfp_count = 4'd10;
+reg [11:0] vs_count = 3178;
+reg [15:0] vbp_count = 52433;
+reg [19:0] vdisp_count = 762661;
+reg [13:0] vfp_count = 15889;
 
-always @(negedge hStage[1])
+
+
+
+always @(posedge CLOCK_50)
 begin
+	vga_clk <= ~vga_clk;
+	
+	if (hStage == 0)
+	begin
+		if (hs_count == 1)
+		begin
+			hStage <= 1;
+			hs_count <= 191;
+		end
+		else hs_count <= hs_count - 1;
+	end
+	
+	else if (hStage == 1)
+	begin
+		if (hbp_count == 1)
+		begin
+			hStage <= 2;
+			hbp_count <= 95;
+		end
+		else hbp_count <= hbp_count - 1;
+	end
+	
+	else if (hStage == 2)
+	begin
+		if (hdisp_count == 1)
+		begin
+			hStage <= 3;
+			hdisp_count <= 1271;
+		end
+		else hdisp_count <= hdisp_count - 1;
+	end
+	
+	else if (hStage == 3)
+	begin
+		if (hfp_count == 1)
+		begin
+			hStage <= 0;
+			hfp_count <= 32;
+		end
+		else hfp_count <= hfp_count - 1;
+	end
+	
+	
+	
 	if (vStage == 0)
 	begin
 		if (vs_count == 1)
 		begin
-			vStage <= vStage+3'b1;
-			vs_count <= 2'd2;
+			vStage <= 1;
+			vs_count <= 3178;
 		end
-		else vs_count <= vs_count - 2'b1;
+		else vs_count <= vs_count - 1;
 	end
 	
    else if (vStage == 1)
 	begin
 		if (vbp_count == 1)
 		begin
-			vStage <= vStage+3'b1;
-			vbp_count <= 6'd33;
+			vStage <= 2;
+			vbp_count <= 52433;
 		end
-		else vbp_count <= vbp_count - 6'b1;
+		else vbp_count <= vbp_count - 1;
 	end
 	
 	else if (vStage == 2)
 	begin
 		if (vdisp_count == 1)
 		begin
-			vStage <= vStage+3'b1;
-			vdisp_count <= 9'd480;
+			vStage <= 3;
+			vdisp_count <= 762661;
 		end
-		else vdisp_count <= vdisp_count - 9'b1;
+		else vdisp_count <= vdisp_count - 1;
 	end
 	
 	else if (vStage == 3)
 	begin
 		if (vfp_count == 1)
 		begin
-			vStage <= 3'b0;
-			vfp_count <= 4'd10;
+			vStage <= 0;
+			vfp_count <= 15889;
 		end
-		else vfp_count <= vfp_count - 4'b1;
+		else vfp_count <= vfp_count - 1;
 	end
 end
 
@@ -215,7 +218,8 @@ assign VGA_G = green;
 assign VGA_B = blue;
 assign VGA_BLANK_N = ~(vStage == 1 || vStage == 3 || hStage == 1 || hStage == 3);
 assign VGA_SYNC_N = 1'b1;
-
+assign ohs = hStage;
+assign ovs = vStage;
 
 
 endmodule

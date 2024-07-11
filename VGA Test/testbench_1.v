@@ -11,6 +11,8 @@ wire			VGA_SYNC_N;
 wire			VGA_BLANK_N;
 wire			VGA_HS;
 wire			VGA_VS;
+wire [2:0]	ohs;
+wire [2:0]	ovs;
 
 VGA_Test inst (
 	.CLOCK_50(CLOCK),
@@ -21,7 +23,9 @@ VGA_Test inst (
 	.VGA_SYNC_N(VGA_SYNC_N),
 	.VGA_BLANK_N(VGA_BLANK_N),
 	.VGA_HS(VGA_HS),
-	.VGA_VS(VGA_VS)
+	.VGA_VS(VGA_VS),
+	.ohs(ohs),
+	.ovs(ovs)
 );
 
 always
