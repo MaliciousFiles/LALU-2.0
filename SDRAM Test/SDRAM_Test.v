@@ -40,7 +40,6 @@ reg reset = 1;
 reg [3:0] ready = 4'hF;
 reg [15:0] data = 0;
 
-reg [20:0] test1 = 0;
 reg [20:0] counter = 100000;
 always @(posedge CLOCK_50)
 begin
@@ -73,14 +72,8 @@ begin
 	begin
 		rd_addr <= 0;
 		rd_en <= 0;
-		test1 <= counter;
 	end
-	if (test1 != 0 && ~busy)
-	begin
-		test1 <= 0;
-		ready <= test1 - counter;
-	end
-		
+
 	if (rd_ready)
 	begin
 		//ready <= 49999-counter;

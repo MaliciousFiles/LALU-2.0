@@ -44,22 +44,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR0",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR1",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR2",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR3",
-					"strict" : false
-				},
-				{
 					"name" : "LEDR5",
 					"strict" : false
 				},
