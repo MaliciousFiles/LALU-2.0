@@ -1,5 +1,5 @@
 module SDRAM_Test(CLOCK_50, DRAM_DQ, DRAM_ADDR, DRAM_BA, DRAM_CLK, DRAM_CKE, DRAM_LDQM, DRAM_UDQM, DRAM_WE_N, DRAM_CAS_N, DRAM_RAS_N, DRAM_CS_N,
-						LEDR0,LEDR1,LEDR2,LEDR3);
+						LEDR0,LEDR1,LEDR2,LEDR3, LEDR5, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5);
 
 input CLOCK_50;
 inout [15:0] DRAM_DQ;
@@ -17,56 +17,109 @@ output LEDR0;
 output LEDR1;
 output LEDR2;
 output LEDR3;
+output LEDR5;
+output [6:0] HEX0;
+output [6:0] HEX1;
+output [6:0] HEX2;
+output [6:0] HEX3;
+output [6:0] HEX4;
+output [6:0] HEX5;
 
-reg [12:0] addr = 0;
+wire dram_clk;
+pll_100m pll (.inclk0(CLOCK_50), .c0(dram_clk));
+
+reg [24:0] wr_addr;
+reg [15:0] wr_data;
+reg 	     wr_en;
+
+reg [24:0] rd_addr;
+wire [15:0] rd_data;
+wire			rd_ready;
+wire			busy;
+reg 	     rd_en;
+
+reg reset = 0;
+
+reg [3:0] ready = 4'hF;
 reg [15:0] data = 0;
 
-reg [3:0] delay = 4'hF;
-reg [6:0] count = 100;
-always @(posedge CLOCK_50)
+reg [20:0] counter = 100000;
+always @(posedge dram_clk)
 begin
-	count <= count - 1;
+if (counter > 0)
+begin
 	
-	if (count == 100)
-	begin
-		data <= 16'hA3FB;
-		addr <= 13'd52;
-	end
-	if (count == 99)
-	begin
-		addr <= 13'b0;
-	end
+	counter <= counter - 1;
 	
-	if (count == 60)
-	begin
-		addr <= 13'd52;
-	end
+	reset <= ~(counter > 99990);
 	
-	if (count < 60 && DRAM_DQ == 16'hA3FB)
+	if (counter == 99000)
 	begin
-		delay <= 59-count;
+		wr_addr <= 25'h0;//25'h2A3;
+		wr_data <= 16'h3D1A;
+		wr_en <= 1;
+	end
+	if (wr_en && busy)
+	begin
+		wr_addr <= 0;
+		wr_data <= 0;
+		wr_en <= 0;
 	end
 	
-	if (count == 0 && delay == 4'hF) delay <= 4'hA;
+	if (~wr_en && counter == 14)
+	begin
+		rd_addr <= 25'hA45BC7;//25'h2A3;
+		rd_en <= 1;
+	end
+	if (rd_en && busy)
+	begin
+		rd_addr <= 0;
+		rd_en <= 0;
+	end
+	
+	if (rd_ready)
+	begin
+		ready <= 13-counter;
+		data <= rd_data;
+	end
+end
 end
 
-assign LEDR0 = delay[0];
-assign LEDR1 = delay[1];
-assign LEDR2 = delay[2];
-assign LEDR3 = delay[3];
-
-assign DRAM_ADDR = addr;
-assign DRAM_BA = 2'b0;
-assign DRAM_DQ = data;
+sdram_controller inst (
+	.wr_addr(wr_addr),
+	.wr_data(wr_data),
+	.wr_enable(wr_en),
+	.rd_addr(rd_addr),
+	.rd_data(rd_data),
+	.rd_enable(rd_en),
+	.rd_ready(rd_ready),
+	.busy(busy),
+	.rst_n(reset),
+	.clk(dram_clk),
+	
+	.addr(DRAM_ADDR),
+	.bank_addr(DRAM_BA),
+	.data(DRAM_DQ),
+	.clock_enable(DRAM_CKE),
+	.cs_n(DRAM_CS_N),
+	.cas_n(DRAM_CAS_N),
+	.we_n(DRAM_WE_N),
+	.data_mask_low(DRAM_LDQM),
+	.data_mask_high(DRAM_UDQM)
+);
 
 assign DRAM_CLK = CLOCK_50;
-assign DRAM_CKE = 1'b1;
-assign DRAM_LDQM = 1'b0;
-assign DRAM_UDQM = 1'b0;
-assign DRAM_WE_N = 1'b1;
-assign DRAM_RAS_N = 1'b0;
-assign DRAM_CAS_N = 1'b0;
-assign DRAM_CS_N = 1'b0;
+assign LEDR0 = ready[0];
+assign LEDR1 = ready[1];
+assign LEDR2 = ready[2];
+assign LEDR3 = ready[3];
+
+hex H3 (.in(data[15:12]), .out(HEX3));
+hex H2 (.in(data[11:8]), .out(HEX2));
+hex H1 (.in(data[7:4]), .out(HEX1));
+hex H0 (.in(data[3:0]), .out(HEX0));
+
+assign LEDR5 = counter == 0;
 
 
 endmodule

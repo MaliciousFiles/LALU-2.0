@@ -1,5 +1,5 @@
 Flow report for SDRAM_Test
-Thu Jul 11 01:13:33 2024
+Thu Jul 11 11:40:42 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -41,16 +41,16 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +---------------------------------+------------------------------------------------+
-; Flow Status                     ; Successful - Thu Jul 11 01:13:33 2024          ;
+; Flow Status                     ; Successful - Thu Jul 11 11:40:42 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; SDRAM_Test                                     ;
 ; Top-level Entity Name           ; SDRAM_Test                                     ;
 ; Family                          ; Cyclone V                                      ;
 ; Device                          ; 5CSEMA5F31C6                                   ;
 ; Timing Models                   ; Final                                          ;
-; Logic utilization (in ALMs)     ; 14 / 32,070 ( < 1 % )                          ;
-; Total registers                 ; 22                                             ;
-; Total pins                      ; 44 / 457 ( 10 % )                              ;
+; Logic utilization (in ALMs)     ; 82 / 32,070 ( < 1 % )                          ;
+; Total registers                 ; 91                                             ;
+; Total pins                      ; 87 / 457 ( 19 % )                              ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0 / 4,065,280 ( 0 % )                          ;
 ; Total DSP Blocks                ; 0 / 87 ( 0 % )                                 ;
@@ -58,7 +58,7 @@ https://fpgasoftware.intel.com/eula.
 ; Total HSSI PMA RX Deserializers ; 0                                              ;
 ; Total HSSI TX PCSs              ; 0                                              ;
 ; Total HSSI PMA TX Serializers   ; 0                                              ;
-; Total PLLs                      ; 0 / 6 ( 0 % )                                  ;
+; Total PLLs                      ; 1 / 6 ( 17 % )                                 ;
 ; Total DLLs                      ; 0 / 4 ( 0 % )                                  ;
 +---------------------------------+------------------------------------------------+
 
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 07/11/2024 01:12:39 ;
+; Start date & time ; 07/11/2024 11:39:45 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; SDRAM_Test          ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 146225681132805.172067835940228        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 146225681132805.172071598511572        ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -101,12 +101,12 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:08     ; 1.0                     ; 4860 MB             ; 00:00:22                           ;
-; Fitter               ; 00:00:31     ; 1.0                     ; 6916 MB             ; 00:01:44                           ;
-; Assembler            ; 00:00:05     ; 1.0                     ; 4868 MB             ; 00:00:05                           ;
-; Timing Analyzer      ; 00:00:04     ; 1.1                     ; 5158 MB             ; 00:00:04                           ;
-; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 4728 MB             ; 00:00:01                           ;
-; Total                ; 00:00:49     ; --                      ; --                  ; 00:02:16                           ;
+; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 4876 MB             ; 00:00:23                           ;
+; Fitter               ; 00:00:33     ; 1.0                     ; 6989 MB             ; 00:01:48                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 4860 MB             ; 00:00:05                           ;
+; Timing Analyzer      ; 00:00:05     ; 1.2                     ; 5209 MB             ; 00:00:06                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4832 MB             ; 00:00:01                           ;
+; Total                ; 00:00:54     ; --                      ; --                  ; 00:02:23                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
