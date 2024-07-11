@@ -66,9 +66,9 @@ begin
 		wr_en <= 0;
 	end
 	
-	if (~wr_en && counter == 14)
+	if (~wr_en && counter == 50000)
 	begin
-		rd_addr <= 25'hA45BC7;//25'h2A3;
+		rd_addr <= 25'h0;//25'h2A3;
 		rd_en <= 1;
 	end
 	if (rd_en && busy)
@@ -77,10 +77,14 @@ begin
 		rd_en <= 0;
 	end
 	
+	if (rd_data == 16'h3D1A)
+	begin
+		data <= rd_data;
+	end
+	
 	if (rd_ready)
 	begin
-		ready <= 13-counter;
-		data <= rd_data;
+		ready <= 49999-counter;
 	end
 end
 end
@@ -108,7 +112,7 @@ sdram_controller inst (
 	.data_mask_high(DRAM_UDQM)
 );
 
-assign DRAM_CLK = CLOCK_50;
+assign DRAM_CLK = dram_clk;
 assign LEDR0 = ready[0];
 assign LEDR1 = ready[1];
 assign LEDR2 = ready[2];

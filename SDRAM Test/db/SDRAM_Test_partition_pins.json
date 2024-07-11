@@ -4,18 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "DRAM_ADDR[0]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_ADDR[1]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_ADDR[2]",
-					"strict" : false
-				},
-				{
 					"name" : "DRAM_ADDR[4]",
 					"strict" : false
 				},
@@ -24,31 +12,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "DRAM_ADDR[6]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_ADDR[7]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_ADDR[8]",
-					"strict" : false
-				},
-				{
 					"name" : "DRAM_ADDR[9]",
 					"strict" : false
 				},
 				{
 					"name" : "DRAM_ADDR[10]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_ADDR[11]",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_BA[0]",
 					"strict" : false
 				},
 				{
@@ -88,27 +56,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "HEX0[0]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[1]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[2]",
-					"strict" : false
-				},
-				{
 					"name" : "HEX0[3]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[4]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[5]",
 					"strict" : false
 				},
 				{
@@ -117,14 +65,6 @@
 				},
 				{
 					"name" : "HEX1[0]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX1[1]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX1[2]",
 					"strict" : false
 				},
 				{
@@ -140,27 +80,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "HEX1[6]",
-					"strict" : false
-				},
-				{
 					"name" : "HEX2[0]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX2[1]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX2[2]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX2[3]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX2[4]",
 					"strict" : false
 				},
 				{
@@ -169,22 +89,6 @@
 				},
 				{
 					"name" : "HEX2[6]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX3[0]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX3[1]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX3[2]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX3[3]",
 					"strict" : false
 				},
 				{
@@ -261,10 +165,6 @@
 				},
 				{
 					"name" : "DRAM_DQ[15]",
-					"strict" : false
-				},
-				{
-					"name" : "CLOCK_50",
 					"strict" : false
 				}
 			]

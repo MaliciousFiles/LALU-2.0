@@ -1,5 +1,5 @@
 Analysis & Synthesis report for SDRAM_Test
-Thu Jul 11 11:39:53 2024
+Thu Jul 11 12:38:22 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -52,13 +52,13 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Thu Jul 11 11:39:53 2024          ;
+; Analysis & Synthesis Status     ; Successful - Thu Jul 11 12:38:22 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; SDRAM_Test                                     ;
 ; Top-level Entity Name           ; SDRAM_Test                                     ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
-; Total registers                 ; 86                                             ;
+; Total registers                 ; 70                                             ;
 ; Total pins                      ; 87                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0                                              ;
@@ -199,16 +199,16 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------------------------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                                                        ;
 +---------------------------------------------+----------------------------------------------------------------------------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 82                                                                                           ;
+; Estimate of Logic utilization (ALMs needed) ; 63                                                                                           ;
 ;                                             ;                                                                                              ;
-; Combinational ALUT usage for logic          ; 137                                                                                          ;
+; Combinational ALUT usage for logic          ; 103                                                                                          ;
 ;     -- 7 input functions                    ; 0                                                                                            ;
-;     -- 6 input functions                    ; 23                                                                                           ;
-;     -- 5 input functions                    ; 16                                                                                           ;
-;     -- 4 input functions                    ; 44                                                                                           ;
-;     -- <=3 input functions                  ; 54                                                                                           ;
+;     -- 6 input functions                    ; 19                                                                                           ;
+;     -- 5 input functions                    ; 18                                                                                           ;
+;     -- 4 input functions                    ; 17                                                                                           ;
+;     -- <=3 input functions                  ; 49                                                                                           ;
 ;                                             ;                                                                                              ;
-; Dedicated logic registers                   ; 86                                                                                           ;
+; Dedicated logic registers                   ; 70                                                                                           ;
 ;                                             ;                                                                                              ;
 ; I/O pins                                    ; 87                                                                                           ;
 ;                                             ;                                                                                              ;
@@ -218,9 +218,9 @@ https://fpgasoftware.intel.com/eula.
 ;     -- PLLs                                 ; 1                                                                                            ;
 ;                                             ;                                                                                              ;
 ; Maximum fan-out node                        ; pll_100m:pll|altpll:altpll_component|pll_100m_altpll:auto_generated|wire_generic_pll1_outclk ;
-; Maximum fan-out                             ; 87                                                                                           ;
-; Total fan-out                               ; 949                                                                                          ;
-; Average fan-out                             ; 2.29                                                                                         ;
+; Maximum fan-out                             ; 72                                                                                           ;
+; Total fan-out                               ; 743                                                                                          ;
+; Average fan-out                             ; 2.04                                                                                         ;
 +---------------------------------------------+----------------------------------------------------------------------------------------------+
 
 
@@ -229,51 +229,53 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------+------------------+--------------+
 ; Compilation Hierarchy Node                ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                             ; Entity Name      ; Library Name ;
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------+------------------+--------------+
-; |SDRAM_Test                               ; 137 (51)            ; 86 (44)                   ; 0                 ; 0          ; 87   ; 0            ; |SDRAM_Test                                                                     ; SDRAM_Test       ; work         ;
-;    |hex:H0|                               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|hex:H0                                                              ; hex              ; work         ;
-;    |hex:H1|                               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|hex:H1                                                              ; hex              ; work         ;
-;    |hex:H2|                               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|hex:H2                                                              ; hex              ; work         ;
-;    |hex:H3|                               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|hex:H3                                                              ; hex              ; work         ;
+; |SDRAM_Test                               ; 103 (51)            ; 70 (29)                   ; 0                 ; 0          ; 87   ; 0            ; |SDRAM_Test                                                                     ; SDRAM_Test       ; work         ;
 ;    |pll_100m:pll|                         ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|pll_100m:pll                                                        ; pll_100m         ; work         ;
 ;       |altpll:altpll_component|           ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|pll_100m:pll|altpll:altpll_component                                ; altpll           ; work         ;
 ;          |pll_100m_altpll:auto_generated| ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|pll_100m:pll|altpll:altpll_component|pll_100m_altpll:auto_generated ; pll_100m_altpll  ; work         ;
-;    |sdram_controller:inst|                ; 58 (58)             ; 42 (42)                   ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|sdram_controller:inst                                               ; sdram_controller ; work         ;
+;    |sdram_controller:inst|                ; 52 (52)             ; 41 (41)                   ; 0                 ; 0          ; 0    ; 0            ; |SDRAM_Test|sdram_controller:inst                                               ; sdram_controller ; work         ;
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------+------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-+--------------------------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                                           ;
-+-------------------------------------------------------------+------------------------------------------------+
-; Register name                                               ; Reason for Removal                             ;
-+-------------------------------------------------------------+------------------------------------------------+
-; rd_addr[0..2,6..9,11,12,14,18,21,23]                        ; Merged with rd_en                              ;
-; rd_addr[4,5,10,13,15..17,19,20,22,24]                       ; Merged with rd_addr[3]                         ;
-; wr_data[1,3,4,8,10..13]                                     ; Merged with wr_en                              ;
-; wr_addr[23]                                                 ; Merged with wr_data[0]                         ;
-; wr_data[7,9,15]                                             ; Merged with wr_data[0]                         ;
-; wr_addr[21]                                                 ; Merged with wr_data[0]                         ;
-; wr_data[5]                                                  ; Merged with wr_data[0]                         ;
-; wr_addr[24]                                                 ; Merged with wr_data[0]                         ;
-; wr_data[14]                                                 ; Merged with wr_data[0]                         ;
-; wr_addr[0..9,20,22]                                         ; Merged with wr_data[0]                         ;
-; wr_data[6]                                                  ; Merged with wr_data[0]                         ;
-; wr_addr[10,11,13..17]                                       ; Merged with wr_data[0]                         ;
-; wr_data[2]                                                  ; Merged with wr_data[0]                         ;
-; wr_addr[12,18,19]                                           ; Merged with wr_data[0]                         ;
-; sdram_controller:inst|command[2,6]                          ; Merged with sdram_controller:inst|command[1]   ;
-; sdram_controller:inst|wr_data_r[2,5..7,9,14,15]             ; Merged with sdram_controller:inst|wr_data_r[0] ;
-; sdram_controller:inst|wr_data_r[3,4,8,10..13]               ; Merged with sdram_controller:inst|wr_data_r[1] ;
-; sdram_controller:inst|haddr_r[1,2,6..9,11,12,14,18,21,23]   ; Merged with sdram_controller:inst|haddr_r[0]   ;
-; sdram_controller:inst|haddr_r[4,5,10,13,15..17,19,20,22,24] ; Merged with sdram_controller:inst|haddr_r[3]   ;
-; rd_addr[3]                                                  ; Stuck at GND due to stuck port data_in         ;
-; wr_data[0]                                                  ; Stuck at GND due to stuck port data_in         ;
-; sdram_controller:inst|command[1]                            ; Stuck at GND due to stuck port data_in         ;
-; sdram_controller:inst|wr_data_r[0]                          ; Stuck at GND due to stuck port data_in         ;
-; sdram_controller:inst|haddr_r[3]                            ; Stuck at GND due to stuck port data_in         ;
-; sdram_controller:inst|command[7]                            ; Stuck at VCC due to stuck port data_in         ;
-; Total Number of Removed Registers = 109                     ;                                                ;
-+-------------------------------------------------------------+------------------------------------------------+
++--------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                               ;
++-------------------------------------------------+------------------------------------------------+
+; Register name                                   ; Reason for Removal                             ;
++-------------------------------------------------+------------------------------------------------+
+; rd_addr[1..24]                                  ; Merged with rd_addr[0]                         ;
+; wr_data[1,3,4,8,10..13]                         ; Merged with wr_en                              ;
+; wr_addr[23]                                     ; Merged with wr_data[0]                         ;
+; wr_data[7,9,15]                                 ; Merged with wr_data[0]                         ;
+; wr_addr[21]                                     ; Merged with wr_data[0]                         ;
+; wr_data[5]                                      ; Merged with wr_data[0]                         ;
+; wr_addr[24]                                     ; Merged with wr_data[0]                         ;
+; wr_data[14]                                     ; Merged with wr_data[0]                         ;
+; wr_addr[0..9,20,22]                             ; Merged with wr_data[0]                         ;
+; wr_data[6]                                      ; Merged with wr_data[0]                         ;
+; wr_addr[10,11,13..17]                           ; Merged with wr_data[0]                         ;
+; wr_data[2]                                      ; Merged with wr_data[0]                         ;
+; wr_addr[12,18,19]                               ; Merged with wr_data[0]                         ;
+; sdram_controller:inst|command[2,6]              ; Merged with sdram_controller:inst|command[1]   ;
+; sdram_controller:inst|wr_data_r[2,5..7,9,14,15] ; Merged with sdram_controller:inst|wr_data_r[0] ;
+; sdram_controller:inst|wr_data_r[3,4,8,10..13]   ; Merged with sdram_controller:inst|wr_data_r[1] ;
+; sdram_controller:inst|haddr_r[1..24]            ; Merged with sdram_controller:inst|haddr_r[0]   ;
+; rd_addr[0]                                      ; Stuck at GND due to stuck port data_in         ;
+; wr_data[0]                                      ; Stuck at GND due to stuck port data_in         ;
+; sdram_controller:inst|command[1]                ; Stuck at GND due to stuck port data_in         ;
+; sdram_controller:inst|wr_data_r[0]              ; Stuck at GND due to stuck port data_in         ;
+; sdram_controller:inst|haddr_r[0]                ; Stuck at GND due to stuck port data_in         ;
+; sdram_controller:inst|command[7]                ; Stuck at VCC due to stuck port data_in         ;
+; data[0,2,5..7,9,14,15]                          ; Stuck at GND due to stuck port data_in         ;
+; data[13]                                        ; Merged with data[12]                           ;
+; data[12]                                        ; Merged with data[11]                           ;
+; data[11]                                        ; Merged with data[10]                           ;
+; data[10]                                        ; Merged with data[8]                            ;
+; data[8]                                         ; Merged with data[4]                            ;
+; data[4]                                         ; Merged with data[3]                            ;
+; data[3]                                         ; Merged with data[1]                            ;
+; Total Number of Removed Registers = 125         ;                                                ;
++-------------------------------------------------+------------------------------------------------+
 
 
 +------------------------------------------------------------------------------------+
@@ -281,7 +283,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------+---------------------------+----------------------------------------+
 ; Register name ; Reason for Removal        ; Registers Removed due to This Register ;
 +---------------+---------------------------+----------------------------------------+
-; rd_addr[3]    ; Stuck at GND              ; sdram_controller:inst|haddr_r[3]       ;
+; rd_addr[0]    ; Stuck at GND              ; sdram_controller:inst|haddr_r[0]       ;
 ;               ; due to stuck port data_in ;                                        ;
 ; wr_data[0]    ; Stuck at GND              ; sdram_controller:inst|wr_data_r[0]     ;
 ;               ; due to stuck port data_in ;                                        ;
@@ -293,12 +295,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 86    ;
-; Number of registers using Synchronous Clear  ; 29    ;
+; Total registers                              ; 70    ;
+; Number of registers using Synchronous Clear  ; 28    ;
 ; Number of registers using Synchronous Load   ; 5     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 62    ;
+; Number of registers using Clock Enable       ; 46    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -315,9 +317,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; counter[10]                             ; 4       ;
 ; counter[5]                              ; 4       ;
 ; counter[7]                              ; 4       ;
+; counter[16]                             ; 4       ;
 ; counter[9]                              ; 5       ;
 ; counter[15]                             ; 4       ;
-; counter[16]                             ; 4       ;
 ; Total number of inverted registers = 10 ;         ;
 +-----------------------------------------+---------+
 
@@ -327,9 +329,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                       ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |SDRAM_Test|sdram_controller:inst|refresh_cnt[8] ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |SDRAM_Test|sdram_controller:inst|rd_data_r[1]   ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SDRAM_Test|sdram_controller:inst|state_cnt[1]   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |SDRAM_Test|sdram_controller:inst|refresh_cnt[0] ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |SDRAM_Test|sdram_controller:inst|rd_data_r[5]   ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SDRAM_Test|sdram_controller:inst|state_cnt[2]   ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SDRAM_Test|sdram_controller:inst|state[1]       ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SDRAM_Test|sdram_controller:inst|state[0]       ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
@@ -757,29 +759,29 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 86                          ;
-;     ENA               ; 46                          ;
+; arriav_ff             ; 70                          ;
+;     ENA               ; 30                          ;
 ;     ENA SCLR          ; 16                          ;
-;     SCLR              ; 13                          ;
+;     SCLR              ; 12                          ;
 ;     SLD               ; 5                           ;
-;     plain             ; 6                           ;
+;     plain             ; 7                           ;
 ; arriav_io_obuf        ; 16                          ;
-; arriav_lcell_comb     ; 148                         ;
+; arriav_lcell_comb     ; 111                         ;
 ;     arith             ; 31                          ;
 ;         1 data inputs ; 31                          ;
-;     normal            ; 117                         ;
+;     normal            ; 80                          ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 16                          ;
-;         2 data inputs ; 7                           ;
-;         3 data inputs ; 9                           ;
-;         4 data inputs ; 44                          ;
-;         5 data inputs ; 16                          ;
-;         6 data inputs ; 23                          ;
+;         1 data inputs ; 12                          ;
+;         2 data inputs ; 5                           ;
+;         3 data inputs ; 7                           ;
+;         4 data inputs ; 17                          ;
+;         5 data inputs ; 18                          ;
+;         6 data inputs ; 19                          ;
 ; boundary_port         ; 87                          ;
 ; generic_pll           ; 1                           ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.60                        ;
-; Average LUT depth     ; 1.74                        ;
+; Average LUT depth     ; 2.03                        ;
 +-----------------------+-----------------------------+
 
 
@@ -798,7 +800,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Thu Jul 11 11:39:44 2024
+    Info: Processing started: Thu Jul 11 12:38:12 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off SDRAM_Test -c SDRAM_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -812,7 +814,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file hex.v
     Info (12023): Found entity 1: hex File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/hex.v Line: 3
 Info (12127): Elaborating entity "SDRAM_Test" for the top level hierarchy
 Warning (10230): Verilog HDL assignment warning at SDRAM_Test.v(52): truncated value with size 32 to match size of target (21) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 52
-Warning (10230): Verilog HDL assignment warning at SDRAM_Test.v(82): truncated value with size 32 to match size of target (4) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 82
+Warning (10230): Verilog HDL assignment warning at SDRAM_Test.v(87): truncated value with size 32 to match size of target (4) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 87
 Warning (10034): Output port "HEX4" at SDRAM_Test.v(25) has no driver File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 25
 Warning (10034): Output port "HEX5" at SDRAM_Test.v(26) has no driver File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 26
 Warning (10034): Output port "DRAM_RAS_N" at SDRAM_Test.v(14) has no driver File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 14
@@ -836,16 +838,40 @@ Info (12133): Instantiated megafunction "pll_100m:pll|altpll:altpll_component" w
 Info (12021): Found 1 design units, including 1 entities, in source file db/pll_100m_altpll.v
     Info (12023): Found entity 1: pll_100m_altpll File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/db/pll_100m_altpll.v Line: 30
 Info (12128): Elaborating entity "pll_100m_altpll" for hierarchy "pll_100m:pll|altpll:altpll_component|pll_100m_altpll:auto_generated" File: c:/altera/23.1std/quartus/libraries/megafunctions/altpll.tdf Line: 898
-Info (12128): Elaborating entity "sdram_controller" for hierarchy "sdram_controller:inst" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 109
-Info (12128): Elaborating entity "hex" for hierarchy "hex:H3" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 117
+Info (12128): Elaborating entity "sdram_controller" for hierarchy "sdram_controller:inst" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 113
+Info (12128): Elaborating entity "hex" for hierarchy "hex:H3" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 121
 Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "DRAM_ADDR[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
     Warning (13410): Pin "DRAM_ADDR[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[7]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[8]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_ADDR[11]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
     Warning (13410): Pin "DRAM_ADDR[12]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 6
+    Warning (13410): Pin "DRAM_BA[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 7
     Warning (13410): Pin "DRAM_BA[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 7
     Warning (13410): Pin "DRAM_CKE" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 9
     Warning (13410): Pin "DRAM_RAS_N" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 14
     Warning (13410): Pin "DRAM_CS_N" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 15
+    Warning (13410): Pin "HEX0[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 21
+    Warning (13410): Pin "HEX0[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 21
+    Warning (13410): Pin "HEX0[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 21
+    Warning (13410): Pin "HEX0[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 21
+    Warning (13410): Pin "HEX0[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 21
+    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 22
+    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 22
+    Warning (13410): Pin "HEX1[6]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 22
+    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 23
+    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 23
+    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 23
+    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 23
+    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 24
+    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 24
+    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 24
+    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 24
     Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 25
     Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 25
     Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/SDRAM_Test.v Line: 25
@@ -863,20 +889,20 @@ Warning (13024): Output pins are stuck at VCC or GND
 Info (286030): Timing-Driven Synthesis is running
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/output_files/SDRAM_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 3 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
+    Info (16011): Adding 5 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
 Warning: RST port on the PLL is not properly connected on instance pll_100m:pll|altpll:altpll_component|pll_100m_altpll:auto_generated|generic_pll1. The reset port on the PLL should be connected. If the PLL loses lock for any reason, you might need to manually reset the PLL in order to re-establish lock to the reference clock. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/SDRAM Test/db/pll_100m_altpll.v Line: 61
     Info: Must be connected
-Info (21057): Implemented 258 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 211 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 1 input pins
     Info (21059): Implemented 70 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 170 logic cells
+    Info (21061): Implemented 123 logic cells
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 29 warnings
-    Info: Peak virtual memory: 4876 megabytes
-    Info: Processing ended: Thu Jul 11 11:39:53 2024
-    Info: Elapsed time: 00:00:09
-    Info: Total CPU time (on all processors): 00:00:23
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 53 warnings
+    Info: Peak virtual memory: 4868 megabytes
+    Info: Processing ended: Thu Jul 11 12:38:22 2024
+    Info: Elapsed time: 00:00:10
+    Info: Total CPU time (on all processors): 00:00:26
 
 
 +------------------------------------------+
