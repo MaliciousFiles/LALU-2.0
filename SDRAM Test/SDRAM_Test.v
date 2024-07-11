@@ -25,26 +25,24 @@ output [6:0] HEX3;
 output [6:0] HEX4;
 output [6:0] HEX5;
 
-wire dram_clk;
-pll_100m pll (.inclk0(CLOCK_50), .c0(dram_clk));
-
 reg [24:0] wr_addr;
 reg [15:0] wr_data;
 reg 	     wr_en;
 
 reg [24:0] rd_addr;
+reg 	     rd_en;
 wire [15:0] rd_data;
 wire			rd_ready;
 wire			busy;
-reg 	     rd_en;
 
-reg reset = 0;
+reg reset = 1;
 
 reg [3:0] ready = 4'hF;
 reg [15:0] data = 0;
 
+reg [20:0] test1 = 0;
 reg [20:0] counter = 100000;
-always @(posedge dram_clk)
+always @(posedge CLOCK_50)
 begin
 if (counter > 0)
 begin
@@ -55,7 +53,7 @@ begin
 	
 	if (counter == 99000)
 	begin
-		wr_addr <= 25'h0;//25'h2A3;
+		wr_addr <= 25'h0;
 		wr_data <= 16'h3D1A;
 		wr_en <= 1;
 	end
@@ -68,23 +66,25 @@ begin
 	
 	if (~wr_en && counter == 50000)
 	begin
-		rd_addr <= 25'h0;//25'h2A3;
+		rd_addr <= 25'h0;
 		rd_en <= 1;
 	end
 	if (rd_en && busy)
 	begin
 		rd_addr <= 0;
 		rd_en <= 0;
+		test1 <= counter;
 	end
-	
-	if (rd_data == 16'h3D1A)
+	if (test1 != 0 && ~busy)
 	begin
-		data <= rd_data;
+		test1 <= 0;
+		ready <= test1 - counter;
 	end
-	
+		
 	if (rd_ready)
 	begin
-		ready <= 49999-counter;
+		//ready <= 49999-counter;
+		data <= rd_data;
 	end
 end
 end
@@ -99,7 +99,7 @@ sdram_controller inst (
 	.rd_ready(rd_ready),
 	.busy(busy),
 	.rst_n(reset),
-	.clk(dram_clk),
+	.clk(CLOCK_50),
 	
 	.addr(DRAM_ADDR),
 	.bank_addr(DRAM_BA),
@@ -107,12 +107,13 @@ sdram_controller inst (
 	.clock_enable(DRAM_CKE),
 	.cs_n(DRAM_CS_N),
 	.cas_n(DRAM_CAS_N),
+	.ras_n(DRAM_RAS_N),
 	.we_n(DRAM_WE_N),
 	.data_mask_low(DRAM_LDQM),
 	.data_mask_high(DRAM_UDQM)
 );
 
-assign DRAM_CLK = dram_clk;
+assign DRAM_CLK = CLOCK_50;
 assign LEDR0 = ready[0];
 assign LEDR1 = ready[1];
 assign LEDR2 = ready[2];
