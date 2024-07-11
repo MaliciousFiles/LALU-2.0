@@ -1,0 +1,14 @@
+
+State Machine - |VGA_Test|vStage
+Name vStage.011 vStage.010 vStage.001 vStage.000 
+vStage.000 0 0 0 0 
+vStage.001 0 0 1 1 
+vStage.010 0 1 0 1 
+vStage.011 1 0 0 1 
+
+State Machine - |VGA_Test|hStage
+Name hStage.011 hStage.010 hStage.001 hStage.000 
+hStage.000 0 0 0 0 
+hStage.001 0 0 1 1 
+hStage.010 0 1 0 1 
+hStage.011 1 0 0 1 

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Test
-Wed Jul 10 20:26:19 2024
+Wed Jul 10 20:32:01 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -54,7 +54,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jul 10 20:26:19 2024          ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 10 20:32:01 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
@@ -64,7 +64,7 @@ https://fpgasoftware.intel.com/eula.
 ; Total pins                      ; 30                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 24                                             ;
-; Total DSP Blocks                ; 1                                              ;
+; Total DSP Blocks                ; 12                                             ;
 ; Total HSSI RX PCSs              ; 0                                              ;
 ; Total HSSI PMA RX Deserializers ; 0                                              ;
 ; Total HSSI TX PCSs              ; 0                                              ;
@@ -174,7 +174,12 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-8         ;   0.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
+;     Processor 5            ;   0.0%      ;
+;     Processor 6            ;   0.0%      ;
+;     Processors 7-8         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -215,14 +220,14 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 141                      ;
+; Estimate of Logic utilization (ALMs needed) ; 222                      ;
 ;                                             ;                          ;
-; Combinational ALUT usage for logic          ; 210                      ;
+; Combinational ALUT usage for logic          ; 361                      ;
 ;     -- 7 input functions                    ; 3                        ;
-;     -- 6 input functions                    ; 55                       ;
-;     -- 5 input functions                    ; 34                       ;
-;     -- 4 input functions                    ; 27                       ;
-;     -- <=3 input functions                  ; 91                       ;
+;     -- 6 input functions                    ; 65                       ;
+;     -- 5 input functions                    ; 36                       ;
+;     -- 4 input functions                    ; 29                       ;
+;     -- <=3 input functions                  ; 228                      ;
 ;                                             ;                          ;
 ; Dedicated logic registers                   ; 162                      ;
 ;                                             ;                          ;
@@ -230,12 +235,12 @@ https://fpgasoftware.intel.com/eula.
 ; Total MLAB memory bits                      ; 0                        ;
 ; Total block memory bits                     ; 24                       ;
 ;                                             ;                          ;
-; Total DSP Blocks                            ; 1                        ;
+; Total DSP Blocks                            ; 12                       ;
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; altera_internal_jtag~TDO ;
 ; Maximum fan-out                             ; 148                      ;
-; Total fan-out                               ; 1482                     ;
-; Average fan-out                             ; 3.29                     ;
+; Total fan-out                               ; 2136                     ;
+; Average fan-out                             ; 3.49                     ;
 +---------------------------------------------+--------------------------+
 
 
@@ -244,7 +249,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                  ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |VGA_Test                                                                                                                               ; 210 (79)            ; 162 (48)                  ; 24                ; 1          ; 30   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
+; |VGA_Test                                                                                                                               ; 361 (230)           ; 162 (48)                  ; 24                ; 12         ; 30   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
 ;    |altsyncram:altsyncram_component|                                                                                                    ; 32 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component                                                                                                                                                                                                                                                                                                            ; altsyncram                        ; work         ;
 ;       |altsyncram_bcl1:auto_generated|                                                                                                  ; 32 (0)              ; 28 (0)                    ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated                                                                                                                                                                                                                                                                             ; altsyncram_bcl1                   ; work         ;
 ;          |altsyncram_77g2:altsyncram1|                                                                                                  ; 0 (0)               ; 0 (0)                     ; 24                ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|altsyncram_77g2:altsyncram1                                                                                                                                                                                                                                                 ; altsyncram_77g2                   ; work         ;
@@ -276,10 +281,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------+-------------+
 ; Statistic                       ; Number Used ;
 +---------------------------------+-------------+
-; Sum of two 18x18                ; 1           ;
-; Total number of DSP blocks      ; 1           ;
+; Two Independent 18x18           ; 6           ;
+; Sum of two 18x18                ; 6           ;
+; Total number of DSP blocks      ; 12          ;
 ;                                 ;             ;
-; Fixed Point Unsigned Multiplier ; 2           ;
+; Fixed Point Unsigned Multiplier ; 18          ;
 +---------------------------------+-------------+
 
 
@@ -460,25 +466,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA SLD           ; 8                           ;
 ;     SCLR              ; 10                          ;
 ;     plain             ; 4                           ;
-; arriav_lcell_comb     ; 112                         ;
-;     arith             ; 20                          ;
+; arriav_lcell_comb     ; 263                         ;
+;     arith             ; 116                         ;
 ;         1 data inputs ; 20                          ;
+;         2 data inputs ; 96                          ;
 ;     extend            ; 2                           ;
 ;         7 data inputs ; 2                           ;
-;     normal            ; 90                          ;
+;     normal            ; 103                         ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 5                           ;
 ;         2 data inputs ; 4                           ;
-;         3 data inputs ; 12                          ;
-;         4 data inputs ; 12                          ;
-;         5 data inputs ; 15                          ;
-;         6 data inputs ; 40                          ;
-; arriav_mac            ; 1                           ;
+;         3 data inputs ; 11                          ;
+;         4 data inputs ; 14                          ;
+;         5 data inputs ; 17                          ;
+;         6 data inputs ; 50                          ;
+;     shared            ; 42                          ;
+;         3 data inputs ; 42                          ;
+; arriav_mac            ; 12                          ;
 ; boundary_port         ; 57                          ;
 ; stratixv_ram_block    ; 8                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 1.44                        ;
+; Max LUT depth         ; 5.90                        ;
+; Average LUT depth     ; 4.02                        ;
 +-----------------------+-----------------------------+
 
 
@@ -497,7 +506,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Wed Jul 10 20:25:58 2024
+    Info: Processing started: Wed Jul 10 20:31:37 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Test -c VGA_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -550,7 +559,7 @@ Info (12128): Elaborating entity "sld_jtag_endpoint_adapter" for hierarchy "alts
 Info (12128): Elaborating entity "sld_jtag_endpoint_adapter_impl" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_jtag_endpoint_adapter:jtag_signal_adapter|sld_jtag_endpoint_adapter_impl:sld_jtag_endpoint_adapter_impl_inst" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd Line: 232
 Info (12128): Elaborating entity "sld_rom_sr" for hierarchy "altsyncram:altsyncram_component|altsyncram_bcl1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd Line: 828
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.07.10.20:26:09 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.07.10.20:31:50 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -579,17 +588,17 @@ Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 9 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 313 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 475 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 4 input pins
     Info (21059): Implemented 30 output pins
-    Info (21061): Implemented 269 logic cells
+    Info (21061): Implemented 420 logic cells
     Info (21064): Implemented 8 RAM segments
-    Info (21062): Implemented 1 DSP elements
+    Info (21062): Implemented 12 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 9 warnings
-    Info: Peak virtual memory: 4914 megabytes
-    Info: Processing ended: Wed Jul 10 20:26:19 2024
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:45
+    Info: Peak virtual memory: 4910 megabytes
+    Info: Processing ended: Wed Jul 10 20:32:01 2024
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:49
 
 
 +------------------------------------------+
