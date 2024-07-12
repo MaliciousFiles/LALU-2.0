@@ -12,10 +12,10 @@ Z0 !s99 nomlopt
 cModel Technology
 Z1 dC:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/simulation/questa
 T_opt
-!s110 1720655692
-V@V`YWHb31blU5J5;Q6DLe0
+!s110 1720819467
+VWcI@SMj5[j8f;WGHSXa7X3
 04 2 4 work tb fast 0
-=1-ea1aa64b8dc3-668f1f4b-1f6-9588
+=1-ea1aa64b8dc3-66919f0b-e3-7c5c
 R0
 !s12b OEM100
 !s124 OEM10U2 
@@ -25,50 +25,50 @@ n@_opt
 OL;O;2023.3;77
 vtb
 2C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v
-Z3 !s110 1720655687
+!s110 1720819466
 !i10b 1
-!s100 J3J1XJFXFLAi?[=2W;52m2
-I7SR5<cOo5Tbm5[b2kGW0?2
+!s100 ?UbP2g05ae^;_fWC::moS0
+I;]7bzR8Ob^jKo;[WD7`RL2
 R1
-w1720655436
+w1720819447
 8C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v
 FC:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v
 !i122 1
-L0 3 42
-Z4 VDg1SIo80bB@j0V0VzS_@n1
-Z5 OL;L;2023.3;77
+L0 3 47
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 OL;L;2023.3;77
 r1
 !s85 0
 31
-Z6 !s108 1720655687.000000
+!s108 1720819466.000000
 !s107 C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test|C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/testbench_1.v|
 !i113 0
-Z7 o-vlog01compat -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-Z8 !s92 -vlog01compat -work work {+incdir+C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z5 o-vlog01compat -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z6 !s92 -vlog01compat -work work {+incdir+C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R2
 vVGA_Test
 2C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v
-R3
+!s110 1720819465
 !i10b 1
-!s100 7]BfTSTbi=[ceJ[OWeKBm1
-I2c0[1=j;6XfKBgdNGmXl21
+!s100 ]HlBho`KbdH0dA^L<oWHQ3
+IE4R>Q^1[Kdf?V4C:EHIS;2
 R1
-w1720655414
+w1720819259
 8C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v
 FC:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v
 !i122 0
-L0 1 225
+L0 1 216
+R3
 R4
-R5
 r1
 !s85 0
 31
-R6
+!s108 1720819465.000000
 !s107 C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test|C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v|
 !i113 0
-R7
-R8
+R5
+R6
 R2
 n@v@g@a_@test

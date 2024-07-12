@@ -1,17 +1,17 @@
-Fitter Status : Successful - Thu Jul 11 16:33:40 2024
+Fitter Status : Successful - Fri Jul 12 16:55:24 2024
 Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 Revision Name : VGA_Test
 Top-level Entity Name : VGA_Test
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 391 / 32,070 ( 1 % )
-Total registers : 216
+Logic utilization (in ALMs) : 108 / 32,070 ( < 1 % )
+Total registers : 150
 Total pins : 30 / 457 ( 7 % )
 Total virtual pins : 0
-Total block memory bits : 1,228,800 / 4,065,280 ( 30 % )
-Total RAM Blocks : 150 / 397 ( 38 % )
-Total DSP Blocks : 5 / 87 ( 6 % )
+Total block memory bits : 12,288 / 4,065,280 ( < 1 % )
+Total RAM Blocks : 2 / 397 ( < 1 % )
+Total DSP Blocks : 0 / 87 ( 0 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0
