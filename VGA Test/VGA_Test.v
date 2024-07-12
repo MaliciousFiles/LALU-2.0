@@ -1,4 +1,5 @@
-module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS);
+module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS,
+/*memData*/);
 
 input				CLOCK_50;
 output [7:0]	VGA_R;
@@ -28,6 +29,9 @@ end
  *********************/
 reg [9:0] hCount = 0;
 reg [9:0] vCount = 0;
+
+wire hDisp = hCount < 640;
+wire vDisp = vCount < 480;
 
 reg [5:0] charX = 0;
 reg [4:0] charY = 0;
@@ -96,7 +100,7 @@ wire [7:0] memData;
 wire [10:0] addr = charX + charY * 64;
 
 altsyncram	altsyncram_component (
-				  .address_a (/*addr*/10'b0),
+				  .address_a (addr),
 				  .clock0 (CLOCK_50),
 				  .data_a (),
 				  .wren_a (1'b0),
@@ -115,7 +119,7 @@ altsyncram	altsyncram_component (
 defparam
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
-		//altsyncram_component.init_file = "mem_init.mif",
+		altsyncram_component.init_file = "mem_init.mif",
 		altsyncram_component.intended_device_family = "Cyclone V",
 		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=YES, INSTANCE_NAME=DATA_MEM",
 		altsyncram_component.lpm_type = "altsyncram",
@@ -198,10 +202,9 @@ end
 /*********************
  **   ASSIGNMENTS   **
  *********************/
-wire hDisp = hCount < 640;
-wire vDisp = vCount < 480;
+wire [4:0] test = memData == 0 ? 0 : memData == 1 ? 1 : 2;
 
-wire fg = characters[memData[0]][charU + charV * 10];
+wire fg = characters[test][charU + charV * 10];
 wire [3:0] p = fg ? 15 : 1;
 
 assign VGA_CLK = vga_clk;
