@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Sun Jul  7 19:26:13 2024
+Analysis & Synthesis Status : Successful - Fri Jul 12 20:36:53 2024
 Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 Revision Name : PS2_test
 Top-level Entity Name : PS2_test
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 97
+Total registers : 240
 Total pins : 48
 Total virtual pins : 0
-Total block memory bits : 0
+Total block memory bits : 524,288
 Total DSP Blocks : 0
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0

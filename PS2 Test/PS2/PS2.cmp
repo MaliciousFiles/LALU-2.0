@@ -1,9 +1,0 @@
-	component PS2 is
-		port (
-			clk_clk                      : in    std_logic := 'X'; -- clk
-			ps2_0_external_interface_CLK : inout std_logic := 'X'; -- CLK
-			ps2_0_external_interface_DAT : inout std_logic := 'X'; -- DAT
-			reset_reset_n                : in    std_logic := 'X'  -- reset_n
-		);
-	end component PS2;
-

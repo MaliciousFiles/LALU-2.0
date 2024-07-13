@@ -4,7 +4,7 @@
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
-      <a name="facing" val="north"/>
+      <a name="facing" val="south"/>
     </tool>
     <tool name="Pin">
       <a name="appearance" val="classic"/>
@@ -48,8 +48,8 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <lib desc="file#Adder_Subtractors.circ" name="12"/>
-  <lib desc="file#Multipliers.circ" name="13"/>
+  <lib desc="file#Multipliers.circ" name="12"/>
+  <lib desc="file#Adder_Subtractors.circ" name="13"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -121,8 +121,8 @@
       <mc key="/run" map="218,347"/>
     </boardmap>
     <boardmap boardname="DE1-SOC">
-      <mc/>
-      <mc/>
+      <mc key="/CLK_50" map="285,101"/>
+      <mc key="/PS2" map="113,66"/>
       <mc key="/bclk" map="501,354"/>
       <mc key="/c0" map="286,287"/>
       <mc key="/c1" map="262,287"/>
@@ -2389,8 +2389,12 @@
       <a name="facing" val="south"/>
       <a name="label" val="rst"/>
     </comp>
-    <comp lib="0" loc="(3440,3240)" name="Power">
+    <comp lib="0" loc="(3440,3260)" name="Ground">
       <a name="facing" val="west"/>
+    </comp>
+    <comp lib="0" loc="(3450,3250)" name="Ground">
+      <a name="facing" val="north"/>
+      <a name="width" val="2"/>
     </comp>
     <comp lib="0" loc="(3460,3230)" name="Splitter">
       <a name="facing" val="north"/>
@@ -4015,11 +4019,11 @@
       <a name="facing" val="south"/>
       <a name="size" val="30"/>
     </comp>
-    <comp lib="12" loc="(2470,610)" name="logisim16A_S">
-      <a name="label" val="logisim16A_S_1"/>
-    </comp>
-    <comp lib="13" loc="(4250,770)" name="mul16">
+    <comp lib="12" loc="(4250,770)" name="mul16">
       <a name="label" val="mul16_1"/>
+    </comp>
+    <comp lib="13" loc="(2470,610)" name="logisim16A_S">
+      <a name="label" val="logisim16A_S_1"/>
     </comp>
     <comp lib="2" loc="(1130,3530)" name="Multiplexer">
       <a name="width" val="16"/>
@@ -4457,7 +4461,7 @@
       <a name="label" val="clkLED"/>
     </comp>
     <comp lib="5" loc="(3430,3200)" name="Keyboard"/>
-    <comp lib="5" loc="(3440,3230)" name="PortIO">
+    <comp lib="5" loc="(3440,3250)" name="PortIO">
       <a name="label" val="PS2"/>
       <a name="number" val="2"/>
     </comp>
@@ -4508,7 +4512,7 @@
     <comp lib="8" loc="(3255,2555)" name="Text">
       <a name="text" val="Protected Flag"/>
     </comp>
-    <comp lib="8" loc="(3482,2991)" name="Text">
+    <comp lib="8" loc="(3480,2990)" name="Text">
       <a name="text" val="Keyboard"/>
     </comp>
     <comp lib="8" loc="(3610,1125)" name="Text">
@@ -6226,6 +6230,7 @@
     <wire from="(3460,1260)" to="(3480,1260)"/>
     <wire from="(3460,3080)" to="(3460,3120)"/>
     <wire from="(3460,3080)" to="(3500,3080)"/>
+    <wire from="(3460,3230)" to="(3460,3250)"/>
     <wire from="(3470,1220)" to="(3470,1230)"/>
     <wire from="(3470,1230)" to="(3490,1230)"/>
     <wire from="(3480,1200)" to="(3480,1260)"/>
