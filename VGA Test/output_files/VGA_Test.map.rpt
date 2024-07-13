@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Test
-Fri Jul 12 18:05:11 2024
+Fri Jul 12 18:36:24 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -53,7 +53,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Fri Jul 12 18:05:11 2024          ;
+; Analysis & Synthesis Status     ; Successful - Fri Jul 12 18:36:24 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; VGA_Test                                       ;
 ; Top-level Entity Name           ; VGA_Test                                       ;
@@ -215,14 +215,14 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 124                      ;
+; Estimate of Logic utilization (ALMs needed) ; 238                      ;
 ;                                             ;                          ;
-; Combinational ALUT usage for logic          ; 200                      ;
-;     -- 7 input functions                    ; 2                        ;
-;     -- 6 input functions                    ; 34                       ;
-;     -- 5 input functions                    ; 36                       ;
-;     -- 4 input functions                    ; 36                       ;
-;     -- <=3 input functions                  ; 92                       ;
+; Combinational ALUT usage for logic          ; 356                      ;
+;     -- 7 input functions                    ; 9                        ;
+;     -- 6 input functions                    ; 99                       ;
+;     -- 5 input functions                    ; 82                       ;
+;     -- 4 input functions                    ; 56                       ;
+;     -- <=3 input functions                  ; 110                      ;
 ;                                             ;                          ;
 ; Dedicated logic registers                   ; 167                      ;
 ;                                             ;                          ;
@@ -234,8 +234,8 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; altera_internal_jtag~TDO ;
 ; Maximum fan-out                             ; 159                      ;
-; Total fan-out                               ; 1556                     ;
-; Average fan-out                             ; 3.50                     ;
+; Total fan-out                               ; 2368                     ;
+; Average fan-out                             ; 3.95                     ;
 +---------------------------------------------+--------------------------+
 
 
@@ -244,7 +244,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                  ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |VGA_Test                                                                                                                               ; 200 (58)            ; 167 (41)                  ; 12288             ; 0          ; 30   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
+; |VGA_Test                                                                                                                               ; 356 (214)           ; 167 (41)                  ; 12288             ; 0          ; 30   ; 0            ; |VGA_Test                                                                                                                                                                                                                                                                                                                                            ; VGA_Test                          ; work         ;
 ;    |altsyncram:altsyncram_component|                                                                                                    ; 43 (0)              ; 40 (0)                    ; 12288             ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component                                                                                                                                                                                                                                                                                                            ; altsyncram                        ; work         ;
 ;       |altsyncram_amk1:auto_generated|                                                                                                  ; 43 (0)              ; 40 (0)                    ; 12288             ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated                                                                                                                                                                                                                                                                             ; altsyncram_amk1                   ; work         ;
 ;          |altsyncram_hnf2:altsyncram1|                                                                                                  ; 0 (0)               ; 0 (0)                     ; 12288             ; 0          ; 0    ; 0            ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|altsyncram_hnf2:altsyncram1                                                                                                                                                                                                                                                 ; altsyncram_hnf2                   ; work         ;
@@ -325,14 +325,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                            ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_reg[3]                                                ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_shift_cntr_reg[1]                                     ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_addr_reg[3]                                                ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|charX[0]                                                                                                                                                    ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |VGA_Test|charX[5]                                                                                                                                                    ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |VGA_Test|charU[1]                                                                                                                                                    ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |VGA_Test|charY[3]                                                                                                                                                    ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|charV[2]                                                                                                                                                    ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|word_counter[1] ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |VGA_Test|charY[0]                                                                                                                                                    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|charV[0]                                                                                                                                                    ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_reg[0]                                                ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_data_shift_cntr_reg[1]                                     ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|ram_rom_addr_reg[8]                                                ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|word_counter[0] ;
 ; 26:1               ; 4 bits    ; 68 LEs        ; 56 LEs               ; 12 LEs                 ; Yes        ; |VGA_Test|altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr|WORD_SR[0]      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -450,24 +450,27 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA SLD           ; 8                           ;
 ;     SCLR              ; 10                          ;
 ;     plain             ; 5                           ;
-; arriav_lcell_comb     ; 103                         ;
-;     arith             ; 31                          ;
-;         1 data inputs ; 31                          ;
-;     extend            ; 1                           ;
-;         7 data inputs ; 1                           ;
-;     normal            ; 71                          ;
+; arriav_lcell_comb     ; 260                         ;
+;     arith             ; 38                          ;
+;         1 data inputs ; 32                          ;
+;         2 data inputs ; 2                           ;
+;         3 data inputs ; 1                           ;
+;         4 data inputs ; 3                           ;
+;     extend            ; 8                           ;
+;         7 data inputs ; 8                           ;
+;     normal            ; 214                         ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 2                           ;
-;         2 data inputs ; 5                           ;
-;         3 data inputs ; 5                           ;
-;         4 data inputs ; 22                          ;
-;         5 data inputs ; 16                          ;
-;         6 data inputs ; 19                          ;
+;         1 data inputs ; 3                           ;
+;         2 data inputs ; 12                          ;
+;         3 data inputs ; 12                          ;
+;         4 data inputs ; 39                          ;
+;         5 data inputs ; 62                          ;
+;         6 data inputs ; 84                          ;
 ; boundary_port         ; 57                          ;
 ; stratixv_ram_block    ; 8                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 1.55                        ;
+; Max LUT depth         ; 7.20                        ;
+; Average LUT depth     ; 3.70                        ;
 +-----------------------+-----------------------------+
 
 
@@ -476,7 +479,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:04     ;
 +----------------+--------------+
 
 
@@ -486,7 +489,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Fri Jul 12 18:04:28 2024
+    Info: Processing started: Fri Jul 12 18:35:53 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Test -c VGA_Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -503,10 +506,9 @@ Warning (10230): Verilog HDL assignment warning at VGA_Test.v(78): truncated val
 Warning (10230): Verilog HDL assignment warning at VGA_Test.v(84): truncated value with size 32 to match size of target (6) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 84
 Warning (10230): Verilog HDL assignment warning at VGA_Test.v(89): truncated value with size 32 to match size of target (4) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 89
 Warning (10230): Verilog HDL assignment warning at VGA_Test.v(100): truncated value with size 32 to match size of target (11) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 100
-Warning (10230): Verilog HDL assignment warning at VGA_Test.v(205): truncated value with size 32 to match size of target (5) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 205
 Warning (10230): Verilog HDL assignment warning at VGA_Test.v(208): truncated value with size 32 to match size of target (4) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 208
-Warning (10030): Net "characters.waddr_a" at VGA_Test.v(167) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 167
 Warning (10030): Net "characters.data_a" at VGA_Test.v(167) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 167
+Warning (10030): Net "characters.waddr_a" at VGA_Test.v(167) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 167
 Warning (10030): Net "characters.we_a" at VGA_Test.v(167) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 167
 Info (12128): Elaborating entity "altsyncram" for hierarchy "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 118
 Info (12130): Elaborated megafunction instantiation "altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 118
@@ -546,7 +548,7 @@ Info (12128): Elaborating entity "sld_jtag_endpoint_adapter" for hierarchy "alts
 Info (12128): Elaborating entity "sld_jtag_endpoint_adapter_impl" for hierarchy "altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_jtag_endpoint_adapter:jtag_signal_adapter|sld_jtag_endpoint_adapter_impl:sld_jtag_endpoint_adapter_impl_inst" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_jtag_endpoint_adapter.vhd Line: 232
 Info (12128): Elaborating entity "sld_rom_sr" for hierarchy "altsyncram:altsyncram_component|altsyncram_amk1:auto_generated|sld_mod_ram_rom:mgl_prim2|sld_rom_sr:\ram_rom_logic_gen:name_gen:info_rom_sr" File: c:/altera/23.1std/quartus/libraries/megafunctions/sld_mod_ram_rom.vhd Line: 828
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.07.12.18:04:53 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.07.12.18:36:08 Progress: Loading sldd0716f44/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -571,48 +573,33 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/ip/s
     Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_splitter File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/ip/sldd0716f44/submodules/alt_sld_fab_alt_sld_fab_splitter.sv Line: 3
 Info (276014): Found 1 instances of uninferred RAM logic
     Info (276007): RAM logic "characters" is uninferred due to asynchronous read logic File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 167
-Warning (113018): Width of data items in "VGA_Test.ram0_VGA_Test_cde21bdf.hdl.mif" is greater than the memory width. Truncating data items to fit in memory. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/VGA_Test.ram0_VGA_Test_cde21bdf.hdl.mif Line: 10
-Critical Warning (127005): Memory depth (8192) in the design file differs from memory depth (27) in the Memory Initialization File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/VGA_Test.ram0_VGA_Test_cde21bdf.hdl.mif" -- setting initial value for remaining addresses to 0
+Warning (127007): Memory Initialization File or Hexadecimal (Intel-Format) File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/db/VGA_Test.ram0_VGA_Test_cde21bdf.hdl.mif" contains "don't care" values -- overwriting them with 0s
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "VGA_R[0]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_R[1]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
-    Warning (13410): Pin "VGA_R[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
-    Warning (13410): Pin "VGA_R[3]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_R[4]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
-    Warning (13410): Pin "VGA_R[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_R[6]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_R[7]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 5
     Warning (13410): Pin "VGA_G[0]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_G[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
     Warning (13410): Pin "VGA_G[2]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_G[3]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_G[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
     Warning (13410): Pin "VGA_G[5]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_G[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_G[7]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 7
-    Warning (13410): Pin "VGA_B[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
-    Warning (13410): Pin "VGA_B[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
-    Warning (13410): Pin "VGA_B[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_B[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
-    Warning (13410): Pin "VGA_B[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_B[5]" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
-    Warning (13410): Pin "VGA_B[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
-    Warning (13410): Pin "VGA_B[7]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 6
     Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/VGA_Test.v Line: 9
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/VGA Test/output_files/VGA_Test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 9 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 285 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 441 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 4 input pins
     Info (21059): Implemented 30 output pins
-    Info (21061): Implemented 242 logic cells
+    Info (21061): Implemented 398 logic cells
     Info (21064): Implemented 8 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 42 warnings
-    Info: Peak virtual memory: 4918 megabytes
-    Info: Processing ended: Fri Jul 12 18:05:11 2024
-    Info: Elapsed time: 00:00:43
-    Info: Total CPU time (on all processors): 00:01:14
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 26 warnings
+    Info: Peak virtual memory: 4915 megabytes
+    Info: Processing ended: Fri Jul 12 18:36:24 2024
+    Info: Elapsed time: 00:00:31
+    Info: Total CPU time (on all processors): 00:01:04
 
 
 +------------------------------------------+
