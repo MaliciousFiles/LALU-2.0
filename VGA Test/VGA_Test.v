@@ -1,5 +1,4 @@
-module VGA_Test(CLOCK_50,VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS,
-/*memData*/);
+module VGA_Test(CLOCK_50, VGA_R, VGA_G, VGA_B, VGA_CLK, VGA_SYNC_N, VGA_BLANK_N, VGA_HS, VGA_VS);
 
 input				CLOCK_50;
 output [7:0]	VGA_R;

@@ -35,6 +35,7 @@ OPCODES = {
     'smul':             ('0000110',2),
     'umul':             ('0000111',2),
     'ldkey':            ('0001010',1.5),
+    'stchr':            ('0001011',2),
     
     'bsl':              ('0001100',2),
     'bsr':              ('0001101',2),
@@ -652,8 +653,8 @@ def monitor_input():
 
 if __name__ == "__main__":
     with open(fName) as f:
+        verb = "--verb" in sys.argv[2:]
         if "--monitor" in sys.argv[2:]:
-            verb = "--verb" in sys.argv[2:]
             Thread(target=monitor_input).start()
             
             contents = None
@@ -682,7 +683,7 @@ if __name__ == "__main__":
                         if str(e) == "'NoneType' object cannot be interpreted as an integer":
                             print("ErrorHint: This is likely caused by an empty field bypassing early detection")
         else:
-            run(mx:=macroEXP(f.read()))
+            run(mx:=macroEXP(f.read(), verb=verb))
 ##            print(mx)
 ##            run(f.read())
 
