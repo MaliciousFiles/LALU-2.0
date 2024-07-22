@@ -6,6 +6,9 @@ import os
 import inspect
 import traceback
 
+#Minor Tweak
+
+
 freeRegisters = 14
 
 OPCODES = {
@@ -132,10 +135,10 @@ def run(contents, verb = False):
         regdict[reg] = None
 
     @AsmSrcMarker
-    def MemSync(reg):
+    def RegSync(reg):
         nonlocal immexp
         addr = MemLoc(regdict[reg])
-        immexp.append( {'op': 'st', 'Rd': addr, 'Rs': reg} )
+        immexp.append( {'op': 'ld', 'Rd': addr, 'Rs': reg} )
 
     @AsmSrcMarker
     def UseVar(name):
@@ -274,10 +277,19 @@ def run(contents, verb = False):
             trn = [name for i,name in queue]
             cloc, cvar = trn[0]
             if cvar in oldreg.values():
-                if cloc == KeyFromValue(oldreg, cvar):
+                if cloc == (oloc:=KeyFromValue(oldreg, cvar)):
                     pass    #The registers are fine so no worries
                 else:
-                    
+                    #Vacate the current location
+                    MemPush(cloc)
+                    regdict[cloc]=cvar
+                    immexp.append( {'op': 'mv', 'Rd': cloc, 'Rs': oloc} )
+                    regdict[oloc]=None #Also go ahead and mark the old location as free
+            else:
+                MemPush(cloc)
+                regdict[cloc]=cvar
+                RegSync(cloc)
+        SPSE(tarptr)
                     
     immexp = []
     memdict = {}
