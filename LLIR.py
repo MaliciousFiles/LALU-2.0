@@ -72,6 +72,21 @@ def errormsg(func):
             print(e)
     return inner
 
+def KeyFromValue(dictionary, val):
+    for key in dictionary:
+        if dictionary[key]==val:
+            return key
+    return None
+
+def PreScan(contents):
+    statics=[]
+    for linenum, line in enumerate(contents.split('\n')):
+        line = [x for x in line.split() if x != None]
+        if len(line)==1 and line[0][-1]==':':
+            lbl = line[0][:-1]
+            statics.append((lbl,linenum))
+    return statics
+
 @errormsg
 def run(contents, verb = False):
     def AsmSrcMarker(func):
@@ -248,7 +263,22 @@ def run(contents, verb = False):
                     memdict[relstkptr]=name
                     return relstkptr
                 off += 1
-    
+
+    @AsmSrcMarker
+    def SetState(tarstate, oldstate):
+        tarreg, tarmem, tarptr = tarstate
+        oldreg, oldmem, oldptr = oldstate
+
+        queue = [(i, tarreg[i]) for i in enumerate(tarreg)]
+        while queue != []:
+            trn = [name for i,name in queue]
+            cloc, cvar = trn[0]
+            if cvar in oldreg.values():
+                if cloc == KeyFromValue(oldreg, cvar):
+                    pass    #The registers are fine so no worries
+                else:
+                    
+                    
     immexp = []
     memdict = {}
     regdict = {}
@@ -256,15 +286,25 @@ def run(contents, verb = False):
     relstkptr = 0
     Vars=[]
 
+    staticIdents = PreScan(contents)
+    sIN = [name for name,lnum in staticIdents]
+    staticIdents = {name:lnum for name,lnum in staticIdents}
+    states = {}
+
     opsyms = [sym for bits,opclass,sym in OPCODES.values()]
     for linenum, line in enumerate(contents.split('\n')):
         line = line.split()
-        if line != []:
-
+        if linenum in staticIdents.values():
+            lbl=line[0][:-1]
+            immexp.append( {'op': 'lbl', 'val': lbl} )
+            states[lbl] = (memdict,regdict,relstkptr)
+        elif line != []:
             #Declarations
             if line[0] == 'decl':
                 if line[1][0].lower() == 'r':
                     ErrorWithHighlight('Cannot declare variable that starts with `r`',1)
+                elif line[1] in sIN:
+                    ErrorWithHighlight(f'Identifier collides with static Identifier `{line[1]}` found at {staticIdents[line[1]]}',1)
                 elif line[1] == 'virtual':
                     virtual = True
                     if line[2][0].lower() == 'r':
@@ -408,6 +448,16 @@ def run(contents, verb = False):
                         ErrorWithHighlight(f'Expected `)`, found: `{line[3]}`', 3)
                 else:
                     ErrorWithHighlight(f'Unknown Intrinsic Function: `{line[0]}`', 0)
+            elif line[0] == 'goto':
+                if line[1] in sIN:
+                    immexp.append( {'op': 'jmp', 'lbl': line[1]} )
+                elif line[1] in Vars:
+                    ErrorWithHighlight(f'Cannot goto variable identifier: `{line[1]}`, if you intend to go to the destination of this variable, please use @jmp(...)', 1)
+                else:
+                    ErrorWithHighlight(f'Unknown destination: `{line[1]}`', 1)
+                if len(line)>2:
+                    ErrorWithHighlight(f'Expected End Of Line, found: `{line[2]}`', 2)
+                    
             else:
                 ErrorWithHighlight('Line cannot be parsed, failed here', 0)
 

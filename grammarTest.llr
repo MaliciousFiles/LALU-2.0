@@ -4,8 +4,12 @@ x = 1
 decl ptr
 ptr = x.&
 
+
 ptr.* = $17
 
-0.* = ptr
 @push(x)
 x = @pop()
+
+test:
+
+goto test
