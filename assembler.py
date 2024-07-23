@@ -34,7 +34,6 @@ OPCODES = {
     'st':               ('0000101',2),
     'smul':             ('0000110',2),
     'umul':             ('0000111',2),
-    'ldkey':            ('0001010',1.5),
     'stchr':            ('0001011',2),
     
     'bsl':              ('0001100',2),
@@ -68,6 +67,10 @@ OPCODES = {
     
     'exjmp':            ('0011110',-2),
     'jmp':              ('10'     ,3),
+
+    'ldkeyr':           ('1100000',1.5),
+    'ldkeyp':           ('1100001',1.5),
+    'rstkey':           ('1100010',-1),
     
     'halt':             ('1111111',-1),
 }
@@ -345,6 +348,7 @@ def run(contents, preprocessed = True):
         oop = op
         annot = None
         retNorm = False
+        protMaskRe = None
         if len(line) > 1:
             argStr = ''.join(line[1:])
             
@@ -363,7 +367,6 @@ def run(contents, preprocessed = True):
                     error('unexpected jmp flag: `'+xfl+'`')
                     break
 
-            protMaskRe = None
             if op not in OPCODES and op[:2] == 'pr' and op[:5] in OPCODES:
                 if op[5:] not in ['RE', 'WR']:
                     error('unexpected prot mask flag: `'+op[5:]+'`')
