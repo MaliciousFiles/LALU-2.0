@@ -41,16 +41,19 @@ module PS2_test(CLOCK_50, PS2_CLK, PS2_DAT, KEY0, KEY1, KEY2, KEY3, HEX0, HEX1, 
 
 	wire [11:0] ra;
 	wire [11:0] wa;
-	//hex H0 (.in(data_print[3:0]), .out(HEX0));
-	//hex H1 (.in(data_print[7:4]), .out(HEX1));
-	//hex H2 (.in(data_raw[3:0]), .out(HEX2));
-	//hex H3 (.in(data_raw[7:4]), .out(HEX3));
-	//hex H4 (.in(data_raw[11:8]), .out(HEX4));
-	//hex H5 (.in(data_raw[15:12]), .out(HEX5));
+	/*hex H0 (.in(data_print[3:0]), .out(HEX0));
+	hex H1 (.in(data_print[7:4]), .out(HEX1));
+	hex H2 (.in(data_raw[3:0]), .out(HEX2));
+	hex H3 (.in(data_raw[7:4]), .out(HEX3));
+	hex H4 (.in(data_raw[11:8]), .out(HEX4));
+	hex H5 (.in(data_raw[15:12]), .out(HEX5));*/
 	hex H0 (.in(ra[3:0]), .out(HEX0));
 	hex H1 (.in(ra[7:4]), .out(HEX1));
 	hex H2 (.in(wa[3:0]), .out(HEX2));
 	hex H3 (.in(wa[7:4]), .out(HEX3));
+	hex H4 (.in(data_print[3:0]), .out(HEX4));
+	hex H5 (.in(data_print[7:4]), .out(HEX5));
+
 	
 	reg [7:0]  data_print;
 	wire [7:0] dp;
@@ -274,7 +277,7 @@ module PS2_test(CLOCK_50, PS2_CLK, PS2_DAT, KEY0, KEY1, KEY2, KEY3, HEX0, HEX1, 
 			if (raw_val != 0) LEDR2 <= 1;
 			if (ascii_val != 0) LEDR3 <= 1;
 			
-		  depressed[raw_val] = !break_code;
+		  depressed[raw_val] <= !break_code;
 	 end
 
 

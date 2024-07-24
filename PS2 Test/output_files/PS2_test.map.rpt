@@ -1,5 +1,5 @@
 Analysis & Synthesis report for PS2_test
-Wed Jul 24 17:11:23 2024
+Wed Jul 24 17:53:40 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -13,13 +13,13 @@ Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. State Machine - |PS2_test|PS2_Controller:inst|s_ps2_transceiver
-  9. State Machine - |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter
- 10. State Machine - |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|s_ps2_receiver
- 11. Registers Removed During Synthesis
- 12. Removed Registers Triggering Further Register Optimizations
- 13. General Register Statistics
- 14. Inverted Register Statistics
+  8. Analysis & Synthesis RAM Summary
+  9. State Machine - |PS2_test|PS2_Controller:inst|s_ps2_transceiver
+ 10. State Machine - |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter
+ 11. State Machine - |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|s_ps2_receiver
+ 12. Registers Removed During Synthesis
+ 13. Removed Registers Triggering Further Register Optimizations
+ 14. General Register Statistics
  15. Multiplexer Restructuring Statistics (Restructuring Performed)
  16. Source assignments for Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated
  17. Source assignments for Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated
@@ -63,16 +63,16 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jul 24 17:11:22 2024          ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 24 17:53:40 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; PS2_test                                       ;
 ; Top-level Entity Name           ; PS2_test                                       ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
-; Total registers                 ; 127                                            ;
+; Total registers                 ; 214                                            ;
 ; Total pins                      ; 53                                             ;
 ; Total virtual pins              ; 0                                              ;
-; Total block memory bits         ; 0                                              ;
+; Total block memory bits         ; 98,304                                         ;
 ; Total DSP Blocks                ; 0                                              ;
 ; Total HSSI RX PCSs              ; 0                                              ;
 ; Total HSSI PMA RX Deserializers ; 0                                              ;
@@ -217,44 +217,63 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 154            ;
+; Estimate of Logic utilization (ALMs needed) ; 198            ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 243            ;
+; Combinational ALUT usage for logic          ; 316            ;
 ;     -- 7 input functions                    ; 1              ;
-;     -- 6 input functions                    ; 61             ;
-;     -- 5 input functions                    ; 31             ;
-;     -- 4 input functions                    ; 37             ;
-;     -- <=3 input functions                  ; 113            ;
+;     -- 6 input functions                    ; 71             ;
+;     -- 5 input functions                    ; 37             ;
+;     -- 4 input functions                    ; 65             ;
+;     -- <=3 input functions                  ; 142            ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 127            ;
+; Dedicated logic registers                   ; 214            ;
 ;                                             ;                ;
 ; I/O pins                                    ; 53             ;
+; Total MLAB memory bits                      ; 0              ;
+; Total block memory bits                     ; 98304          ;
 ;                                             ;                ;
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 115            ;
-; Total fan-out                               ; 1459           ;
-; Average fan-out                             ; 3.05           ;
+; Maximum fan-out                             ; 214            ;
+; Total fan-out                               ; 2689           ;
+; Average fan-out                             ; 4.06           ;
 +---------------------------------------------+----------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                             ;
-+---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------+---------------------------+--------------+
-; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                     ; Entity Name               ; Library Name ;
-+---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------+---------------------------+--------------+
-; |PS2_test                                         ; 243 (93)            ; 127 (22)                  ; 0                 ; 0          ; 53   ; 0            ; |PS2_test                                                               ; PS2_test                  ; work         ;
-;    |Keyboard_Buffer:printable_buf|                ; 19 (19)             ; 15 (15)                   ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:printable_buf                                 ; Keyboard_Buffer           ; work         ;
-;    |PS2_Controller:inst|                          ; 108 (6)             ; 90 (5)                    ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst                                           ; PS2_Controller            ; work         ;
-;       |Altera_UP_PS2_Command_Out:PS2_Command_Out| ; 86 (86)             ; 60 (60)                   ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out ; Altera_UP_PS2_Command_Out ; work         ;
-;       |Altera_UP_PS2_Data_In:PS2_Data_In|         ; 16 (16)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In         ; Altera_UP_PS2_Data_In     ; work         ;
-;    |hex:H0|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H0                                                        ; hex                       ; work         ;
-;    |hex:H1|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H1                                                        ; hex                       ; work         ;
-;    |hex:H2|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H2                                                        ; hex                       ; work         ;
-;    |hex:H3|                                       ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H3                                                        ; hex                       ; work         ;
-+---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------+---------------------------+--------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                            ;
++---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------+---------------------------+--------------+
+; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                    ; Entity Name               ; Library Name ;
++---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------+---------------------------+--------------+
+; |PS2_test                                         ; 316 (104)           ; 214 (52)                  ; 98304             ; 0          ; 53   ; 0            ; |PS2_test                                                                                              ; PS2_test                  ; work         ;
+;    |Keyboard_Buffer:printable_buf|                ; 31 (31)             ; 32 (32)                   ; 32768             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:printable_buf                                                                ; Keyboard_Buffer           ; work         ;
+;       |altsyncram:altsyncram_component|           ; 0 (0)               ; 0 (0)                     ; 32768             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component                                ; altsyncram                ; work         ;
+;          |altsyncram_0032:auto_generated|         ; 0 (0)               ; 0 (0)                     ; 32768             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated ; altsyncram_0032           ; work         ;
+;    |Keyboard_Buffer:raw_buf|                      ; 31 (31)             ; 40 (40)                   ; 65536             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:raw_buf                                                                      ; Keyboard_Buffer           ; work         ;
+;       |altsyncram:altsyncram_component|           ; 0 (0)               ; 0 (0)                     ; 65536             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component                                      ; altsyncram                ; work         ;
+;          |altsyncram_u232:auto_generated|         ; 0 (0)               ; 0 (0)                     ; 65536             ; 0          ; 0    ; 0            ; |PS2_test|Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated       ; altsyncram_u232           ; work         ;
+;    |PS2_Controller:inst|                          ; 108 (6)             ; 90 (5)                    ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst                                                                          ; PS2_Controller            ; work         ;
+;       |Altera_UP_PS2_Command_Out:PS2_Command_Out| ; 86 (86)             ; 60 (60)                   ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out                                ; Altera_UP_PS2_Command_Out ; work         ;
+;       |Altera_UP_PS2_Data_In:PS2_Data_In|         ; 16 (16)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In                                        ; Altera_UP_PS2_Data_In     ; work         ;
+;    |hex:H0|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H0                                                                                       ; hex                       ; work         ;
+;    |hex:H1|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H1                                                                                       ; hex                       ; work         ;
+;    |hex:H2|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H2                                                                                       ; hex                       ; work         ;
+;    |hex:H3|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H3                                                                                       ; hex                       ; work         ;
+;    |hex:H4|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H4                                                                                       ; hex                       ; work         ;
+;    |hex:H5|                                       ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |PS2_test|hex:H5                                                                                       ; hex                       ; work         ;
++---------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------+---------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                           ;
++---------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+-------+------+
+; Name                                                                                                    ; Type ; Mode           ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size  ; MIF  ;
++---------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+-------+------+
+; Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port ; 4096         ; 8            ; 4096         ; 8            ; 32768 ; None ;
+; Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|ALTSYNCRAM       ; AUTO ; True Dual Port ; 4096         ; 16           ; 4096         ; 16           ; 65536 ; None ;
++---------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+-------+------+
 
 
 Encoding Type:  One-Hot
@@ -307,14 +326,8 @@ Encoding Type:  One-Hot
 +----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------+
 ; Register name                                                                                                  ; Reason for Removal                                                                       ;
 +----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------+
-; depressed[40,43,44,46..48]                                                                                     ; Lost fanout                                                                              ;
-; Keyboard_Buffer:raw_buf|rd_addr[0..11]                                                                         ; Lost fanout                                                                              ;
-; Keyboard_Buffer:raw_buf|wr_addr[0..11]                                                                         ; Lost fanout                                                                              ;
 ; PS2_Controller:inst|idle_counter[0..7]                                                                         ; Lost fanout                                                                              ;
-; Keyboard_Buffer:printable_buf|wr_addr[4]                                                                       ; Merged with Keyboard_Buffer:printable_buf|wr_addr[1]                                     ;
-; Keyboard_Buffer:printable_buf|wr_addr[6..11]                                                                   ; Merged with Keyboard_Buffer:printable_buf|wr_addr[0]                                     ;
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[1..7]                                ; Merged with PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[0] ;
-; Keyboard_Buffer:printable_buf|wr_addr[0]                                                                       ; Stuck at GND due to stuck port data_in                                                   ;
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[0]                                   ; Stuck at GND due to stuck port data_in                                                   ;
 ; raw_val[7]                                                                                                     ; Stuck at GND due to stuck port data_in                                                   ;
 ; PS2_Controller:inst|s_ps2_transceiver~2                                                                        ; Lost fanout                                                                              ;
@@ -324,7 +337,6 @@ Encoding Type:  One-Hot
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter~4                              ; Lost fanout                                                                              ;
 ; PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|s_ps2_receiver~2                                         ; Lost fanout                                                                              ;
 ; PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|s_ps2_receiver~3                                         ; Lost fanout                                                                              ;
-; Keyboard_Buffer:printable_buf|wr_addr[5]                                                                       ; Merged with Keyboard_Buffer:printable_buf|wr_addr[2]                                     ;
 ; ascii_table~0                                                                                                  ; Stuck at GND due to stuck port clock                                                     ;
 ; ascii_table~1                                                                                                  ; Stuck at GND due to stuck port clock                                                     ;
 ; ascii_table~2                                                                                                  ; Stuck at GND due to stuck port clock                                                     ;
@@ -1839,7 +1851,7 @@ Encoding Type:  One-Hot
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter.PS2_STATE_0_IDLE               ; Stuck at GND due to stuck port data_in                                                   ;
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter.PS2_STATE_6_COMMAND_WAS_SENT   ; Lost fanout                                                                              ;
 ; PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter.PS2_STATE_7_TRANSMISSION_ERROR ; Lost fanout                                                                              ;
-; Total Number of Removed Registers = 1577                                                                       ;                                                                                          ;
+; Total Number of Removed Registers = 1538                                                                       ;                                                                                          ;
 +----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
@@ -1866,24 +1878,14 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 127   ;
-; Number of registers using Synchronous Clear  ; 83    ;
+; Total registers                              ; 214   ;
+; Number of registers using Synchronous Clear  ; 179   ;
 ; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 12    ;
+; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 88    ;
+; Number of registers using Clock Enable       ; 122   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
-
-
-+----------------------------------------------------+
-; Inverted Register Statistics                       ;
-+------------------------------------------+---------+
-; Inverted Register                        ; Fan out ;
-+------------------------------------------+---------+
-; Keyboard_Buffer:printable_buf|wr_addr[3] ; 7       ;
-; Total number of inverted registers = 1   ;         ;
-+------------------------------------------+---------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1893,15 +1895,17 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------+
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|received_data[7]                    ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|data_shift_reg[4]                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |PS2_test|ascii_val[1]                                                                              ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |PS2_test|raw_val[6]                                                                                ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |PS2_test|Keyboard_Buffer:printable_buf|wr_addr[1]                                                  ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 0 LEs                ; 26 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|command_initiate_counter[1] ;
-; 4:1                ; 20 bits   ; 40 LEs        ; 0 LEs                ; 40 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|waiting_counter[4]          ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |PS2_test|raw_val[1]                                                                                ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |PS2_test|ascii_val[3]                                                                              ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 0 LEs                ; 24 LEs                 ; Yes        ; |PS2_test|Keyboard_Buffer:printable_buf|rd_addr[3]                                                  ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 0 LEs                ; 24 LEs                 ; Yes        ; |PS2_test|Keyboard_Buffer:raw_buf|rd_addr[6]                                                        ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 0 LEs                ; 24 LEs                 ; Yes        ; |PS2_test|Keyboard_Buffer:raw_buf|wr_addr[4]                                                        ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 0 LEs                ; 24 LEs                 ; Yes        ; |PS2_test|Keyboard_Buffer:printable_buf|wr_addr[10]                                                 ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 0 LEs                ; 26 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|command_initiate_counter[2] ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 0 LEs                ; 40 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|waiting_counter[6]          ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|cur_bit[3]                  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|data_count[0]                       ;
-; 4:1                ; 17 bits   ; 34 LEs        ; 0 LEs                ; 34 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|transfer_counter[4]         ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |PS2_test|Keyboard_Buffer:printable_buf|wr_addr[5]                                                  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In|data_count[2]                       ;
+; 4:1                ; 17 bits   ; 34 LEs        ; 0 LEs                ; 34 LEs                 ; Yes        ; |PS2_test|PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out|transfer_counter[6]         ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------+
 
 
@@ -2132,26 +2136,24 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------------------+---------------------------------------------------------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "Keyboard_Buffer:raw_buf"                                                               ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; Port    ; Type   ; Severity ; Details                                                                             ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; rd_data ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; ra      ; Output ; Info     ; Explicitly unconnected                                                              ;
-; wa      ; Output ; Info     ; Explicitly unconnected                                                              ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
++-----------------------------------------------------+
+; Port Connectivity Checks: "Keyboard_Buffer:raw_buf" ;
++------+--------+----------+--------------------------+
+; Port ; Type   ; Severity ; Details                  ;
++------+--------+----------+--------------------------+
+; ra   ; Output ; Info     ; Explicitly unconnected   ;
+; wa   ; Output ; Info     ; Explicitly unconnected   ;
++------+--------+----------+--------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "Keyboard_Buffer:printable_buf"                                                           ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
-; Port      ; Type   ; Severity ; Details                                                                             ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
-; rd_data   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; ra[11..8] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; wa[11..8] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Keyboard_Buffer:printable_buf"                                                      ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; ra   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; wa   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2171,32 +2173,30 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 127                         ;
-;     CLR               ; 1                           ;
-;     ENA               ; 11                          ;
-;     ENA CLR           ; 11                          ;
-;     ENA SCLR          ; 66                          ;
-;     SCLR              ; 17                          ;
-;     plain             ; 21                          ;
+; arriav_ff             ; 214                         ;
+;     ENA               ; 8                           ;
+;     ENA SCLR          ; 114                         ;
+;     SCLR              ; 65                          ;
+;     plain             ; 27                          ;
 ; arriav_io_obuf        ; 2                           ;
-; arriav_lcell_comb     ; 250                         ;
-;     arith             ; 61                          ;
-;         1 data inputs ; 60                          ;
-;         2 data inputs ; 1                           ;
+; arriav_lcell_comb     ; 322                         ;
+;     arith             ; 98                          ;
+;         1 data inputs ; 98                          ;
 ;     extend            ; 1                           ;
 ;         7 data inputs ; 1                           ;
-;     normal            ; 188                         ;
+;     normal            ; 223                         ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 8                           ;
-;         2 data inputs ; 12                          ;
-;         3 data inputs ; 38                          ;
-;         4 data inputs ; 37                          ;
-;         5 data inputs ; 31                          ;
-;         6 data inputs ; 61                          ;
+;         1 data inputs ; 7                           ;
+;         2 data inputs ; 9                           ;
+;         3 data inputs ; 33                          ;
+;         4 data inputs ; 65                          ;
+;         5 data inputs ; 37                          ;
+;         6 data inputs ; 71                          ;
 ; boundary_port         ; 53                          ;
+; stratixv_ram_block    ; 24                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 2.18                        ;
+; Average LUT depth     ; 1.92                        ;
 +-----------------------+-----------------------------+
 
 
@@ -2215,15 +2215,12 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Wed Jul 24 17:11:06 2024
+    Info: Processing started: Wed Jul 24 17:53:22 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off PS2_test -c PS2_test
 Warning (125092): Tcl Script File PS2/synthesis/PS2.qip not found
     Info (125063): set_global_assignment -name QIP_FILE PS2/synthesis/PS2.qip
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
-Warning (10229): Verilog HDL Expression warning at PS2_test.v(192): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 192
-Warning (10229): Verilog HDL Expression warning at PS2_test.v(193): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 193
-Warning (10229): Verilog HDL Expression warning at PS2_test.v(194): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 194
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(195): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 195
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(196): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 196
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(197): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 197
@@ -2271,6 +2268,9 @@ Warning (10229): Verilog HDL Expression warning at PS2_test.v(238): truncated li
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(239): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 239
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(240): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 240
 Warning (10229): Verilog HDL Expression warning at PS2_test.v(241): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 241
+Warning (10229): Verilog HDL Expression warning at PS2_test.v(242): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 242
+Warning (10229): Verilog HDL Expression warning at PS2_test.v(243): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 243
+Warning (10229): Verilog HDL Expression warning at PS2_test.v(244): truncated literal to match 8 bits File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 244
 Info (12021): Found 1 design units, including 1 entities, in source file ps2_test.v
     Info (12023): Found entity 1: PS2_test File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file hex.v
@@ -2292,31 +2292,28 @@ Info (12021): Found 1 design units, including 1 entities, in source file /users/
 Info (12021): Found 1 design units, including 1 entities, in source file keyboard_buffer.v
     Info (12023): Found entity 1: Keyboard_Buffer File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 1
 Info (12127): Elaborating entity "PS2_test" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at PS2_test.v(55): object "data_print" assigned a value but never read File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 55
-Warning (10036): Verilog HDL or VHDL warning at PS2_test.v(58): object "data_raw" assigned a value but never read File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 58
-Warning (10230): Verilog HDL assignment warning at PS2_test.v(269): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 269
-Warning (10230): Verilog HDL assignment warning at PS2_test.v(270): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 270
-Warning (10030): Net "raw_table.data_a" at PS2_test.v(84) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 84
-Warning (10030): Net "raw_table.waddr_a" at PS2_test.v(84) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 84
-Warning (10030): Net "raw_table_ex.data_a" at PS2_test.v(85) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 85
-Warning (10030): Net "raw_table_ex.waddr_a" at PS2_test.v(85) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 85
-Warning (10030): Net "ascii_table.data_a" at PS2_test.v(86) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 86
-Warning (10030): Net "ascii_table.waddr_a" at PS2_test.v(86) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 86
-Warning (10030): Net "raw_table.we_a" at PS2_test.v(84) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 84
-Warning (10030): Net "raw_table_ex.we_a" at PS2_test.v(85) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 85
-Warning (10030): Net "ascii_table.we_a" at PS2_test.v(86) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 86
-Warning (10034): Output port "HEX4" at PS2_test.v(18) has no driver File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-Warning (10034): Output port "HEX5" at PS2_test.v(19) has no driver File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-Info (12128): Elaborating entity "hex" for hierarchy "hex:H0" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 50
-Info (12128): Elaborating entity "PS2_Controller" for hierarchy "PS2_Controller:inst" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 78
+Warning (10230): Verilog HDL assignment warning at PS2_test.v(272): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 272
+Warning (10230): Verilog HDL assignment warning at PS2_test.v(273): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 273
+Warning (10030): Net "raw_table.data_a" at PS2_test.v(87) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 87
+Warning (10030): Net "raw_table.waddr_a" at PS2_test.v(87) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 87
+Warning (10030): Net "raw_table_ex.data_a" at PS2_test.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 88
+Warning (10030): Net "raw_table_ex.waddr_a" at PS2_test.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 88
+Warning (10030): Net "ascii_table.data_a" at PS2_test.v(89) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 89
+Warning (10030): Net "ascii_table.waddr_a" at PS2_test.v(89) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 89
+Warning (10030): Net "raw_table.we_a" at PS2_test.v(87) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 87
+Warning (10030): Net "raw_table_ex.we_a" at PS2_test.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 88
+Warning (10030): Net "ascii_table.we_a" at PS2_test.v(89) has no driver or initial value, using a default initial value '0' File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 89
+Info (12128): Elaborating entity "hex" for hierarchy "hex:H0" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 44
+Info (12128): Elaborating entity "PS2_Controller" for hierarchy "PS2_Controller:inst" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 81
 Info (12128): Elaborating entity "Altera_UP_PS2_Data_In" for hierarchy "PS2_Controller:inst|Altera_UP_PS2_Data_In:PS2_Data_In" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/ps2/PS2_Controller.v Line: 247
 Info (12128): Elaborating entity "Altera_UP_PS2_Command_Out" for hierarchy "PS2_Controller:inst|Altera_UP_PS2_Command_Out:PS2_Command_Out" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/ps2/PS2_Controller.v Line: 267
-Info (12128): Elaborating entity "Keyboard_Buffer" for hierarchy "Keyboard_Buffer:printable_buf" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 292
-Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(41): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 41
-Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(46): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 46
-Info (12128): Elaborating entity "altsyncram" for hierarchy "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
-Info (12130): Elaborated megafunction instantiation "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
-Info (12133): Instantiated megafunction "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
+Info (12128): Elaborating entity "Keyboard_Buffer" for hierarchy "Keyboard_Buffer:printable_buf" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 295
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(35): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 35
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(43): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 43
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(48): truncated value with size 32 to match size of target (8) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 48
+Info (12128): Elaborating entity "altsyncram" for hierarchy "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
+Info (12130): Elaborated megafunction instantiation "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
+Info (12133): Instantiated megafunction "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_input_b" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
@@ -2342,12 +2339,13 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
 Info (12128): Elaborating entity "altsyncram_0032" for hierarchy "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated" File: c:/altera/23.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Warning (287013): Variable or input pin "clocken2" is defined but never used. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 34
 Warning (287013): Variable or input pin "clocken3" is defined but never used. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 35
-Info (12128): Elaborating entity "Keyboard_Buffer" for hierarchy "Keyboard_Buffer:raw_buf" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 304
-Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(41): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 41
-Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(46): truncated value with size 32 to match size of target (16) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 46
-Info (12128): Elaborating entity "altsyncram" for hierarchy "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
-Info (12130): Elaborated megafunction instantiation "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
-Info (12133): Instantiated megafunction "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 76
+Info (12128): Elaborating entity "Keyboard_Buffer" for hierarchy "Keyboard_Buffer:raw_buf" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 307
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(35): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 35
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(43): truncated value with size 32 to match size of target (12) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 43
+Warning (10230): Verilog HDL assignment warning at Keyboard_Buffer.v(48): truncated value with size 32 to match size of target (16) File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 48
+Info (12128): Elaborating entity "altsyncram" for hierarchy "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
+Info (12130): Elaborated megafunction instantiation "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
+Info (12133): Instantiated megafunction "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component" with the following parameter: File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/Keyboard_Buffer.v Line: 78
     Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
     Info (12134): Parameter "clock_enable_input_b" = "BYPASS"
     Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
@@ -2373,36 +2371,10 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
 Info (12128): Elaborating entity "altsyncram_u232" for hierarchy "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated" File: c:/altera/23.1std/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Warning (287013): Variable or input pin "clocken2" is defined but never used. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 34
 Warning (287013): Variable or input pin "clocken3" is defined but never used. File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 35
-Warning (14284): Synthesized away the following node(s):
-    Warning (14285): Synthesized away the following RAM node(s):
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[0]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 43
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[1]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 78
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[2]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 113
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[3]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 148
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[4]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 183
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[5]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 218
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[6]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 253
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[7]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 288
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[8]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 323
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[9]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 358
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[10]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 393
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[11]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 428
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[12]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 463
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[13]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 498
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[14]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 533
-        Warning (14320): Synthesized away node "Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component|altsyncram_u232:auto_generated|q_a[15]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_u232.tdf Line: 568
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[0]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 43
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[1]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 78
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[2]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 113
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[3]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 148
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[4]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 183
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[5]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 218
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[6]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 253
-        Warning (14320): Synthesized away node "Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component|altsyncram_0032:auto_generated|q_a[7]" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/altsyncram_0032.tdf Line: 288
 Info (276014): Found 3 instances of uninferred RAM logic
-    Info (276007): RAM logic "raw_table" is uninferred due to asynchronous read logic File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 84
-    Info (276004): RAM logic "raw_table_ex" is uninferred due to inappropriate RAM size File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 85
-    Info (276004): RAM logic "ascii_table" is uninferred due to inappropriate RAM size File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 86
+    Info (276007): RAM logic "raw_table" is uninferred due to asynchronous read logic File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 87
+    Info (276004): RAM logic "raw_table_ex" is uninferred due to inappropriate RAM size File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 88
+    Info (276004): RAM logic "ascii_table" is uninferred due to inappropriate RAM size File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 89
 Critical Warning (127005): Memory depth (256) in the design file differs from memory depth (132) in the Memory Initialization File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/PS2_test.ram0_PS2_test_f95242bf.hdl.mif" -- setting initial value for remaining addresses to 0
 Warning (127007): Memory Initialization File or Hexadecimal (Intel-Format) File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/PS2_test.ram0_PS2_test_f95242bf.hdl.mif" contains "don't care" values -- overwriting them with 0s
 Critical Warning (127005): Memory depth (128) in the design file differs from memory depth (126) in the Memory Initialization File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/PS2_test.ram1_PS2_test_f95242bf.hdl.mif" -- setting initial value for remaining addresses to 0
@@ -2410,39 +2382,22 @@ Warning (127007): Memory Initialization File or Hexadecimal (Intel-Format) File 
 Critical Warning (127005): Memory depth (128) in the design file differs from memory depth (94) in the Memory Initialization File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/PS2_test.ram2_PS2_test_f95242bf.hdl.mif" -- setting initial value for remaining addresses to 0
 Warning (127007): Memory Initialization File or Hexadecimal (Intel-Format) File "C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/db/PS2_test.ram2_PS2_test_f95242bf.hdl.mif" contains "don't care" values -- overwriting them with 0s
 Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 17
-    Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX4[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 18
-    Warning (13410): Pin "HEX5[0]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[1]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[2]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[3]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[4]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[5]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
-    Warning (13410): Pin "HEX5[6]" is stuck at GND File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 19
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 49 registers lost all their fanouts during netlist optimizations.
+Info (17049): 19 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/output_files/PS2_test.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 1 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "KEY1" File: C:/Users/Malcolm/Documents/Logisim/LALU-2.0/PS2 Test/PS2_test.v Line: 6
-Info (21057): Implemented 315 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 458 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 5 input pins
     Info (21059): Implemented 46 output pins
     Info (21060): Implemented 2 bidirectional pins
-    Info (21061): Implemented 262 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 130 warnings
-    Info: Peak virtual memory: 4869 megabytes
-    Info: Processing ended: Wed Jul 24 17:11:23 2024
-    Info: Elapsed time: 00:00:17
-    Info: Total CPU time (on all processors): 00:00:46
+    Info (21061): Implemented 381 logic cells
+    Info (21064): Implemented 24 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 84 warnings
+    Info: Peak virtual memory: 4881 megabytes
+    Info: Processing ended: Wed Jul 24 17:53:40 2024
+    Info: Elapsed time: 00:00:18
+    Info: Total CPU time (on all processors): 00:00:49
 
 
 +------------------------------------------+
