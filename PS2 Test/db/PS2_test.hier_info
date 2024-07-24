@@ -7,52 +7,52 @@ KEY1 => Keyboard_Buffer:raw_buf.poll
 KEY2 => Keyboard_Buffer:printable_buf.rd_clk
 KEY2 => Keyboard_Buffer:raw_buf.rd_clk
 KEY3 => reset.IN1
-HEX0[0] << hex:H0.out
-HEX0[1] << hex:H0.out
-HEX0[2] << hex:H0.out
-HEX0[3] << hex:H0.out
-HEX0[4] << hex:H0.out
-HEX0[5] << hex:H0.out
-HEX0[6] << hex:H0.out
-HEX1[0] << hex:H1.out
-HEX1[1] << hex:H1.out
-HEX1[2] << hex:H1.out
-HEX1[3] << hex:H1.out
-HEX1[4] << hex:H1.out
-HEX1[5] << hex:H1.out
-HEX1[6] << hex:H1.out
-HEX2[0] << hex:H2.out
-HEX2[1] << hex:H2.out
-HEX2[2] << hex:H2.out
-HEX2[3] << hex:H2.out
-HEX2[4] << hex:H2.out
-HEX2[5] << hex:H2.out
-HEX2[6] << hex:H2.out
-HEX3[0] << hex:H3.out
-HEX3[1] << hex:H3.out
-HEX3[2] << hex:H3.out
-HEX3[3] << hex:H3.out
-HEX3[4] << hex:H3.out
-HEX3[5] << hex:H3.out
-HEX3[6] << hex:H3.out
-HEX4[0] << hex:H4.out
-HEX4[1] << hex:H4.out
-HEX4[2] << hex:H4.out
-HEX4[3] << hex:H4.out
-HEX4[4] << hex:H4.out
-HEX4[5] << hex:H4.out
-HEX4[6] << hex:H4.out
-HEX5[0] << hex:H5.out
-HEX5[1] << hex:H5.out
-HEX5[2] << hex:H5.out
-HEX5[3] << hex:H5.out
-HEX5[4] << hex:H5.out
-HEX5[5] << hex:H5.out
-HEX5[6] << hex:H5.out
-LEDR0 << LEDR0~reg0.DB_MAX_OUTPUT_PORT_TYPE
-LEDR1 << LEDR1~reg0.DB_MAX_OUTPUT_PORT_TYPE
-LEDR2 << LEDR2~reg0.DB_MAX_OUTPUT_PORT_TYPE
-LEDR3 << LEDR3~reg0.DB_MAX_OUTPUT_PORT_TYPE
+HEX0[0] <= hex:H0.out
+HEX0[1] <= hex:H0.out
+HEX0[2] <= hex:H0.out
+HEX0[3] <= hex:H0.out
+HEX0[4] <= hex:H0.out
+HEX0[5] <= hex:H0.out
+HEX0[6] <= hex:H0.out
+HEX1[0] <= hex:H1.out
+HEX1[1] <= hex:H1.out
+HEX1[2] <= hex:H1.out
+HEX1[3] <= hex:H1.out
+HEX1[4] <= hex:H1.out
+HEX1[5] <= hex:H1.out
+HEX1[6] <= hex:H1.out
+HEX2[0] <= hex:H2.out
+HEX2[1] <= hex:H2.out
+HEX2[2] <= hex:H2.out
+HEX2[3] <= hex:H2.out
+HEX2[4] <= hex:H2.out
+HEX2[5] <= hex:H2.out
+HEX2[6] <= hex:H2.out
+HEX3[0] <= hex:H3.out
+HEX3[1] <= hex:H3.out
+HEX3[2] <= hex:H3.out
+HEX3[3] <= hex:H3.out
+HEX3[4] <= hex:H3.out
+HEX3[5] <= hex:H3.out
+HEX3[6] <= hex:H3.out
+HEX4[0] <= <GND>
+HEX4[1] <= <GND>
+HEX4[2] <= <GND>
+HEX4[3] <= <GND>
+HEX4[4] <= <GND>
+HEX4[5] <= <GND>
+HEX4[6] <= <GND>
+HEX5[0] <= <GND>
+HEX5[1] <= <GND>
+HEX5[2] <= <GND>
+HEX5[3] <= <GND>
+HEX5[4] <= <GND>
+HEX5[5] <= <GND>
+HEX5[6] <= <GND>
+LEDR0 <= LEDR0~reg0.DB_MAX_OUTPUT_PORT_TYPE
+LEDR1 <= LEDR1~reg0.DB_MAX_OUTPUT_PORT_TYPE
+LEDR2 <= LEDR2~reg0.DB_MAX_OUTPUT_PORT_TYPE
+LEDR3 <= LEDR3~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |PS2_test|hex:H0
@@ -98,34 +98,6 @@ out[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |PS2_test|hex:H3
-in[0] => Decoder0.IN3
-in[1] => Decoder0.IN2
-in[2] => Decoder0.IN1
-in[3] => Decoder0.IN0
-out[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-out[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-out[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-out[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-out[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-out[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-out[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|PS2_test|hex:H4
-in[0] => Decoder0.IN3
-in[1] => Decoder0.IN2
-in[2] => Decoder0.IN1
-in[3] => Decoder0.IN0
-out[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-out[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-out[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-out[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-out[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-out[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-out[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|PS2_test|hex:H5
 in[0] => Decoder0.IN3
 in[1] => Decoder0.IN2
 in[2] => Decoder0.IN1
@@ -444,6 +416,14 @@ reset => rd_addr[8].ACLR
 reset => rd_addr[9].ACLR
 reset => rd_addr[10].ACLR
 reset => rd_addr[11].ACLR
+reset => data[0].ACLR
+reset => data[1].ACLR
+reset => data[2].ACLR
+reset => data[3].ACLR
+reset => data[4].ACLR
+reset => data[5].ACLR
+reset => data[6].ACLR
+reset => data[7].ACLR
 reset => wr_addr[0].ACLR
 reset => wr_addr[1].ACLR
 reset => wr_addr[2].ACLR
@@ -465,6 +445,30 @@ rd_data[4] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[5] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[6] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[7] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
+ra[0] <= rd_addr[0].DB_MAX_OUTPUT_PORT_TYPE
+ra[1] <= rd_addr[1].DB_MAX_OUTPUT_PORT_TYPE
+ra[2] <= rd_addr[2].DB_MAX_OUTPUT_PORT_TYPE
+ra[3] <= rd_addr[3].DB_MAX_OUTPUT_PORT_TYPE
+ra[4] <= rd_addr[4].DB_MAX_OUTPUT_PORT_TYPE
+ra[5] <= rd_addr[5].DB_MAX_OUTPUT_PORT_TYPE
+ra[6] <= rd_addr[6].DB_MAX_OUTPUT_PORT_TYPE
+ra[7] <= rd_addr[7].DB_MAX_OUTPUT_PORT_TYPE
+ra[8] <= rd_addr[8].DB_MAX_OUTPUT_PORT_TYPE
+ra[9] <= rd_addr[9].DB_MAX_OUTPUT_PORT_TYPE
+ra[10] <= rd_addr[10].DB_MAX_OUTPUT_PORT_TYPE
+ra[11] <= rd_addr[11].DB_MAX_OUTPUT_PORT_TYPE
+wa[0] <= wr_addr[0].DB_MAX_OUTPUT_PORT_TYPE
+wa[1] <= wr_addr[1].DB_MAX_OUTPUT_PORT_TYPE
+wa[2] <= wr_addr[2].DB_MAX_OUTPUT_PORT_TYPE
+wa[3] <= wr_addr[3].DB_MAX_OUTPUT_PORT_TYPE
+wa[4] <= wr_addr[4].DB_MAX_OUTPUT_PORT_TYPE
+wa[5] <= wr_addr[5].DB_MAX_OUTPUT_PORT_TYPE
+wa[6] <= wr_addr[6].DB_MAX_OUTPUT_PORT_TYPE
+wa[7] <= wr_addr[7].DB_MAX_OUTPUT_PORT_TYPE
+wa[8] <= wr_addr[8].DB_MAX_OUTPUT_PORT_TYPE
+wa[9] <= wr_addr[9].DB_MAX_OUTPUT_PORT_TYPE
+wa[10] <= wr_addr[10].DB_MAX_OUTPUT_PORT_TYPE
+wa[11] <= wr_addr[11].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |PS2_test|Keyboard_Buffer:printable_buf|altsyncram:altsyncram_component
@@ -830,6 +834,22 @@ reset => rd_addr[8].ACLR
 reset => rd_addr[9].ACLR
 reset => rd_addr[10].ACLR
 reset => rd_addr[11].ACLR
+reset => data[0].ACLR
+reset => data[1].ACLR
+reset => data[2].ACLR
+reset => data[3].ACLR
+reset => data[4].ACLR
+reset => data[5].ACLR
+reset => data[6].ACLR
+reset => data[7].ACLR
+reset => data[8].ACLR
+reset => data[9].ACLR
+reset => data[10].ACLR
+reset => data[11].ACLR
+reset => data[12].ACLR
+reset => data[13].ACLR
+reset => data[14].ACLR
+reset => data[15].ACLR
 reset => wr_addr[0].ACLR
 reset => wr_addr[1].ACLR
 reset => wr_addr[2].ACLR
@@ -859,6 +879,30 @@ rd_data[12] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[13] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[14] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
 rd_data[15] <= rd_data.DB_MAX_OUTPUT_PORT_TYPE
+ra[0] <= rd_addr[0].DB_MAX_OUTPUT_PORT_TYPE
+ra[1] <= rd_addr[1].DB_MAX_OUTPUT_PORT_TYPE
+ra[2] <= rd_addr[2].DB_MAX_OUTPUT_PORT_TYPE
+ra[3] <= rd_addr[3].DB_MAX_OUTPUT_PORT_TYPE
+ra[4] <= rd_addr[4].DB_MAX_OUTPUT_PORT_TYPE
+ra[5] <= rd_addr[5].DB_MAX_OUTPUT_PORT_TYPE
+ra[6] <= rd_addr[6].DB_MAX_OUTPUT_PORT_TYPE
+ra[7] <= rd_addr[7].DB_MAX_OUTPUT_PORT_TYPE
+ra[8] <= rd_addr[8].DB_MAX_OUTPUT_PORT_TYPE
+ra[9] <= rd_addr[9].DB_MAX_OUTPUT_PORT_TYPE
+ra[10] <= rd_addr[10].DB_MAX_OUTPUT_PORT_TYPE
+ra[11] <= rd_addr[11].DB_MAX_OUTPUT_PORT_TYPE
+wa[0] <= wr_addr[0].DB_MAX_OUTPUT_PORT_TYPE
+wa[1] <= wr_addr[1].DB_MAX_OUTPUT_PORT_TYPE
+wa[2] <= wr_addr[2].DB_MAX_OUTPUT_PORT_TYPE
+wa[3] <= wr_addr[3].DB_MAX_OUTPUT_PORT_TYPE
+wa[4] <= wr_addr[4].DB_MAX_OUTPUT_PORT_TYPE
+wa[5] <= wr_addr[5].DB_MAX_OUTPUT_PORT_TYPE
+wa[6] <= wr_addr[6].DB_MAX_OUTPUT_PORT_TYPE
+wa[7] <= wr_addr[7].DB_MAX_OUTPUT_PORT_TYPE
+wa[8] <= wr_addr[8].DB_MAX_OUTPUT_PORT_TYPE
+wa[9] <= wr_addr[9].DB_MAX_OUTPUT_PORT_TYPE
+wa[10] <= wr_addr[10].DB_MAX_OUTPUT_PORT_TYPE
+wa[11] <= wr_addr[11].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |PS2_test|Keyboard_Buffer:raw_buf|altsyncram:altsyncram_component

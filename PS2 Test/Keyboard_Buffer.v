@@ -5,7 +5,8 @@ module Keyboard_Buffer(	wr_clk,
 								poll,
 								reset,
 								rd_clk,
-								rd_data );
+								rd_data,
+								ra, wa);
 
 	parameter WIDTH = 8;
 
@@ -16,31 +17,36 @@ module Keyboard_Buffer(	wr_clk,
 	input	[WIDTH-1:0]	wr_data;
 	input			we;
 
-	output reg [WIDTH-1:0] rd_data;
+	output [11:0] ra;
+	output [11:0] wa;
+	output [WIDTH-1:0] rd_data;
 
 
-
-	reg [11:0] wr_addr = 0;
+	reg [WIDTH-1:0] data = 0;
+	reg [11:0] wr_addr = 30;
    always @(posedge reset or posedge wr_clk) begin
-       if (reset) wr_addr <= 0;
-       else if (we) wr_addr <= wr_addr + 1;
+       if (reset) begin
+			wr_addr <= 0;
+			data <= 0;
+		end
+       else if (we) begin
+			wr_addr <= wr_addr + 1;
+			data <= memdata;
+		 end
    end
 
 	reg [11:0] rd_addr = 0;
 	always @(posedge reset or posedge rd_clk) begin
-		if (reset) begin
-			rd_addr <= 0;
-			rd_data <= -1;
-		end
-		else if (poll && rd_addr != wr_addr) begin
-			rd_addr <= rd_addr + 1;
-			rd_data <= memdata;
-		end
-		else rd_data <= -1;
+		if (reset) rd_addr <= 0;
+		else if (poll && rd_addr != wr_addr) rd_addr <= rd_addr + 1;
 	end
+	
+	assign ra = rd_addr;
+	assign wa = wr_addr;
+	assign rd_data = poll && rd_addr != wr_addr ? data : 0;
+	
 
 	wire [WIDTH-1:0] memdata;
-
    altsyncram altsyncram_component (
                 .address_a (wr_addr),
                 .clock0 (wr_clk),
