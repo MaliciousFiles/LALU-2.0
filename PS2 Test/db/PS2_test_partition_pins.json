@@ -92,10 +92,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "HEX3[1]",
-					"strict" : false
-				},
-				{
 					"name" : "HEX3[2]",
 					"strict" : false
 				},

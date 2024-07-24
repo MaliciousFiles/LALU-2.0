@@ -23,14 +23,14 @@ module Keyboard_Buffer(	wr_clk,
 
 
 	reg [WIDTH-1:0] data = 0;
-	reg [11:0] wr_addr = 30;
-   always @(posedge reset or posedge wr_clk) begin
+	reg [11:0] wr_addr = 40;
+   always @(/*posedge reset or*/ posedge wr_clk) begin
        if (reset) begin
-			wr_addr <= 0;
+			wr_addr <= 30;
 			data <= 0;
-		end
+		 end
        else if (we) begin
-			wr_addr <= wr_addr + 1;
+			wr_addr <= 50;//wr_addr + 1;
 			data <= memdata;
 		 end
    end

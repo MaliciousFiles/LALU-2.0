@@ -299,6 +299,7 @@ module PS2_test(CLOCK_50, PS2_CLK, PS2_DAT, KEY0, KEY1, KEY2, KEY3, HEX0, HEX1, 
         .poll(poll_raw),
         .reset(reset),
         .rd_clk(rd_clk),
-        .rd_data(dr)
+        .rd_data(dr),
+		  .ra(), .wa()
     );
 endmodule
