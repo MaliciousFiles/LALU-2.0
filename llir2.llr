@@ -1,10 +1,9 @@
 decl x
 decl virtual y
 
-crash
-
-
 x = 1
+
+crash
 
 func main () -> 0 { #Specific entry point
   x, y = @func(z, ptr) #hjhjks

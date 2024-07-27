@@ -67,6 +67,10 @@ class CompileError(Exception):        #Just makes a custom Exception class so it
     def __init__(self,message):
         super().__init__(message)
 
+class TokenlessCompileError(Exception):
+    def __init__(self,message):
+        super().__init__(message)
+
 
     ###################################################################################
     #  * * * * * * * * * * * * * * *                   * * * * * * * * * * * * * * *  #
@@ -103,10 +107,10 @@ class State():
                 break
         else:
             reg = self.M_AquireReg()
-        addr = self.AquireMem(1, name)
         if virtual:
-            self.tempLoc[name] = addr
+            self.tempLoc[name] = None
         else:
+            addr = self.AquireMem(1, name)
             self.statLoc[name] = addr
 
     def M_AquireReg(self):
@@ -147,7 +151,7 @@ class State():
         self.M_OpRegReg('st', stkPtr, regLoc)    # *stkPtr = regVal
 
     def M_StkPointTo(self, var):
-        relAddr = self.I_MemLoc(var)
+        relAddr = self.MemLoc(var)
         self.M_SetStkPtr(relAddr)
 
     def M_SetStkPtr(self, addr):
@@ -214,6 +218,12 @@ class State():
             print('Memory Dump:')
             print(f'{self.mem=}')
             Error(f'Could not find variable `{var}` in memory')
+
+    def MemLoc(self, var):
+        if (ret := self.I_MemLoc(var)) == None:
+            return self.AquireMem(1, var)
+        else:
+            return ret
 
 def TryNum(tkn, val):
     num = 0
@@ -307,6 +317,7 @@ def Compile(contents, verb = False):
                 if len(self.tkns) == 0:
                     self.tkns.append(Token(' ', 0, self))
                     self.tkns[-1].Error('Expected another token, but got no line')
+                self.tkns.append(Token(' ', len(self.tkns), self))
                 self.tkns[-1].Error('Expected another token, but got end of line')
             ret = self.tkns[self.next]
             self.next += 1
@@ -396,6 +407,8 @@ def Compile(contents, verb = False):
         if ident.raw == 'virtual':
             ident = line.pop()
             if ident.type == 'u-ident':
+                if ident.isPtr:
+                    ident.Error(f'Cannot declare variable with the suffix `.*`: `{ident.type}`')
                 cstate.M_DeclVar(ident, True)
             elif ident.type in ["u-func", "lbl", "v-ident", "s-ident"]:
                 ident.Error(f'Identifier collides with prexisting name, results in type: `{ident.type}`')
@@ -403,6 +416,8 @@ def Compile(contents, verb = False):
                 ident.Error(f'Expected valid identifier type, found: `{ident.type}`')
         else:
             if ident.type == 'u-ident':
+                if ident.isPtr:
+                    ident.Error(f'Cannot declare variable with the suffix `.*`: `{ident.type}`')
                 cstate.M_DeclVar(ident, False)
             elif ident.type in ["u-func", "lbl", "v-ident", "s-ident"]:
                 ident.Error(f'Identifier collides with prexisting name, results in type: `{ident.type}`')
@@ -440,7 +455,7 @@ def Compile(contents, verb = False):
 
         try:
             Parse(line)
-        except CompileError as e:
+        except TokenlessCompileError as e:
             print(str(e))
             NoHintError('Parsing Failure')
         
