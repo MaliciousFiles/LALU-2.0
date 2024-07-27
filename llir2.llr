@@ -1,0 +1,30 @@
+decl x
+decl virtual y
+
+crash
+
+
+x = 1
+
+func main () -> 0 { #Specific entry point
+  x, y = @func(z, ptr) #hjhjks
+  x = 1
+  cmp x +> y goto lbl
+  
+  lbl:
+  {
+    decl z
+    z = 1
+    goto then
+  }
+
+  then:
+  from lbl
+  x = 0x10
+
+  decl ptr
+  ptr = x.&
+  ptr.* = lbl
+  @push(x)
+  x = @pop()
+}

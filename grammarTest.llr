@@ -1,15 +1,22 @@
-decl x
-x = 1
 
-decl ptr
-ptr = x.&
+main:
+  decl x
+  x = 1
+
+  goto test #!
+
+  decl ptr
+  ptr = x.&
 
 
-ptr.* = $17
+  goto test #!
 
-@push(x)
-x = @pop()
+  x = 1
 
 test:
+  decl z 
+  z = ptr
 
-goto test
+  undecl x
+
+  goto test #!

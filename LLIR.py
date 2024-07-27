@@ -5,6 +5,7 @@ from threading import Thread
 import os
 import inspect
 import traceback
+from copy import deepcopy as copy
 
 #Minor Tweak
 
@@ -82,12 +83,17 @@ def KeyFromValue(dictionary, val):
     return None
 
 def PreScan(contents):
+    global mark
+    mark=[]
     statics=[]
     for linenum, line in enumerate(contents.split('\n')):
+        line, comm = (line+'#').split('#', maxsplit=1)
         line = [x for x in line.split() if x != None]
         if len(line)==1 and line[0][-1]==':':
             lbl = line[0][:-1]
             statics.append((lbl,linenum))
+        if len(comm)>0 and comm[0]=='!':
+            mark.append(linenum)
     return statics
 
 @errormsg
@@ -130,9 +136,26 @@ def run(contents, verb = False):
             memdict[memloc]=name
 
     @AsmSrcMarker
+    def UndeclareVar(name):
+        nonlocal Vars
+        for reg in range(freeRegisters):
+            if regdict.get(reg, None) == name:
+                regdict[reg]=None
+        for memloc in memdict:
+            if memdict[memloc] == name:
+                memdict[memloc]=None
+        Vars.remove(name)
+        
+    @AsmSrcMarker
     def MemPush(reg):
         MemSync(reg)
         regdict[reg] = None
+
+    @AsmSrcMarker
+    def MemSync(reg):
+        nonlocal immexp
+        addr = MemLoc(regdict[reg])
+        immexp.append( {'op': 'st', 'Rd': addr, 'Rs': reg} )
 
     @AsmSrcMarker
     def RegSync(reg):
@@ -221,14 +244,20 @@ def run(contents, verb = False):
         nonlocal relstkptr
         if val > relstkptr:
             diff = val - relstkptr
-            LDIEX(14, diff)
-            immexp.append( {'op': 'add', 'Rd': 15, 'Rs': 14} )
+            if diff < 16:
+                immexp.append( {'op': 'add', 'Rd': 15, 'Rs': diff, 'Imm': True} )
+            else:
+                LDIEX(14, diff)
+                immexp.append( {'op': 'add', 'Rd': 15, 'Rs': 14} )
         elif val == relstkptr:
             return
         else:
             diff = relstkptr - val
-            LDIEX(14, diff)
-            immexp.append( {'op': 'sub', 'Rd': 15, 'Rs': 14} )
+            if diff < 16:
+                immexp.append( {'op': 'sub', 'Rd': 15, 'Rs': diff, 'Imm': True} )
+            else:
+                LDIEX(14, diff)
+                immexp.append( {'op': 'sub', 'Rd': 15, 'Rs': 14} )
         relstkptr = val
 
     #Offset Imm Extended
@@ -258,37 +287,50 @@ def run(contents, verb = False):
                         OFIEX(15, off)
                     relstkptr += off
                     memdict[relstkptr]=name
+                    if not goto:
+                        relstkptr -= off
                     return relstkptr
                 elif relstkptr - off >= 0 and memdict.get(relstkptr - off, None) == None:
                     if goto:
                         OFIEX(15, -off)
                     relstkptr -= off
                     memdict[relstkptr]=name
+                    if not goto:
+                        relstkptr += off
                     return relstkptr
                 off += 1
 
     @AsmSrcMarker
     def SetState(tarstate, oldstate):
-        tarreg, tarmem, tarptr = tarstate
-        oldreg, oldmem, oldptr = oldstate
+        tarmem, tarreg, tarptr = tarstate
+        oldmem, oldreg, oldptr = oldstate
 
-        queue = [(i, tarreg[i]) for i in enumerate(tarreg)]
-        while queue != []:
-            trn = [name for i,name in queue]
-            cloc, cvar = trn[0]
+        if verb:
+            print(f'Old: {oldstate!r}\nNew: {tarstate!r}')
+
+        for cloc in tarreg:
+            cvar = tarreg[cloc]
+            if cvar == None:
+                continue
             if cvar in oldreg.values():
                 if cloc == (oloc:=KeyFromValue(oldreg, cvar)):
                     pass    #The registers are fine so no worries
+                    if verb:
+                        print('Bypass')
                 else:
                     #Vacate the current location
                     MemPush(cloc)
                     regdict[cloc]=cvar
                     immexp.append( {'op': 'mv', 'Rd': cloc, 'Rs': oloc} )
                     regdict[oloc]=None #Also go ahead and mark the old location as free
+                if verb:
+                    print(f'Var `{cvar}` needs to be at `{cloc}` and is found at `{oloc}`')
             else:
+                if verb:
+                    print(f'Could not find Var `{cvar}`')
+                    print(f'Vacate location `{cloc}`')
                 MemPush(cloc)
                 regdict[cloc]=cvar
-                RegSync(cloc)
         SPSE(tarptr)
                     
     immexp = []
@@ -302,14 +344,16 @@ def run(contents, verb = False):
     sIN = [name for name,lnum in staticIdents]
     staticIdents = {name:lnum for name,lnum in staticIdents}
     states = {}
+    iloc = {}
 
     opsyms = [sym for bits,opclass,sym in OPCODES.values()]
     for linenum, line in enumerate(contents.split('\n')):
+        line, comm = (line+'#').split('#', maxsplit=1)
         line = line.split()
         if linenum in staticIdents.values():
             lbl=line[0][:-1]
             immexp.append( {'op': 'lbl', 'val': lbl} )
-            states[lbl] = (memdict,regdict,relstkptr)
+            states[lbl] = copy((memdict,regdict,relstkptr))
         elif line != []:
             #Declarations
             if line[0] == 'decl':
@@ -324,6 +368,12 @@ def run(contents, verb = False):
                     DeclareVar(line[2],True)
                 else:
                     DeclareVar(line[1])
+
+            elif line[0] == 'undecl':
+                if line[1] in Vars:
+                    UndeclareVar(line[1])
+                else:
+                    ErrorWithHighlight('Cannot undeclare variable that does not exist',1)
 
             #Inplace binary operations
             elif line[0] in Vars:
@@ -460,8 +510,13 @@ def run(contents, verb = False):
                         ErrorWithHighlight(f'Expected `)`, found: `{line[3]}`', 3)
                 else:
                     ErrorWithHighlight(f'Unknown Intrinsic Function: `{line[0]}`', 0)
+
+            #Jumps
             elif line[0] == 'goto':
                 if line[1] in sIN:
+                    albl = str(linenum)
+                    states[albl] = copy((memdict,regdict,relstkptr))
+                    iloc[albl] = len(immexp)
                     immexp.append( {'op': 'jmp', 'lbl': line[1]} )
                 elif line[1] in Vars:
                     ErrorWithHighlight(f'Cannot goto variable identifier: `{line[1]}`, if you intend to go to the destination of this variable, please use @jmp(...)', 1)
@@ -472,11 +527,54 @@ def run(contents, verb = False):
                     
             else:
                 ErrorWithHighlight('Line cannot be parsed, failed here', 0)
-
         for line in immexp:
             line['Src'] = line.get('Src', f'Line: {linenum+1}')
-    print('\n'.join([str(x) for x in immexp]))
+        print(f'`{linenum+1}` :: `{(memdict,regdict,relstkptr)=}')
 
+
+    oldexp = immexp
+    psh = 0
+    
+    #Secondary Processing
+    for linenum, line in enumerate(contents.split('\n')):
+        line, comm = (line+'#').split('#', maxsplit=1)
+        line = line.split()
+        
+        immexp = []
+
+
+        if line != []:
+            if line[0] == 'goto':
+                albl=str(linenum)
+                currstate = states[albl]
+                if verb:
+                    print('\nStates:')
+                    for state in states:
+                        print('   '+(state+':').ljust(16)+f'{states[state]}')
+##                    print(f'\n\t{states=}')
+                tarstate = states[line[1]]
+                SetState(tarstate, currstate)
+
+                inloc = iloc[albl]
+                inloc += psh
+                oldexp = oldexp[:inloc]+immexp+oldexp[inloc:]
+                psh+=len(immexp)
+
+                    
+
+
+    if verb:
+        print()
+        print()
+    for x in oldexp:
+        srcl = x['Src'][::-1].split(' ',maxsplit=1)[0][::-1]
+        if int(srcl)-1 in mark:
+            print('\t'+str(x))
+        else:
+            print(x)
+##    print(mark)
+##    print('\n'.join([str(x) for x in oldexp]))
+##
 inp = None
 
 def monitor_input():
