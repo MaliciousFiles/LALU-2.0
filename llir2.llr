@@ -1,3 +1,5 @@
+lbl:
+
 decl x
 decl virtual y
 decl z
@@ -5,7 +7,7 @@ decl z
 x.* = y
 0.* = 17
 x = y.*
-x = 17.* #!
+x = 17.*
 #0 = y.*
 x = 0x10
 
@@ -20,7 +22,18 @@ regsync y
 x = z.&
 
 @push(0)
-z = @pop()
+z = @pop() #!
+
+before:
+from lbl
+recent:
+
+from before
+x = 1
+
+goto future
+
+future:
 
 #crash
 

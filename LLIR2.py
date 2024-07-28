@@ -5,6 +5,7 @@ from threading import Thread
 import os
 import inspect
 import traceback
+from copy import deepcopy as copy
 
 
 freeRegisters = 14
@@ -106,6 +107,11 @@ class State():
         self.vIdents = []
         self.sIdents = []
         self.finals = []
+
+    def __hash__(self):
+        full = [self.regs, self.mem, self.statLoc, self.tempLoc, self.relStkPtr, self.relTopStk, self.regUseOrder, self.numRegsUsed, self.vIdents, self.sIdents, self.finals]
+        parts = [repr(hash(repr(x))) for x in full]
+        return hash(''.join(parts))
 
     @AsmSrcMarker
     def M_DeclVar(self, tkn, virtual):
@@ -303,6 +309,11 @@ class State():
         else:
             return ret
 
+    @AsmSrcMarker
+    def M_PushStateChange(self, oldstatename, tarstatename):
+        global immexp
+        immexp.append( {'proc': 'stateChange', 'from': oldstatename, 'to': tarstatename} )
+
 def TryNum(tkn, val):
     num = 0
     isNeg = val[0] == '-'
@@ -438,6 +449,9 @@ def Compile(contents, verb = False):
                 self.type = 'u-func'
             elif self.val in lbls:
                 self.type = 'lbl'
+            elif self.val[:-1] in lbls and self.val[-1]==':':
+                self.type = 'lbl'
+                self.val = self.val[:-1]
             elif self.val[0] == '@':
                 self.type = 'i-func'
                 self.val = self.val[1:]
@@ -656,13 +670,18 @@ def Compile(contents, verb = False):
         
                 
     def Parse(line):
-        nonlocal opsyms
+        nonlocal opsyms, cstate
+        global linenum
+
         if not line.CanPop():
             return
         tkn = line.pop()
 
+        #Declarations
         if tkn.raw == 'decl':
             ParseDecl(line)
+
+        #Memsync
         elif tkn.raw == 'memsync':
             var = line.pop()
             if var.type == 'v-ident':
@@ -671,6 +690,8 @@ def Compile(contents, verb = False):
                 var.Error(f'Cannot memsync undeclared identifier `{var.val}`')
             else:
                 var.Error(f'Expected variable, got type: `{var.type}`')
+
+        #Regsync
         elif tkn.raw == 'regsync':
             var = line.pop()
             if var.type == 'v-ident':
@@ -679,6 +700,42 @@ def Compile(contents, verb = False):
                 var.Error(f'Cannot regsync undeclared identifier `{var.val}`')
             else:
                 var.Error(f'Expected variable, got type: `{var.type}`')
+
+        #Labels
+        elif tkn.raw[-1] == ':' and tkn.type == 'lbl':
+            states[tkn.val] = copy(cstate)
+            line.AssertEmpty()
+
+        #From statements
+        elif tkn.raw == 'from':
+            lbl = line.pop()
+            if lbl.type != 'lbl':
+                lbl.Error(f'Expected identifier of label type, got: `{lbl.type}`')
+            lblname = lbl.val
+
+            cstatename = linenum
+            states[cstatename] = copy(cstate)
+            if lblname not in states:
+                lbl.Error(f'Can only resume with state of previous label, not future static label')
+            tarstate = copy(states[lblname])
+            cstate.M_PushStateChange(cstatename, lblname)
+            cstate = tarstate
+            line.AssertEmpty()
+
+        #Always goto statements
+        elif tkn.raw == 'goto':
+            lbl = line.pop()
+            if lbl.type != 'lbl':
+                lbl.Error(f'Expected identifier of label type, got: `{lbl.type}`')
+            lblname = lbl.val
+
+            cstatename = linenum
+            states[cstatename] = copy(cstate)
+            cstate.M_PushStateChange(cstatename, lblname)
+            cstate = None
+            line.AssertEmpty()
+
+        #Binary Ops & Returning IFuncs
         elif tkn.type in ['v-ident', 'num']:
             mid = line.pop()
             if mid.raw in opsyms:
@@ -692,8 +749,12 @@ def Compile(contents, verb = False):
                     
             else:
                 mid.Error('Line starts with variable, and thus must be followed by either a binary operator, function call, or name cycling')
+
+        #Void IFuncs
         elif tkn.type == 'i-func':
             ParseVoidIFunc(line)
+
+        #Different error messages
         elif tkn.type == 'addr':
             tkn.Error(f'Assigning to an address is not allowed')
         else:
@@ -705,6 +766,23 @@ def Compile(contents, verb = False):
 
         line.AssertEmpty()
 
+    def SIAParse(line):
+        nonlocal lbls, funcs
+
+        if not line.CanPop():
+            return
+
+        tkn = line.pop()
+        if tkn.type == 'u-ident' and tkn.raw[-1] == ':':
+            lbl = tkn.raw[:-1]
+            lbls.append(lbl)
+            line.AssertEmpty()
+        elif tkn.raw == 'func':
+            ParseFuncHeader(line)
+        elif tkn.raw == 'macro':
+            tkn.Error('Path not implemented: Macros')
+        
+
 
     ####################################################################################
     #  * * * * * * * * * * * * * * *                    * * * * * * * * * * * * * * *  #
@@ -715,15 +793,33 @@ def Compile(contents, verb = False):
     opsyms = [sym for bits,opclass,sym in OPCODES.values()]
 
     cstate = State()
+##    print(f'{hash(pstate)=}, {hash(cstate)=}')
+      
     lbls = []
     funcs = []
     mark = []
+    states = {}
 
-    immexp = []
+    #0. Static Identifier Analysis
     for linenum, line in enumerate(contents.split('\n')):
         line = TknList(line, cstate.vIdents, cstate.sIdents, funcs, lbls)
         if len(line.comment)>0 and line.comment[0]=='!':
             mark.append(linenum)
+
+        try:
+            SIAParse(line)
+        except TokenlessCompileError as e:
+            print()
+            print(str(e))
+            print()
+            print(traceback.format_exc())
+            NoHintError('Static Identifier Analysis Parsing Failure')
+
+
+    #1. Main Expansions
+    immexp = []
+    for linenum, line in enumerate(contents.split('\n')):
+        line = TknList(line, cstate.vIdents, cstate.sIdents, funcs, lbls)
 
         try:
             Parse(line)
@@ -738,6 +834,8 @@ def Compile(contents, verb = False):
 
     asm=[]
 
+
+    #4. Compile to assembly
     for x in immexp:
         if 'op' in x:   #Ready assembly
             if 'Rd' in x:   #Two register type
