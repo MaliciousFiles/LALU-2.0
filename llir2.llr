@@ -1,29 +1,49 @@
 decl x
 decl virtual y
+decl z
 
-x = 1
+x.* = y
+0.* = 17
+x = y.*
+x = 17.* #!
+#0 = y.*
+x = 0x10
 
-crash
+memsync x
+#memsync y
+regsync x
+regsync x
+#memsync y
+regsync y
+regsync y
 
-func main () -> 0 { #Specific entry point
-  x, y = @func(z, ptr) #hjhjks
-  x = 1
-  cmp x +> y goto lbl
-  
-  lbl:
-  {
-    decl z
-    z = 1
-    goto then
-  }
+x = z.&
 
-  then:
-  from lbl
-  x = 0x10
+@push(0)
+z = @pop()
 
-  decl ptr
-  ptr = x.&
-  ptr.* = lbl
-  @push(x)
-  x = @pop()
-}
+#crash
+
+#func main () -> 0 { #Specific entry point
+#  x, y = @func(z, ptr) #hjhjks
+#  x = 1
+#  cmp x +> y goto lbl
+#  flg x ovflw goto lbl
+#  
+#  lbl:
+#  {
+#    decl z
+#    z = 1
+#    goto then
+#  }
+#
+#  then:
+#  from lbl
+#  x = 0x10
+#
+#  decl ptr
+#  ptr = x.&
+#  ptr.* = lbl
+#  @push(x)
+#  x = @pop()
+#}

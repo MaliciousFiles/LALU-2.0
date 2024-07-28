@@ -61,7 +61,7 @@ OPCODES = {
 def __LINE__() -> int:
     return inspect.currentframe().f_back.f_lineno
 def __CALL_LINE__() -> int:
-    return inspect.currentframe().f_back.f_back.f_lineno
+    return inspect.currentframe().f_back.f_back.f_back.f_lineno
 
 class CompileError(Exception):        #Just makes a custom Exception class so its own errors can be caught
     def __init__(self,message):
@@ -71,6 +71,18 @@ class TokenlessCompileError(Exception):
     def __init__(self,message):
         super().__init__(message)
 
+def AsmSrcMarker(func):
+    global immexp, linenum
+    def inner(*args, **kwargs):
+        preImmExpLen = len(immexp)
+        ret = func(*args, **kwargs)
+        new = immexp[preImmExpLen:]
+        for line in new:
+            line['rSrc'] = line.get('rSrc',linenum)
+            line['Src'] = line.get('Src', f'Line: {linenum+1}')
+            line['Src'] = f'{func.__name__}::'+line['Src']
+        return ret
+    return inner
 
     ###################################################################################
     #  * * * * * * * * * * * * * * *                   * * * * * * * * * * * * * * *  #
@@ -79,7 +91,7 @@ class TokenlessCompileError(Exception):
     ###################################################################################
 
 def Error(msg):
-    raise CompileError('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
+    raise TokenlessCompileError('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')')
 
 class State():
     def __init__(self):
@@ -95,6 +107,7 @@ class State():
         self.sIdents = []
         self.finals = []
 
+    @AsmSrcMarker
     def M_DeclVar(self, tkn, virtual):
         name = tkn.val
         if name in self.vIdents:
@@ -103,7 +116,7 @@ class State():
         for i in range(freeRegisters):
             if self.regs[i] == None:
                 self.regs[i] = name
-                self.numRegsUsed = max(i, self.numRegsUsed)
+                self.numRegsUsed = max(1+i, self.numRegsUsed)
                 break
         else:
             reg = self.M_AquireReg()
@@ -113,11 +126,12 @@ class State():
             addr = self.AquireMem(1, name)
             self.statLoc[name] = addr
 
+    @AsmSrcMarker
     def M_AquireReg(self):
         regIdx = self.regUseOrder[0]
         var = self.regs[regIdx]
         self.M_MemPushVar(var)
-        self.regs[redIdx] = None
+        self.regs[regIdx] = None
         return regIdx
 
     def AquireMem(self, width, var):
@@ -145,15 +159,43 @@ class State():
                 return False
         return True
 
+    @AsmSrcMarker
     def M_MemPushVar(self, var):
         regLoc = self.I_RegLoc(var)
         self.M_StkPointTo(var)
-        self.M_OpRegReg('st', stkPtr, regLoc)    # *stkPtr = regVal
+        self.M_OpRegReg('st', regLoc, stkPtr)    # *stkPtr = regVal
 
+    @AsmSrcMarker
+    def M_MemSyncVar(self, var):
+        if var in self.regs:
+            self.M_MemPushVar(var)
+        elif var not in self.vIdents:
+            Error(f'Cannot memsync variable `{var}`, which is not a variable identifier in this scope')
+
+    @AsmSrcMarker
+    def M_MemPullVar(self, var):
+        regLoc = self.I_RegLoc(var)
+        self.M_StkPointTo(var)
+        self.M_OpRegReg('ld', regLoc, stkPtr)    # *stkPtr = regVal
+        if var in self.tempLoc:
+            self.tempLoc[var] = None
+
+    @AsmSrcMarker
+    def M_RegSyncVar(self, var):
+        if var in self.regs:
+            memLoc = self.I_MemLoc(var)
+            if memLoc == None:
+                return
+            self.M_MemPullVar(var)
+        elif var not in self.vIdents:
+            Error(f'Cannot regsync variable `{var}`, which is not a variable identifier in this scope')
+
+    @AsmSrcMarker
     def M_StkPointTo(self, var):
         relAddr = self.MemLoc(var)
         self.M_SetStkPtr(relAddr)
 
+    @AsmSrcMarker
     def M_SetStkPtr(self, addr):
         offset = addr - self.relStkPtr
         if offset > 0:
@@ -162,10 +204,12 @@ class State():
             self.M_OpRegImm('sub', stkPtr, -offset)
         self.relStkPtr = addr
 
+    @AsmSrcMarker
     def M_OpRegReg(self, op, rd, rs):
         global immexp
         immexp.append( {'op': op, 'Rd': rd, 'Rs': rs} )
 
+    @AsmSrcMarker
     def M_OpRegImm(self, op, rd, imm):
         global immexp
 
@@ -179,6 +223,24 @@ class State():
         else:
             Error('Immediate supplied is not encodeable')
 
+    @AsmSrcMarker
+    def M_OpReg(self, op, rs):
+        global immexp
+        immexp.append( {'op': op, 'Rs': rs} )
+
+    @AsmSrcMarker
+    def M_OpImm(self, op, imm):
+        global immexp
+
+        if 0 <= imm < 16:
+            immexp.append( {'op': op, 'Rs': imm, 'Imm': True} )
+        elif 16 <= imm < 2**16 and op != 'mv':
+            self.M_LoadImm(intReg, imm)
+            immexp.append( {'op': op, 'Rs': intReg} ) #Load from the intermediate register
+        else:
+            Error('Immediate supplied is not encodeable')
+
+    @AsmSrcMarker
     def M_LoadImm(self, reg, val):
         global immexp
         chunks = []
@@ -190,7 +252,8 @@ class State():
         immexp.append( {'op': 'mv', 'Rd': reg, 'Rs': val, 'Imm': True} )
         for cnk in chunks:
             immexp.append( {'op': 'bsl', 'Rd': reg, 'Rs': 4, 'Imm': True} )
-            immexp.append( {'op': 'add', 'Rd': reg, 'Rs': cnk, 'Imm': True} )
+            if cnk != 0:
+                immexp.append( {'op': 'add', 'Rd': reg, 'Rs': cnk, 'Imm': True} )
 
     def I_RegLoc(self, var):
         for i in range(self.numRegsUsed):
@@ -201,11 +264,24 @@ class State():
             print(f'{self.regs=}')
             Error(f'Could not find variable `{var}` in registers')
 
+    @AsmSrcMarker
+    def M_RegLoc(self, var):
+        for i in range(self.numRegsUsed):
+            if self.regs[i] == var:
+                return i
+        else:
+            regloc = self.M_AquireReg()
+            devar = self.regs[regloc]
+            self.M_MemPushVar(devar)
+            self.regs[regloc] = var
+            self.M_RegSync(var)
+            
+
     def I_MemLoc(self, var):
         if var in self.statLoc:
-            return statLoc[var]
+            return self.statLoc[var]
         elif var in self.tempLoc:
-            return tempLoc[var]
+            return self.tempLoc[var]
         elif var in self.mem.values():
             print('Memory Dump:')
             print(f'{self.mem=}')
@@ -221,7 +297,9 @@ class State():
 
     def MemLoc(self, var):
         if (ret := self.I_MemLoc(var)) == None:
-            return self.AquireMem(1, var)
+            addr = self.AquireMem(1, var)
+            self.tempLoc[var] = addr
+            return addr
         else:
             return ret
 
@@ -273,6 +351,7 @@ def errormsg(func):
 
 @errormsg
 def Compile(contents, verb = False):
+    global immexp, linenum
     class TknList():
         def __init__(self, line, vIdents, sIdents, uFuncs, lbls):
             self.tkns = []
@@ -329,6 +408,9 @@ def Compile(contents, verb = False):
 
         def CanPop(self):
             return self.next != len(self.tkns)
+
+        def Reset(self):
+            self.next = 0
             
     class Token():
         def __init__(self, txt, idx, parent):
@@ -348,45 +430,32 @@ def Compile(contents, verb = False):
                 self.val = self.val[:-2]
                 self.isPtr = True
             
-            if self.raw in vIdents:
+            if self.val in vIdents:
                 self.type = 'v-ident'
-            elif self.raw in sIdents:
+            elif self.val in sIdents:
                 self.type = 's-ident'
-            elif self.raw in uFuncs:
+            elif self.val in uFuncs:
                 self.type = 'u-func'
-            elif self.raw in lbls:
+            elif self.val in lbls:
                 self.type = 'lbl'
-            elif self.raw[0] == '@':
+            elif self.val[0] == '@':
                 self.type = 'i-func'
                 self.val = self.val[1:]
-            elif self.raw[-2:] == '.&':
+            elif self.val[-2:] == '.&':
                 self.type = 'addr'
                 self.val = self.val[:-2]
-            elif self.raw in '(){}':
+            elif self.val in '(){}':
                 self.type = 'sym-lit'
-            elif self.raw == ' ':
+            elif self.val == ' ':
                 self.type = 'ws'
-            elif num := TryNum(self, self.raw):
+            elif (num := TryNum(self, self.val)) != None:
                 self.type = 'num'
+                self.val = num
             else:
                 self.type = 'u-ident'
-            
-        
-    def AsmSrcMarker(func):
-        nonlocal immexp, linenum
-        def inner(*args, **kwargs):
-            preImmExpLen = len(immexp)
-            ret = func(*args, **kwargs)
-            new = immexp[preImmExpLen:]
-            for line in new:
-                line['rSrc'] = line.get('rSrc',linenum)
-                line['Src'] = line.get('Src', f'Line: {linenum+1}')
-                line['Src'] = f'{func.__name__}::'+line['Src']
-            return ret
-        return inner
         
     def NoHintError(msg):
-        nonlocal linenum, line
+        nonlocal line
         fline = ''.join(x.raw for x in line.tkns)
         if line.comment != '':
             fline += ' #'
@@ -394,7 +463,6 @@ def Compile(contents, verb = False):
         raise CompileError('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')'+'\n\t`'+fline+'`'+'\nSource Line: '+str(linenum+1))
 
     def ErrorWithHighlight(msg, line, lineidx):
-        nonlocal linenum
         fline = ''.join(x.raw for x in line.tkns)
         if line.comment != '':
             fline += ' #'
@@ -402,6 +470,7 @@ def Compile(contents, verb = False):
         highlight = ''.join([('^' if idx == lineidx else ' ')*len(seg.raw) for idx,seg in enumerate(line.tkns)])
         raise CompileError('ERROR: '+msg+' (@ Py: '+str(__CALL_LINE__())+')'+'\n\t`'+fline+'`'+'\n\t '+highlight+'\nSource Line: '+str(linenum+1))
 
+    @AsmSrcMarker
     def ParseDecl(line):
         ident = line.pop()
         if ident.raw == 'virtual':
@@ -424,17 +493,215 @@ def Compile(contents, verb = False):
             else:
                 ident.Error(f'Expected valid identifier type, found: `{ident.type}`')
 
+
+    #There are four valid types for rhs in many cases, which may be registers, immediates, addresses, and labels. These last two needs special processing and act like registers
+    @AsmSrcMarker
+    def ParseBinaryOp(line):
+        line.Reset()
+        lhs = line.pop()
+        op = line.pop()
+        rhs = line.pop()
+        line.AssertEmpty()
+
+        if lhs.isPtr and rhs.isPtr:
+            op.Error('Either lhs or rhs may be pointer destinations, but not both')
+        elif lhs.isPtr and not rhs.isPtr:   #Store operation *Rs = Rd,      Rs(i) = lhs, Rd = rhs
+            if op.raw != '=':
+                op.Error('Cannot perform an inplace binary operation other than assignment with pointer types')
+            if lhs.type == 'v-ident':
+                lhsreg = cstate.M_RegLoc(lhs.val)
+                if rhs.type == 'v-ident':
+                    rhsreg = cstate.M_RegLoc(rhs.val)
+                    cstate.M_OpRegReg('st', rhsreg, lhsreg)
+                elif rhs.type == 'num':
+                    rhsnum = rhs.val
+                    cstate.M_LoadImm(intReg, rhsnum)
+                    cstate.M_OpRegImm('st', intReg, lhsreg)
+                else:
+                    lhs.Error('Path not implemented: Var.* = Addr/Lbl')
+                
+            elif lhs.type == 'num':
+                lhsnum = lhs.val
+                if rhs.type == 'v-ident':
+                    rhsreg = cstate.M_RegLoc(rhs.val)
+                    cstate.M_OpRegReg('st', rhsreg, lhsnum)
+                elif rhs.type == 'num':
+                    rhsnum = rhs.val
+                    cstate.M_LoadImm(intReg, rhsnum)
+                    cstate.M_OpRegImm('st', intReg, lhsnum)
+                else:
+                    lhs.Error('Path not implemented: Imm.* = Addr/Lbl')
+            else:
+                lhs.Error(f'Storing to the location of type: `{lhs.type}`, is not implemented behavior, please use a temporary variable if this is infact desire behavior')
+        elif not lhs.isPtr and rhs.isPtr:   #Load operation Rd = *Rs,      Rs(i) = rhs, Rd = lhs
+            if op.raw != '=':
+                op.Error('Cannot perform an inplace binary operation other than assignment with pointer types')
+            if lhs.type == 'v-ident':
+                lhsreg = cstate.M_RegLoc(lhs.val)
+                if rhs.type == 'v-ident':
+                    rhsreg = cstate.M_RegLoc(rhs.val)
+                    cstate.M_OpRegReg('ld', lhsreg, rhsreg)
+                elif rhs.type == 'num':
+                    rhsnum = rhs.val
+                    cstate.M_OpRegImm('ld', lhsreg, rhsnum)
+                else:
+                    rhs.Error('Loading from the location of type: `{rhs.type}`, is not implemented behavior, please use a temporary variable if this is infact desire behavior')
+                
+            elif lhs.type == 'num':
+                lhs.Error('Cannot assign to constant lhs')
+            else:
+                lhs.Error(f'Storing to the location of type: `{lhs.type}`, is not implemented behavior')
+        elif not lhs.isPtr and not rhs.isPtr:   #Generic Operation, Rd op= Rs   Rs(i) = rhs, Rd = lhs
+            if lhs.type == 'v-ident':
+                lhsreg = cstate.M_RegLoc(lhs.val)
+                opname = list(OPCODES.keys())[opsyms.index(op.raw)]
+                if rhs.type == 'v-ident':
+                    rhsreg = cstate.M_RegLoc(rhs.val)
+                    cstate.M_OpRegReg(opname, lhsreg, rhsreg)
+                elif rhs.type == 'num':
+                    rhsnum = rhs.val
+                    cstate.M_OpRegImm(opname, lhsreg, rhsnum)
+                elif op.raw == '=':
+                    if rhs.type == 'addr' and rhs.val in cstate.statLoc:
+                        cstate.M_StkPointTo(rhs.val)
+                        cstate.M_OpRegReg(opname, lhsreg, stkPtr)
+                    elif rhs.type == 'addr' and rhs.val in cstate.tempLoc:
+                        rhs.Error(f'Cannot take address of virtual variable `{rhs.val}`')
+                    elif rhs.type == 'addr' and rhs.val in cstate.vIdents:
+                        rhs.Error('This error should not occur, internal memory desync')
+                    else:
+                        rhs.Error(f'Loading from the location of type: `{rhs.type}`, is not implemented behavior, please use a temporary variable if this is infact desire behavior')
+                else:
+                    rhs.Error(f'Inplace operations with an rhs of type: `{rhs.type}`, is not implemented behavior, please use a temporary variable if this is infact desire behavior')
+                
+            elif lhs.type == 'num':
+                lhs.Error('Cannot assign to constant lhs')
+            else:
+                lhs.Error(f'Storing into type: `{lhs.type}`, is not implemented behavior')
+        else:
+            op.Error('This error should not occur, something has gone very wrong')
+        
+    def ParseRetIFunc(line):
+        line.Reset()
+        lhs = line.pop()
+        assg = line.pop()
+        ifunc = line.pop()
+        lparen = line.pop()
+        rparen = line.pop()
+
+        if assg.raw != '=':
+            assg.Error('Expected `=` for returning intrinsic function calls')
+        if lparen.raw != '(':
+            lparen.Error('Expected `(` for returning intrinsic function calls')
+        if rparen.raw != ')':
+            rparen.Error('Expected `)` for function of arity 0')
+        
+        line.AssertEmpty()
+
+        if lhs.isPtr or lhs.type != 'v-ident':
+            lhs.Error('Return destination must be a plain variable identifier')
+
+        lhsreg = cstate.M_RegLoc(lhs.val)
+        if ifunc.val == 'pop':
+            cstate.M_OpReg('pop',lhsreg)
+        elif ifunc.val == 'ldkey':
+            cstate.M_OpReg('ldkey',lhsreg)
+        else:
+            ifunc.Error(f'Unknown intrinsic function `{ifunc.val}`')
+
+    def ParseVoidIFunc(line):
+        line.Reset()
+        ifunc = line.pop()
+        lparen = line.pop()
+        arg = line.pop()
+        rparen = line.pop()
+
+        if lparen.raw != '(':
+            lparen.Error('Expected `(` for returning intrinsic function calls')
+        if rparen.raw != ')':
+            rparen.Error('Expected `)` for function of arity 1')
+        
+        line.AssertEmpty()
+
+        if arg.isPtr:
+            arg.Error('Return destination must be a plain variable identifier, number, label, or address')
+        
+        if arg.type in ['v-ident', 'addr']:
+            if arg.val not in cstate.vIdents:
+                arg.Error(f'Usage of undeclared variable `{arg.val}`')
+            if arg.type == 'v-ident':
+                argReg = cstate.M_RegLoc(arg.val)
+            else:
+                if arg.val not in cstate.statLoc:
+                    arg.Error(f'Cannot take address of virtual variable `{arg.val}`')
+                cstate.M_StkPointTo(arg.val)
+                argReg = stkPtr
+            if ifunc.val == 'push':
+                cstate.M_OpReg('psh',argReg)
+            elif ifunc.val == 'stkey':
+                cstate.M_OpReg('stkey',argReg)
+            else:
+                ifunc.Error(f'Unknown intrinsic function `{ifunc.val}`')
+        elif arg.type == 'num':
+            if ifunc.val == 'push':
+                cstate.M_OpImm('psh',arg.val)
+            elif ifunc.val == 'stkey':
+                cstate.M_OpImm('stkey',arg.val)
+            else:
+                ifunc.Error(f'Unknown intrinsic function `{ifunc.val}`')
+        elif arg.type == 'lbl':
+            arg.Error('Unimplemented Path: @IFunc(lbl)')
+        else:
+            arg.Error(f'Invalid arguement type: `{arg.type}`')
+        
+                
     def Parse(line):
+        nonlocal opsyms
         if not line.CanPop():
             return
         tkn = line.pop()
 
         if tkn.raw == 'decl':
             ParseDecl(line)
-        elif tkn.isPtr == False and tkn.type == 'v-ident':
-            pass
+        elif tkn.raw == 'memsync':
+            var = line.pop()
+            if var.type == 'v-ident':
+                cstate.M_MemSyncVar(var.raw)
+            elif var.type == 'u-ident':
+                var.Error(f'Cannot memsync undeclared identifier `{var.val}`')
+            else:
+                var.Error(f'Expected variable, got type: `{var.type}`')
+        elif tkn.raw == 'regsync':
+            var = line.pop()
+            if var.type == 'v-ident':
+                cstate.M_RegSyncVar(var.raw)
+            elif var.type == 'u-ident':
+                var.Error(f'Cannot regsync undeclared identifier `{var.val}`')
+            else:
+                var.Error(f'Expected variable, got type: `{var.type}`')
+        elif tkn.type in ['v-ident', 'num']:
+            mid = line.pop()
+            if mid.raw in opsyms:
+                rhsi = line.pop()
+                if rhsi.type in ['addr', 'num', 'v-ident', 'lbl']:
+                    ParseBinaryOp(line)
+                elif mid.raw == '=' and rhsi.type == 'i-func':    #Simple assignment is overloaded, so fall back to other cases
+                    ParseRetIFunc(line)
+                else:
+                    mid.Error('Expected a numeric type or variable as rhs, found: `{rhsi.type}`, which is not valid with operator: `{mid.raw}`')
+                    
+            else:
+                mid.Error('Line starts with variable, and thus must be followed by either a binary operator, function call, or name cycling')
+        elif tkn.type == 'i-func':
+            ParseVoidIFunc(line)
+        elif tkn.type == 'addr':
+            tkn.Error(f'Assigning to an address is not allowed')
         else:
-            tkn.Error('Unable to detirmine type of line based on initial token')
+            if line.CanPop():
+                ntkn = line.pop()
+                if ntkn.raw in opsyms:
+                    tkn.Error(f'Usage of undeclared identifier of type `{tkn.type}`')
+            tkn.Error(f'Unable to detirmine type of line based on initial token, got type: `{tkn.type}`')
 
         line.AssertEmpty()
 
@@ -445,22 +712,61 @@ def Compile(contents, verb = False):
     #  * * * * * * * * * * * * * * *                    * * * * * * * * * * * * * * *  #
     ####################################################################################
 
+    opsyms = [sym for bits,opclass,sym in OPCODES.values()]
+
     cstate = State()
     lbls = []
     funcs = []
+    mark = []
 
     immexp = []
     for linenum, line in enumerate(contents.split('\n')):
         line = TknList(line, cstate.vIdents, cstate.sIdents, funcs, lbls)
+        if len(line.comment)>0 and line.comment[0]=='!':
+            mark.append(linenum)
 
         try:
             Parse(line)
         except TokenlessCompileError as e:
+            print()
             print(str(e))
+            print()
+            print(traceback.format_exc())
             NoHintError('Parsing Failure')
         
-        print('`'+'`'.join(x.raw for x in line.tkns)+'`')
+##        print('`'+'`'.join(x.raw for x in line.tkns)+'`')
 
+    asm=[]
+
+    for x in immexp:
+        if 'op' in x:   #Ready assembly
+            if 'Rd' in x:   #Two register type
+                Rs = x['Rs']
+                Rd = x['Rd']
+                op = x['op']
+                if x.get('Imm', False):
+                    Rs = f'[{hex(Rs)[2:]}]'
+                else:
+                    Rs = f'R{hex(Rs)[2:]}'
+                Rd = f'R{hex(Rd)[2:]}'
+                asm.append(f'{op}\t{Rd}, {Rs}')
+            else:
+                Rs = x['Rs']
+                op = x['op']
+                if x.get('Imm', False):
+                    Rs = f'[{hex(Rs)[2:]}]'
+                else:
+                    Rs = f'R{hex(Rs)[2:]}'
+                asm.append(f'{op}\t{Rs}')
+            asm[-1]+='\t\t#'+x['Src']
+
+            srcl = x['rSrc']
+            if srcl in mark:
+                asm[-1]='  '+asm[-1]
+        else:
+            asm.append(x)
+    for x in asm:
+        print(x)
 inp = None
 
 def monitor_input():
