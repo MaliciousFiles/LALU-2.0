@@ -58,6 +58,21 @@ OPCODES = {
     'halt':             ('1111111',-1,None),
 }
 
+CMPCODES = {
+    #Name
+    'INFO':             ('Opcode' ,'sym'),
+    'ugt':              ('0000', '+>'),
+    'uge':              ('0001', '+>='),
+    'ult':              ('0010', '+<'),
+    'ule':              ('0011', '+<='),
+    'sgt':              ('0100', '->'),
+    'sge':              ('0101', '->='),
+    'slt':              ('0110', '-<'),
+    'sle':              ('0111', '-<='),
+    'eq':               ('1000', '=='),
+    'ne':               ('1001', '!='),
+}
+
 #Thx Stack Exchange (https://stackoverflow.com/questions/3056048/filename-and-line-number-of-python-script)
 def __LINE__() -> int:
     return inspect.currentframe().f_back.f_lineno
@@ -245,6 +260,11 @@ class State():
             immexp.append( {'op': op, 'Rs': intReg} ) #Load from the intermediate register
         else:
             Error('Immediate supplied is not encodeable')
+    @AsmSrcMarker
+    def M_OpLit(self, op, lit):
+        global immexp
+
+        immexp.append( {'op': op, 'Rs': lit} )
 
     @AsmSrcMarker
     def M_LoadImm(self, reg, val):
@@ -313,6 +333,35 @@ class State():
     def M_PushStateChange(self, oldstatename, tarstatename):
         global immexp
         immexp.append( {'proc': 'stateChange', 'from': oldstatename, 'to': tarstatename} )
+
+    @AsmSrcMarker
+    def M_UCJmp(self, destLbl):
+        global immexp
+        immexp.append ({'op': 'jmp', 'to': destLbl} )
+
+    @AsmSrcMarker
+    def M_PrepCmpJmp(self, lReg, rReg, cmp):
+        global immexp
+        self.M_OpRegReg('mv', intReg, lReg)
+        self.M_OpRegReg('sub', intReg, rReg)
+        if cmp not in CMPCODES:
+            Error(f'This should not occur, recieved CmpCode: `{cmp}`')
+        cmpbin, _ = CMPCODES[cmp]
+        self.M_OpLit('usm', cmp)
+
+    @AsmSrcMarker
+    def M_CmpJmp(self, destLbl):
+        global immexp
+        immexp.append ({'op': 'cmpjmp', 'to': destLbl} )
+
+    @AsmSrcMarker
+    def M_PushLbl(self, lbl):
+        global immexp
+        immexp.append ({'lbl': lbl} )
+
+        
+global NoneState
+NoneState = copy(State())
 
 def TryNum(tkn, val):
     num = 0
@@ -667,6 +716,65 @@ def Compile(contents, verb = False):
             arg.Error('Unimplemented Path: @IFunc(lbl)')
         else:
             arg.Error(f'Invalid arguement type: `{arg.type}`')
+
+    def ParseCmpGoto(line):
+        line.Reset()
+        commonkword = line.pop()
+        cmpkword = line.pop()
+        lhs = line.pop()
+        cmp = line.pop()
+        rhs = line.pop()
+        gotokword = line.pop()
+        lbl = line.pop()
+
+        line.AssertEmpty()
+
+        if lhs.type != 'v-ident':
+            lhs.Error(f'Left hand side of the comparison must be of variable type, not `{lhs.type}`')
+        if lhs.isPtr:
+            lhs.Error(f'Left hand side of the comparison cannot be a ptr type')
+        if rhs.type != 'v-ident':
+            rhs.Error(f'Right hand side of the comparison must be of variable type, not `{rhs.type}`')
+        if rhs.isPtr:
+            lhs.Error(f'Right hand side of the comparison cannot be a ptr type')
+
+        sOps = ['>','<','>=','<=']  #Sign marked comparions
+        uOps = ['!=', '==']         #Unsigned comparisons
+
+        if cmp.type != 'u-ident':
+            cmp.Error(f'Comparions cannot be of type `{cmp.type}`')
+        if cmp.isPtr:
+            cmp.Error(f'Comparions cannot be pointed')
+
+        if cmp.raw[0] in '+-':  #Sign marked comparison
+            if cmp.raw[1:] in sOps:
+                condCode = {'+':'u', '-':'s'}[cmp.raw[0]] + {'>':'gt', '<':'lt', '>=':'ge', '<=':'le'}[cmp.raw[1:]]
+            elif cmp.raw[1:] in uOps:
+                cmp.Error(f'Equality tests do not need sign marking')
+            else:
+                cmp.Error(f'Unknown sign marked comparison operator: `{cmp.raw[1:]}`')
+        else:  #No sign marked comparison
+            if cmp.raw in uOps:
+                condCode = {'!=':'ne', '==':'eq'}[cmp.raw]
+            elif cmp.raw in sOps:
+                cmp.Error(f'Inequalities require sign marking, please prefix with `+` for unsigned and `-` for signed')
+            else:
+                cmp.Error(f'Unknown sign markless comparison operator: `{cmp.raw}`')
+        
+        if lbl.type != 'lbl':
+            lbl.Error(f'Expected identifier of label type, got: `{lbl.type}`')
+
+        if gotokword.raw != 'goto':
+            gotokword.Error('Expected keyword: `goto`')
+
+        lhsreg = cstate.M_RegLoc(lhs.raw)
+        rhsreg = cstate.M_RegLoc(rhs.raw)
+        
+        cstatename = linenum
+        cstate.M_PrepCmpJmp(lhsreg, rhsreg, condCode)
+        cstate.M_PushStateChange(cstatename, lbl.raw)
+        cstate.M_CmpJmp(lbl.raw)
+        cstate.M_PushStateChange(lbl.raw, cstatename)
         
                 
     def Parse(line):
@@ -676,6 +784,23 @@ def Compile(contents, verb = False):
         if not line.CanPop():
             return
         tkn = line.pop()
+
+        #Special stateless status which occurs after unconditional gotos
+        if cstate is NoneState:
+            #From statements
+            if tkn.raw == 'from':
+                lbl = line.pop()
+                if lbl.type != 'lbl':
+                    lbl.Error(f'Expected identifier of label type, got: `{lbl.type}`')
+                lblname = lbl.val
+                if lblname not in states:
+                    lbl.Error(f'Can only resume with state of previous label, not future static label')
+                tarstate = copy(states[lblname])
+                cstate = tarstate
+                line.AssertEmpty()
+            else:
+                tkn.Error('State cannot be inferred following an unconitional goto, please use a `from` statement')
+            return
 
         #Declarations
         if tkn.raw == 'decl':
@@ -705,6 +830,7 @@ def Compile(contents, verb = False):
         elif tkn.raw[-1] == ':' and tkn.type == 'lbl':
             states[tkn.val] = copy(cstate)
             line.AssertEmpty()
+            cstate.M_PushLbl(tkn.val)
 
         #From statements
         elif tkn.raw == 'from':
@@ -732,8 +858,30 @@ def Compile(contents, verb = False):
             cstatename = linenum
             states[cstatename] = copy(cstate)
             cstate.M_PushStateChange(cstatename, lblname)
-            cstate = None
+            cstate.M_UCJmp(lblname)
+            cstate = NoneState
             line.AssertEmpty()
+
+        #Simple varients of conditional gotos:
+        elif tkn.raw == 'common':
+            ntkn = line.pop()
+            
+            #Comparions driven conditional goto statements
+            if ntkn.raw == 'cmp':
+                ParseCmpGoto(line)
+
+            elif ntkn.raw == 'flg':
+                ntkn.Error('Path not implemented: Common Flag Goto')
+                ParseFlgGoto(line)
+
+        #Generally better variants, but more complicated
+        elif tkn.raw == 'cmp':
+            tkn.Error('Path not implemented: Fast Cmp Goto')
+            ParseFastCmpGoto(line)
+
+        elif tkn.raw == 'flg':
+            tkn.Error('Path not implemented: Fast Flag Goto')
+            ParseFastFlgGoto(line)
 
         #Binary Ops & Returning IFuncs
         elif tkn.type in ['v-ident', 'num']:
@@ -798,12 +946,15 @@ def Compile(contents, verb = False):
     lbls = []
     funcs = []
     mark = []
+    dmark = []
     states = {}
 
     #0. Static Identifier Analysis
     for linenum, line in enumerate(contents.split('\n')):
         line = TknList(line, cstate.vIdents, cstate.sIdents, funcs, lbls)
         if len(line.comment)>0 and line.comment[0]=='!':
+            if len(line.comment)>1 and line.comment[1]=='!':
+                dmark.append(linenum)
             mark.append(linenum)
 
         try:
@@ -834,11 +985,22 @@ def Compile(contents, verb = False):
 
     asm=[]
 
+    maxlbllen = 1+max([len(d['lbl']) for d in immexp if 'lbl' in d])
+    srcl = 0
 
     #4. Compile to assembly
     for x in immexp:
+        if srcl != x['rSrc'] and len([v for v in dmark if srcl < v < x['rSrc']]) > 0:
+            asm.append('')
         if 'op' in x:   #Ready assembly
-            if 'Rd' in x:   #Two register type
+            if 'to' in x:
+                op = x['op']
+                dest = x['to']
+                if op == 'jmp':
+                    asm.append(f'jmp\t{dest}:')
+                elif op == 'cmpjmp':
+                    asm.append(f'jmpu\t{dest}:')
+            elif 'Rd' in x:   #Two register type
                 Rs = x['Rs']
                 Rd = x['Rd']
                 op = x['op']
@@ -851,18 +1013,32 @@ def Compile(contents, verb = False):
             else:
                 Rs = x['Rs']
                 op = x['op']
-                if x.get('Imm', False):
-                    Rs = f'[{hex(Rs)[2:]}]'
+                if op == 'usm':
+                    asm.append(f'{op}\t{Rs}')
                 else:
-                    Rs = f'R{hex(Rs)[2:]}'
-                asm.append(f'{op}\t{Rs}')
+                    if x.get('Imm', False):
+                        Rs = f'[{hex(Rs)[2:]}]'
+                    else:
+                        Rs = f'R{hex(Rs)[2:]}'
+                    asm.append(f'{op}\t{Rs}')
             asm[-1]+='\t\t#'+x['Src']
+            asm[-1] = ' '*(1+maxlbllen) + asm[-1]
 
             srcl = x['rSrc']
             if srcl in mark:
-                asm[-1]='  '+asm[-1]
+                asm[-1]='\t'+asm[-1]
+        elif 'lbl' in x:
+            lbl = x['lbl']+':'
+            asm.append(lbl.ljust(maxlbllen))
+            asm[-1]+='\t\t\t\t#'+x['Src']
         else:
-            asm.append(x)
+            asm.append(repr(x))
+            asm[-1] = ' '*(1+maxlbllen) + asm[-1]
+            srcl = x['rSrc']
+            if srcl in mark:
+                asm[-1]='\t'+asm[-1]
+    
+
     for x in asm:
         print(x)
 inp = None

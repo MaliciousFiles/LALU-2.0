@@ -22,7 +22,7 @@ regsync y
 x = z.&
 
 @push(0)
-z = @pop() #!
+z = @pop()
 
 before:
 from lbl
@@ -32,6 +32,27 @@ from before
 x = 1
 
 goto future
+from before
+
+x = 0xffff
+
+#!!
+common cmp x +> y goto future #!
+#!!
+
+#!!
+A:
+
+A':
+common cmp x +> y goto skip
+goto B
+from A'
+skip:
+#!!
+
+B:
+#!!
+
 
 future:
 
