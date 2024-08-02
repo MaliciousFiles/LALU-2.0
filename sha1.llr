@@ -1,0 +1,112 @@
+setup:
+decl ptr
+ptr = 0x0100
+ptr.* = 0x6865 #he
+ptr += 1
+ptr.* = 0x6C6C #ll
+ptr += 1
+ptr.* = 0x6F20 #o_ <- Spacebar
+ptr += 1
+ptr.* = 0x776F #wo
+ptr += 1
+ptr.* = 0x726C #rl
+ptr += 1
+ptr.* = 0x6421 #d!
+ptr = 0x0100
+
+#!!
+
+preprocess:
+decl h0u
+decl h1u
+decl h2u
+decl h3u
+decl h4u
+decl h0l
+decl h1l
+decl h2l
+decl h3l
+decl h4l
+
+h0u = 0x6745
+h1u = 0xEFCD
+h2u = 0x98BA
+h3u = 0x1032
+h4u = 0xC3D2
+h0l = 0x2301
+h1l = 0xAB89
+h2l = 0xDCFE
+h3l = 0x5476
+h4l = 0xE1F0
+
+#ml is 64 bit quantity
+decl ml_3
+decl ml_2
+decl ml_1
+decl ml_0
+ml_3 = 0x0000
+ml_2 = 0x0000
+ml_1 = 0x0000
+ml_0 = 0x0060
+#ml = 0x0000_0000_0000_0060 = 6 words
+	
+
+decl ptrbase
+ptrbase = ptr
+
+decl temp
+temp = ml_0
+temp >>= 4
+ptrbase += temp
+ptrbase.* = 0x8000
+
+ptrbase = ptr
+ptrbase += 0x28
+ptrbase.* = ml_3
+ptrbase += 1
+ptrbase.* = ml_2
+ptrbase += 1
+ptrbase.* = ml_1
+ptrbase += 1
+ptrbase.* = ml_0
+
+
+decl wptr
+wptr = 0
+
+decl twptr
+decl tptr
+
+main_func:
+
+  decl i
+  i = 0
+  loop1:
+    # wptr[i] = ptr[i]
+    twptr = wptr
+    tptr = ptr
+    twptr += i
+    tptr += i
+    temp = tptr.*
+    twptr.* = temp
+    i += 1
+    temp = 16
+    common cmp i +< temp goto loop1
+  loop2:
+    # wptr[i] = (w[i-3] ^ w[i-8] ^ w[i-14] ^ w[i-16]) |<<| 1
+    decl calctemp
+    twptr = wptr
+    calctemp = twptr.*
+    twptr -= 3
+    temp = twptr.*
+    calctemp ^= temp
+    twptr -= 5
+    temp = twptr.*
+    calctemp ^= temp
+    twptr -= 9
+    temp = twptr.*
+    calctemp ^= temp
+    twptr -= 3
+    temp = twptr.*
+    calctemp ^= temp
+    

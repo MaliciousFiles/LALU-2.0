@@ -78,6 +78,8 @@ def __LINE__() -> int:
     return inspect.currentframe().f_back.f_lineno
 def __CALL_LINE__() -> int:
     return inspect.currentframe().f_back.f_back.f_back.f_lineno
+def __OUTER_FUNC__() -> str:
+    return inspect.currentframe().f_back.f_back.f_code.co_name
 
 class CompileError(Exception):        #Just makes a custom Exception class so its own errors can be caught
     def __init__(self,message):
@@ -89,7 +91,7 @@ class TokenlessCompileError(Exception):
 
 def AsmSrcMarker(func):
     global immexp, linenum
-    def inner(*args, **kwargs):
+    def MarkedInner(*args, **kwargs):
         preImmExpLen = len(immexp)
         ret = func(*args, **kwargs)
         new = immexp[preImmExpLen:]
@@ -98,7 +100,16 @@ def AsmSrcMarker(func):
             line['Src'] = line.get('Src', f'Line: {linenum+1}')
             line['Src'] = f'{func.__name__}::'+line['Src']
         return ret
-    return inner
+    return MarkedInner
+
+def DontTakeNone(func):
+    def NonelessInner(*args, **kwargs):
+        if None in args:
+            nonearg = [i for i,arg in enumerate(args) if arg == None][0]
+            fname = __OUTER_FUNC__()
+            raise TokenlessCompileError(f'{fname} does not take None as a valid arguement, arg_{nonearg} is None, called from line: {__CALL_LINE__()}')
+        return func(*args, **kwargs)
+    return NonelessInner
 
     ###################################################################################
     #  * * * * * * * * * * * * * * *                   * * * * * * * * * * * * * * *  #
@@ -129,6 +140,7 @@ class State():
         return hash(''.join(parts))
 
     @AsmSrcMarker
+    @DontTakeNone
     def M_DeclVar(self, tkn, virtual):
         name = tkn.val
         if name in self.vIdents:
@@ -141,12 +153,20 @@ class State():
                 break
         else:
             reg = self.M_AquireReg()
+            self.regs[reg] = name
         if virtual:
             self.tempLoc[name] = None
         else:
             addr = self.AquireMem(1, name)
             self.statLoc[name] = addr
 
+    @DontTakeNone
+    def UseReg(self, reg):
+        if reg in self.regUseOrder:
+            self.regUseOrder.remove(reg)
+        self.regUseOrder.append(reg)
+
+    @DontTakeNone
     @AsmSrcMarker
     def M_AquireReg(self):
         regIdx = self.regUseOrder[0]
@@ -155,6 +175,7 @@ class State():
         self.regs[regIdx] = None
         return regIdx
 
+    @DontTakeNone
     def AquireMem(self, width, var):
         off = 0
         while True:
@@ -172,6 +193,7 @@ class State():
             self.mem[addr+i] = var
         return addr
 
+    @DontTakeNone
     def I_MemIsFree(self, addr, width):
         if addr < 0:
             return False
@@ -180,12 +202,14 @@ class State():
                 return False
         return True
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_MemPushVar(self, var):
         regLoc = self.I_RegLoc(var)
         self.M_StkPointTo(var)
         self.M_OpRegReg('st', regLoc, stkPtr)    # *stkPtr = regVal
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_MemSyncVar(self, var):
         if var in self.regs:
@@ -193,6 +217,7 @@ class State():
         elif var not in self.vIdents:
             Error(f'Cannot memsync variable `{var}`, which is not a variable identifier in this scope')
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_MemPullVar(self, var):
         regLoc = self.I_RegLoc(var)
@@ -201,6 +226,7 @@ class State():
         if var in self.tempLoc:
             self.tempLoc[var] = None
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_RegSyncVar(self, var):
         if var in self.regs:
@@ -211,11 +237,13 @@ class State():
         elif var not in self.vIdents:
             Error(f'Cannot regsync variable `{var}`, which is not a variable identifier in this scope')
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_StkPointTo(self, var):
         relAddr = self.MemLoc(var)
         self.M_SetStkPtr(relAddr)
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_SetStkPtr(self, addr):
         offset = addr - self.relStkPtr
@@ -225,11 +253,13 @@ class State():
             self.M_OpRegImm('sub', stkPtr, -offset)
         self.relStkPtr = addr
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_OpRegReg(self, op, rd, rs):
         global immexp
         immexp.append( {'op': op, 'Rd': rd, 'Rs': rs} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_OpRegImm(self, op, rd, imm):
         global immexp
@@ -244,11 +274,13 @@ class State():
         else:
             Error('Immediate supplied is not encodeable')
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_OpReg(self, op, rs):
         global immexp
         immexp.append( {'op': op, 'Rs': rs} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_OpImm(self, op, imm):
         global immexp
@@ -260,12 +292,15 @@ class State():
             immexp.append( {'op': op, 'Rs': intReg} ) #Load from the intermediate register
         else:
             Error('Immediate supplied is not encodeable')
+
+    @DontTakeNone
     @AsmSrcMarker
     def M_OpLit(self, op, lit):
         global immexp
 
         immexp.append( {'op': op, 'Rs': lit} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_LoadImm(self, reg, val):
         global immexp
@@ -281,6 +316,7 @@ class State():
             if cnk != 0:
                 immexp.append( {'op': 'add', 'Rd': reg, 'Rs': cnk, 'Imm': True} )
 
+    @DontTakeNone
     def I_RegLoc(self, var):
         for i in range(self.numRegsUsed):
             if self.regs[i] == var:
@@ -290,19 +326,23 @@ class State():
             print(f'{self.regs=}')
             Error(f'Could not find variable `{var}` in registers')
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_RegLoc(self, var):
         for i in range(self.numRegsUsed):
             if self.regs[i] == var:
+                self.UseReg(i)
                 return i
         else:
+##            print(f'{self.regs=}')
             regloc = self.M_AquireReg()
-            devar = self.regs[regloc]
-            self.M_MemPushVar(devar)
+##            print(f'{self.regs=}')
             self.regs[regloc] = var
-            self.M_RegSync(var)
+            self.M_RegSyncVar(var)
+            self.UseReg(regloc)
+            return regloc
             
-
+    @DontTakeNone
     def I_MemLoc(self, var):
         if var in self.statLoc:
             return self.statLoc[var]
@@ -321,6 +361,7 @@ class State():
             print(f'{self.mem=}')
             Error(f'Could not find variable `{var}` in memory')
 
+    @DontTakeNone
     def MemLoc(self, var):
         if (ret := self.I_MemLoc(var)) == None:
             addr = self.AquireMem(1, var)
@@ -329,16 +370,19 @@ class State():
         else:
             return ret
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_PushStateChange(self, oldstatename, tarstatename):
         global immexp
         immexp.append( {'proc': 'stateChange', 'from': oldstatename, 'to': tarstatename} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_UCJmp(self, destLbl):
         global immexp
         immexp.append ({'op': 'jmp', 'to': destLbl} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_PrepCmpJmp(self, lReg, rReg, cmp):
         global immexp
@@ -349,11 +393,13 @@ class State():
         cmpbin, _ = CMPCODES[cmp]
         self.M_OpLit('usm', cmp)
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_CmpJmp(self, destLbl):
         global immexp
         immexp.append ({'op': 'cmpjmp', 'to': destLbl} )
 
+    @DontTakeNone
     @AsmSrcMarker
     def M_PushLbl(self, lbl):
         global immexp
