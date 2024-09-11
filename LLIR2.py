@@ -878,6 +878,9 @@ def Compile(contents, verb = False):
             line.AssertEmpty()
             cstate.M_PushLbl(tkn.val)
 
+        elif tkn.raw == 'macro':
+            return
+
         #From statements
         elif tkn.raw == 'from':
             lbl = line.pop()
@@ -960,6 +963,19 @@ def Compile(contents, verb = False):
 
         line.AssertEmpty()
 
+    def MacroParse(line):
+        line.Reset()
+        macrokword = line.pop()
+        macroname = line.pop()
+        args = ParenArgParse(line)
+        lcurly = line.pop()
+        line.AssertEmpty()
+
+        if macroname.type != 'u-ident':
+            macroname.Error(f'Expected type `u-ident`, got `{macroname.type}`')
+        if lcurly.raw != '{':
+            lcurly.Error(f'Expected `{{`, got `{lcurly.raw}`')
+
     def SIAParse(line):
         nonlocal lbls, funcs
 
@@ -974,7 +990,30 @@ def Compile(contents, verb = False):
         elif tkn.raw == 'func':
             ParseFuncHeader(line)
         elif tkn.raw == 'macro':
-            tkn.Error('Path not implemented: Macros')
+            MacroParse(line)
+##            tkn.Error('Path not implemented: Macros')
+
+    def ParenArgParse(line):
+        lparen = line.pop()
+        if lparen.raw != '(':
+            lparen.Error(f'Expected `(`, got `{lparen.raw}`')
+        args = []
+        tkn = line.pop()
+        while tkn.raw != ')':
+            if tkn.type == 'u-ident':
+                args.append(tkn.raw)
+            else:
+                tkn.Error(f'Expected unused variable declaration, not type `{tkn.type}`')
+            tkn = line.pop()
+            if tkn.raw == ')':
+                break
+            elif tkn.raw == ',':
+                continue
+            else:
+                tkn.Error(f'Expected `,` got `{tkn.raw}`')
+            tkn = line.pop()
+        return args
+        
         
 
 

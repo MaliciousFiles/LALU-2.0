@@ -56,6 +56,12 @@ B:
 
 future:
 
+#macro MultiDecl(arg1) {
+#  decl arg1 @ _1
+#  decl arg1 @ _0
+#}
+
+
 #crash
 
 #func main () -> 0 { #Specific entry point

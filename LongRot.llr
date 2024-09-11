@@ -1,0 +1,29 @@
+decl Upper
+decl Lower
+decl AmtRot
+
+Upper = 0x6868
+Lower = 0xA5A5
+AmtRot = 5 #! End of Setup Code
+
+
+	#Algorithm Start
+decl UpperWrap
+decl LowerWrap
+
+UpperWrap = Upper
+LowerWrap = Lower
+
+UpperWrap |>>|= AmtRot
+LowerWrap |>>|= AmtRot
+Upper >>= AmtRot
+Lower >>= AmtRot
+
+UpperWrap ^= Upper
+LowerWrap ^= Lower
+
+Upper |= LowerWrap
+Lower |= UpperWrap
+
+#undecl UpperWarp
+#undecl LowerWrap
